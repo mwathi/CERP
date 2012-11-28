@@ -1,0 +1,316 @@
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-touch-callout: none;
+}
+html, body {
+	font-family: Arial, Helvetica, sans-serif;
+	height: 100%;
+}
+a {
+	text-decoration: none;
+}
+
+#space {
+	height: 5px;
+}
+#wrap, .wrap {
+	width: 996px;
+	margin: 0 auto;
+}
+#header {
+	height: 47px;
+	margin: 0 0px 0px;
+	position: relative;
+	background: #9A32CD;
+}
+#header .wrap {
+	position: relative;
+}
+.menu {
+	text-align: right;
+}
+.menu .menu-item {
+	float: left;
+	color: #fff;
+	height: 47px;
+	width: auto;
+	text-shadow: #444444 0 -1px 0;
+	text-shadow: #2d3033 0 1px 0;
+	-webkit-transition: background-color 0.25s;
+	-moz-transition: background-color 0.25s;
+	-o-transition: background-color 0.25s;
+	transition: background-color 0.25s;
+	text-align: center;
+	position: relative;
+	text-decoration: none;
+	background: transparent;
+	font-size: 1em;
+	display: inline-block;
+	vertical-align: top;
+	padding: 0 24px;
+}
+.menu .menu-item .label {
+	text-decoration: none;
+	line-height: 47px;
+	text-align: left;
+	font-size: 13px;
+}
+.menu .menu-item .icon {
+	position: static;
+	display: none;
+	width: 42px;
+	height: 50px;
+	float: left;
+	margin-top: 6px;
+}
+.menu .logo {
+	width: 128px;
+	margin-right: 12px;
+	float: left;
+	padding: 0;
+}
+.menu .logo .label {
+	text-decoration: none;
+	line-height: 47px;
+	text-align: left;
+	font-size: 14px;
+}
+.menu a.menu-item:hover, .menu a.menu-item.active {
+	background: #BDA0CB;
+}
+.menu .menu-select {
+	display: none;
+	width: 180px;
+	border-bottom: 1px solid #444;
+	padding-top: 13px;
+	height: 26px;
+}
+#wrap {
+	position: relative;
+	width: 996px;
+	margin: 0 auto;
+	display: block;
+}
+.othertext {
+	font-family: calibri;
+	font-size: 16px;
+}
+
+::-webkit-input-placeholder {
+	font-size: 15px;
+	text-align: center;
+	font-family: Arial;
+}
+input:-moz-placeholder {
+	color: #999;
+}
+#footer .container {
+	padding-top: 0px;
+	width: 700px;
+	margin: 0 auto;
+}
+.clearfix {
+	display: block;
+}
+.clearfix::after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+#view_content {
+	overflow: hidden;
+}
+.action_button:hover {
+	cursor: pointer;
+	border: 1px solid #AA6600;
+	color: #fff;
+	text-shadow: 0 1px rgba(0,0,0,0.3);
+	background-color: #BDA0CB;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#BDA0CB),to(#BDA0CB));
+	background-image: -webkit-linear-gradient(top,#BDA0CB,#BDA0CB);
+	background-image: -moz-linear-gradient(top,#BDA0CB,#BDA0CB);
+}
+.action_button {
+	width: 150px;
+	height: 15px;
+	line-height: 15px;
+	color: white;
+	text-decoration: none;
+	font-size: 12px;
+	font-family: helvetica, arial;
+	font-weight: bolder;
+	display: block;
+	text-align: center;
+	background: #660198;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 5px 20px;
+	letter-spacing: 1px;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+	margin: 5px 10px;
+}
+.button {
+	display: block;
+	min-width: 54px;
+	text-align: center;
+	color: #ffffff;	
+	height: 27px;
+	padding: 0 8px;
+	line-height: 15px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-transition: all 0.218s;
+	-moz-transition: all 0.218s;
+	-ms-transition: all 0.218s;
+	-o-transition: all 0.218s;
+	transition: all 0.218s;
+	border: 1px solid #dcdcdc;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	background-color: #C53727;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#C53727),to(#C53727));
+	background-image: -webkit-linear-gradient(top,#C53727,#C53727);
+	background-image: -moz-linear-gradient(top,#C53727,#C53727);
+	font-family: helvetica, arial;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	cursor: default;
+}
+.button:hover {
+	border: 1px solid black;
+}
+
+.holder {
+	margin-left: 35%;
+	padding: 25px;
+	background: whitesmoke;
+	border: 1px solid #E5E5E5;
+	display: block;
+	width: 362px;
+}
+
+.othertext {
+	font-family: calibri;
+	font-size: 16px;
+}
+
+
+.memberreporttable {
+	margin-top: 3%;
+	font: 11px/27px Verdana, Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+}
+.memberreporttable th {
+	padding: 0 0.5em;
+	text-align: left;
+}
+.memberreporttable tr.yellow th {
+	border-top: 1px solid #FB7A31;
+	border-bottom: 1px solid #FB7A31;
+	background: #FFC;
+}
+.memberreporttable td {
+	border-bottom: 1px solid #CCC;
+	padding: 0 0.5em;
+}
+.memberreporttable td+ td {
+	border-left: 1px solid #CCC;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#footer .upper_footer ul.footer_nav h4 {
+	border-bottom: thin solid #E1E1E1;
+	display: block;
+	-webkit-margin-before: 1.33em;
+	-webkit-margin-after: 1.33em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+}
+#footer li {
+	list-style: none;
+	display: list-item;
+	text-align: -webkit-match-parent;
+}
+#footer a {
+	color: #4183C4;
+	text-decoration: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+	text-align: -webkit-match-parent;
+}
+
+#footer .upper_footer ul.footer_nav {
+	position: relative;
+	float: left;
+	width: 164px;
+	display: block;
+	list-style-type: disc;
+	-webkit-margin-before: 1px;
+	-webkit-margin-after: 1px;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	-webkit-padding-start: 40px;
+	padding: 0;
+	border: 0;
+}
+#footer_nav h4 {
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-bottom: thin solid #e1e1e1;
+}
+#footer {
+	clear: both;
+	display: block;
+	width: 99%;
+	font-size: small;
+	text-align: center;
+	bottom: 0;
+}
+#footer, .push {
+	height: 180px; /* .push must be the same height as .footer */
+}
+#footer .upper_footer {
+	min-height: 140px;
+	overflow: hidden;
+	border-top: 1px solid #AA6600;
+	border-bottom: 1px solid #AA6600;
+	box-shadow: inset 0 -1px 0 white;
+	background-color: #F8F8F8;
+}
+#footer .lower_footer {
+	position: relative;
+	background-color: white;
+	overflow: hidden;
+	clear: both;
+}
+
+#wrapper {
+	min-height: 80%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+}
+
+textarea {
+	width: 250px;
+	height: 100px;
+}
