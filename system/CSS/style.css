@@ -201,25 +201,25 @@ input:-moz-placeholder {
 }
 
 
-.memberreporttable {
+.reporttable {
 	margin-top: 3%;
 	font: 11px/27px Verdana, Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
 }
-.memberreporttable th {
+.reporttable th {
 	padding: 0 0.5em;
 	text-align: left;
 }
-.memberreporttable tr.yellow th {
+.reporttable tr.yellow th {
 	border-top: 1px solid #FB7A31;
 	border-bottom: 1px solid #FB7A31;
 	background: #FFC;
 }
-.memberreporttable td {
+.reporttable td {
 	border-bottom: 1px solid #CCC;
 	padding: 0 0.5em;
 }
-.memberreporttable td+ td {
+.reporttable td+ td {
 	border-left: 1px solid #CCC;
 	text-align: center;
 }

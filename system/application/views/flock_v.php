@@ -2,7 +2,7 @@
     <a class="action_button" id="new_flock" href="<?php echo site_url("flock_management/add"); ?>">New Flock</a>
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>
-        <table class="memberreporttable">
+        <table class="reporttable">
             <tr class="yellow">
                 <th>Member</th>
                 <th>Group</th>

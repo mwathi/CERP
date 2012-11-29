@@ -71,7 +71,7 @@ class Flock_Management extends Controller {
         $this -> load -> database();
         $sql = 'delete from flock where id =' . $id . ' ';
         $query = $this -> db -> query($sql);
-        redirect("bflock_management/listing", "refresh");
+        redirect("flock_management/listing", "refresh");
     }//end save
 
     public function edit_member($id) {
