@@ -10,7 +10,6 @@
 
 
 <?php
-error_reporting(0);
 $this -> load -> helper(array('form', 'search'));
 if (isset($scripts)) {
     foreach ($scripts as $script) {
@@ -31,11 +30,17 @@ if (isset($styles)) {
     <div id="header">
             <div class="wrap">
                 <div class="menu">
-                    <a class="menu-item logo" href=""> <span class="label">Church ERP</span> </a>                   
+                    <a class="menu-item logo" href="<?php echo base_url()."flock_management/listing"?>"> <span class="label">Church ERP</span> </a>                   
                 </div>                              
             </div>
         </div>    
 <div id="wrapper">
+     <a class="action_button" id="parents" href="<?php echo site_url("flock_management/allParentsListing"); ?>">Adults</a>
+    <a class="action_button" id="youth" href="<?php echo site_url("flock_management/allYouthListing"); ?>">Youth</a>
+    <a class="action_button" id="children" href="<?php echo site_url("flock_management/allChildrenListing"); ?>">Children</a>    
+    <a class="action_button" id="reports" href="<?php echo site_url("flock_management/allListing"); ?>">Member Reports</a>
+    <!--a class="action_button" id="youth" href="<?php echo site_url("employee_management/listing"); ?>">Employees</a-->
+    
     <div id="main_wrapper"> 
         <?php $this -> load -> view($content_view); ?>
     </div>

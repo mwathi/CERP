@@ -1,17 +1,106 @@
+<script>
+    $(function() {
+        $("#youthoradult").dialog({
+            resizable : false,
+            height : 200,
+            modal : true,
+            buttons : {
+                "Youth" : function() {
+                    $(document.getElementById("childrenrow")).replaceWith(
+                        '<tr><td>Father</td><td><select name="father" id="father"><option value="n/a">N/A</option><?php foreach ($maleparents as $maleparentof) {
+                             echo "<option value=".$maleparentof->First_Name." ".$maleparentof->Surname.">".$maleparentof->First_Name." ".$maleparentof->Surname."</option>"; }?></select></td><td>Mother</td><td><select name="mother" id="mother"><option value="n/a">N/A</option><?php foreach ($femaleparents as $femaleparentof) { echo "<option value=".$femaleparentof->First_Name." ".$femaleparentof->Surname.">".$femaleparentof->First_Name." ".$femaleparentof->Surname."</option>"; }?></select></td></tr>');
+                    $(document.getElementById("spouserow")).replaceWith('');                    
+                    $(document.getElementById("apparent")).replaceWith('');
+                    $(this).dialog("close");
+                },
+                "Child" : function() {
+                    $(document.getElementById("childrenrow")).replaceWith(
+                        '<tr><td>Father</td><td><select name="father" id="father"><option value="n/a">N/A</option><?php foreach ($maleparents as $maleparentof) {
+                             echo "<option value=".$maleparentof->First_Name." ".$maleparentof->Surname.">".$maleparentof->First_Name." ".$maleparentof->Surname."</option>"; }?></select></td><td>Mother</td><td><select name="mother" id="mother"><option value="n/a">N/A</option><?php foreach ($femaleparents as $femaleparentof) { echo "<option value=".$femaleparentof->First_Name." ".$femaleparentof->Surname.">".$femaleparentof->First_Name." ".$femaleparentof->Surname."</option>"; }?></select></td></tr>');
+                    $(document.getElementById("spouserow")).replaceWith('');                    
+                    $(document.getElementById("apparent")).replaceWith('');
+                    $(document.getElementById("nationalidrow")).replaceWith('');
+                    $(document.getElementById("statusrow")).replaceWith('');
+                    $(document.getElementById("professionrow")).replaceWith('');
+                    $(document.getElementById("workplacerow")).replaceWith(
+                        '<tr><td>School</td><td><?php $data_search = array("name" => "school", "value" => ""); echo form_input($data_search);?></td></tr>');
+                    $(this).dialog("close");
+                },
+                "Adult" : function() {
+                    $(document.getElementById("x")).replaceWith(
+                        '<tr><td>Father</td><td><select name="father" id="father"><option value="n/a">N/A</option><?php foreach ($maleparents as $maleparentof) {
+                             echo "<option value=".$maleparentof->First_Name." ".$maleparentof->Surname.">".$maleparentof->First_Name." ".$maleparentof->Surname."</option>"; }?></select></td><td>Mother</td><td><select name="mother" id="mother"><option value="n/a">N/A</option><?php foreach ($femaleparents as $femaleparentof) { echo "<option value=".$femaleparentof->First_Name." ".$femaleparentof->Surname.">".$femaleparentof->First_Name." ".$femaleparentof->Surname."</option>"; }?></select></td></tr>');
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+</script>
+<style>
+.holder input, select{
+    font-family: calibri;
+    font-size: 16px;
+}    
+</style>
+<script>
+    $(function() {
+        $("#date_of_birth").datepicker({
+            changeMonth : true,
+            changeYear : true
+        });
+    });
+</script>
+
 <?php
 if (isset($member)) {
     $member_id = $member -> id;
-    $member_name = $member -> Name;
+    
+    $first_name = $member -> First_Name;
+    $surname = $member -> Surname;
+    $last_name = $member -> Last_Name;
+    $house = $member -> House;
+    
+    $profession = $member -> Profession;
+    //$marital_status = $member -> Marital_Status;
+    $disability_status = $member -> Disability_Status;
+    $level_of_education = $member -> Level_of_education;
+    $place_of_work = $member -> Place_of_work;
+    $darasa = $member -> Darasa;
+    $school = $member -> School;
+    $national_id = $member -> National_id;
+    $passport = $member -> Passport;
+    $country = $member -> Country;
+    $residence = $member -> Residence;
+    $physical_address = $member -> Physical_Address;
+    
     $member_phone_number = $member -> Phone;
     $date_of_birth = $member -> Date_of_Birth;
     $spouse = $member -> Spouse;
     $number_of_children = $member -> Children;
-    $address = $member -> Address;
     $email = $member -> Email;
 
 } else {
     $member_id = "";
-    $member_name = "";
+    
+    $first_name = "";
+    $surname = "";
+    $last_name = "";
+    
+    $house = "";
+    $profession = "";
+    //$marital_status = "";
+    $disability_status = "";
+    $level_of_education = "";
+    $place_of_work = "";
+    $darasa = "";
+    $school = "";
+    $national_id = "";
+    $passport = "";
+    $country = "";
+    $residence = "";
+    $physical_address = "";
+    
     $member_group = "";
     $member_phone_number = "";
     $date_of_birth = "";
@@ -27,40 +116,52 @@ echo validation_errors('
 <p class="error">', '</p>
 ');
 ?>
-<script>
-	$(function() {
-		$("#date_of_birth").datepicker({
-			changeMonth : true,
-			changeYear : true
-		});
-	});
-</script>
 
+<input type="text" name="member_number" value="<?php foreach($maxno as $max){ echo $max -> Member_Number; } ?>" />
 <input type="hidden" name="member_id" value = "<?php echo $member_id; ?>"/>
-<div class="holder" style="margin-top: 50px; width: 500px">
-    
-    <table>
-        
-        <tr class="yellow">
-        <th class="" colspan="2">Congregation Member Details</th>
+<div id="youthoradult" title="Youth or Adult">Is this a child, youth or adult member?</div>
+<div class="holder" style="width: 70%; margin-left: 13%" align="center">
+    <table class="othertext">        
+        <tr>
+            <th class="" colspan="2">Congregation Member Details</th>
         </tr>
         
         <tr>
-            <td>Member Name</td>
-            <td class="othertext"><?php
-
-            $data_search = array('name' => 'member_name', 'value' => $member_name, 'class' => 'othertext');
+            <th colspan="2">Member Names</th>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>
+            <?php
+            $data_search = array('name' => 'first_name', 'value' => $first_name, 'required' => 'required');
             echo form_input($data_search);
-            ?></td>
+            ?>
+            </td>
+            
+            <td>Surname</td>
+            <td>
+            <?php
+            $data_search = array('name' => 'surname', 'value' => $surname, 'required' => 'required');
+            echo form_input($data_search);
+            ?>
+            </td>
+            
+            <td>Middle Name</td>
+            <td>
+            <?php
+            $data_search = array('name' => 'last_name', 'value' => $last_name);
+            echo form_input($data_search);
+            ?>
+            </td>
         </tr>
 
         <tr>
             <td>Member Group</td>
-             <td><select name="member_group" id="member_group" class="othertext">
-                <option value="0" selected>Select Group</option>
+             <td><select name="member_group" id="member_group" required>
+                <option value="" selected>Select Group</option>
                 <?php
                 foreach ($member_groups as $member_group) {
-                    echo "<option selected value='$member_group->id'>$member_group->Name</option>";
+                    echo "<option selected value='$member_group->id'>$member_group->Group_Name</option>";
                 }
                 ?>
             </select>
@@ -68,10 +169,10 @@ echo validation_errors('
         </tr>
         
         <tr>
-            <td>Member Phone Number</td>
-             <td><?php
+            <td>Member Telephone</td>
+             <td>+254&nbsp;<?php
 
-            $data_search = array('name' => 'member_phone_number', 'value' => $member_phone_number, 'class' => 'othertext');
+            $data_search = array('name' => 'member_phone_number', 'value' => $member_phone_number, 'maxlength' => 9, 'required' => 'required', 'id' => 'member_phone_number');
             echo form_input($data_search);
             ?></td>
         </tr>
@@ -79,8 +180,8 @@ echo validation_errors('
         
         <tr>
             <td>Gender</td>
-            <td><select name="gender" id="gender" class="othertext">
-                <option value="0" selected>Select Gender</option>
+            <td><select name="gender" id="gender" required>
+                <option value="" selected>Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
             </select></td>
@@ -91,44 +192,145 @@ echo validation_errors('
             <td>Date of Birth</td>
             <td><?php
 
-            $data_search = array('name' => 'date_of_birth', 'id' => 'date_of_birth', 'value' => $date_of_birth, 'class' => 'othertext');
+            $data_search = array('name' => 'date_of_birth', 'id' => 'date_of_birth', 'value' => $date_of_birth, 'required' => 'required');
             echo form_input($data_search);
             ?></td>
         </tr>
 
-        <tr>
+        <tr id="spouserow">
             <td>Spouse</td>
             <td><?php
 
-            $data_search = array('name' => 'spouse', 'value' => $spouse, 'class' => 'othertext');
+            $data_search = array('name' => 'spouse', 'id' => 'spouse','value' => $spouse);
             echo form_input($data_search);
             ?></td>
         </tr>
 
-        <tr>
+        <tr id="childrenrow">
             <td>Number of Children</td>
             <td><?php
 
-            $data_search = array('name' => 'number_of_children', 'value' => $number_of_children, 'class' => 'othertext');
+            $data_search = array('name' => 'number_of_children', 'id' => 'number_of_children', 'value' => $number_of_children);
             echo form_input($data_search);
             ?></td>
         </tr>
 
-        <tr>
-            <td>Address</td>
+        <tr id="nationalidrow">
+            <td>National Id Number</td>
             <td><?php
 
-            $data_search = array('name' => 'address', 'value' => $address, 'class' => 'othertext');
+            $data_search = array('name' => 'national_id', 'value' => $national_id);
             echo form_input($data_search);
             ?></td>
         </tr>
-
         
-<tr>
+        <!--new-->
+        <tr>
+            <td>Passport Number</td>
+            <td><?php
+
+            $data_search = array('name' => 'passport', 'value' => $passport);
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+        <tr id="professionrow">
+            <td>Profession</td>
+            <td><?php
+
+            $data_search = array('name' => 'profession', 'value' => $profession, 'required' => 'required');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        <tr id="x"></tr>
+        <tr id="statusrow">
+            <td>Marital Status</td>
+            <td>
+                <select name="marital_status">
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                    <option value="Widow">Widow</option>
+                    <option value="Widower">Widower</option>
+                    <option value="N/A">N/A</option>
+                </select>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>Level of Education</td>
+            <td>
+                <select name="level_of_education">
+                    <option value="secondary">High School Diploma</option>
+                    <option value="college">College Diploma</option>
+                    <option value="degree">Undergraduate Degree</option>
+                    <option value="masters">Masters Degree</option>
+                    <option value="doctor">Doctorate</option>
+                    <option value="n/a">N/A</option>
+                </select>
+            </td>
+        </tr>
+        
+        <tr id="workplacerow">
+            <td>Place of Work</td>
+            <td><?php
+
+            $data_search = array('name' => 'place_of_work', 'value' => $place_of_work);
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+        <tr>
+            <td>Language</td>
+            <td>
+                <select name="country">
+                    <option value="english">English</option>
+                    <option value="swahili">Swahili</option>
+                    <option value="french">French</option>
+                    <option value="german">German</option>
+                    <option value="italian">Italian</option>
+                    <option value="arabic">Arabic</option>
+                </select>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>Physical Address</td>
+            <td><?php
+
+            $data_search = array('name' => 'physical_address', 'value' => $physical_address);
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+                
+        <tr>
+            <td>Residence/Area/Estate</td>
+            <td><?php
+
+            $data_search = array('name' => 'residence', 'value' => $residence);
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+                
+        <tr>
+            <td>House Number</td>
+            <td><?php
+
+            $data_search = array('name' => 'house', 'value' => $house);
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+        
+        <!------->
+        
+        <tr>
             <td>Email</td>
             <td><?php
 
-            $data_search = array('name' => 'email', 'value' => $email, 'class' => 'othertext');
+            $data_search = array('name' => 'email', 'value' => $email);
             echo form_input($data_search);
             ?></td>
         </tr>
@@ -139,4 +341,4 @@ echo validation_errors('
         </tr>
     </table>
     </form>
-    </div>
+</div>

@@ -19,17 +19,17 @@ echo validation_errors('
 ');
 ?>
 <script>
-    $(function() {
-        $("#date_of_birth").datepicker({
-            changeMonth : true,
-            changeYear : true
-        });
-    });
+	$(function() {
+		$("#date_of_birth").datepicker({
+			changeMonth : true,
+			changeYear : true
+		});
+	});
 </script>
 <input type="hidden" name="employee_id" value = "<?php echo $employee_id; ?>"/>
 <div class="holder" style="margin-top: 50px; width: 500px">
     
-    <table>
+    <table class="othertext">
         
         <tr class="yellow">
         <th class="" colspan="2">Employee Details</th>
@@ -80,7 +80,20 @@ echo validation_errors('
             echo form_input($data_search);
             ?></td>
         </tr>
-
+        
+        <tr>
+            <td>Post</td>
+             <td><select name="posts" id="posts" class="othertext">
+                <option value="0" selected>Select Post</option>
+                <?php
+                foreach ($posts as $posting) {
+                    echo "<option selected value='$posting->id'>$posting->Name</option>";
+                }
+                ?>
+            </select>
+            </td>          
+        </tr>
+      
         <tr>
             <td><input name="submit" type="submit" value="Save Employee" class="button" style="width: 120px; height: 30px; font-size: 13px"></td>
         </tr>

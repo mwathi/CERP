@@ -6,15 +6,22 @@ class Employee extends Doctrine_Record {
         $this -> hasColumn('Date_of_Birth', 'varchar', 15);
         $this -> hasColumn('Phone', 'varchar', 20);
         $this -> hasColumn('Gender', 'varchar', 6);       
-        $this -> hasColumn('Address', 'varchar', 25);
-        $this -> hasColumn('Benefits', 'varchar', 2);
+        $this -> hasColumn('Address', 'varchar', 25);        
         $this -> hasColumn('Post', 'varchar', 2);
+        $this -> hasColumn('Salary', 'varchar', 2);
+        $this -> hasColumn('Qualifications', 'varchar', 250);
+        $this -> hasColumn('Schools_Attended', 'varchar', 250);
+        $this -> hasColumn('Previous_Employer', 'varchar', 40);
+        $this -> hasColumn('Contact_Person', 'varchar', 40);
+        $this -> hasColumn('Contact_Telephone', 'varchar', 20);
         $this -> hasColumn('Date_Created', 'timestamp');
     }
 
     public function setUp() {
         $this -> setTableName('employee');
-        //$this -> hasOne('Groups', array('local' => 'Member_Group', 'foreign' => 'id'));
+        $this -> hasOne('Posts', array('local' => 'Post', 'foreign' => 'id'));
+        $this -> hasOne('Paygrade', array('local' => 'Salary', 'foreign' => 'id'));
+        
     }//end setUp
 
     public function getAll() {

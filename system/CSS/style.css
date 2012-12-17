@@ -92,10 +92,6 @@ a {
 	margin: 0 auto;
 	display: block;
 }
-.othertext {
-	font-family: calibri;
-	font-size: 16px;
-}
 
 ::-webkit-input-placeholder {
 	font-size: 15px;
@@ -125,7 +121,7 @@ input:-moz-placeholder {
 }
 .action_button:hover {
 	cursor: pointer;
-	border: 1px solid #AA6600;
+	border: 1px solid blue;
 	color: #fff;
 	text-shadow: 0 1px rgba(0,0,0,0.3);
 	background-color: #BDA0CB;
@@ -156,6 +152,7 @@ input:-moz-placeholder {
 }
 .button {
 	display: block;
+	letter-spacing: 1px;
 	min-width: 54px;
 	text-align: center;
 	color: #ffffff;	
@@ -172,15 +169,16 @@ input:-moz-placeholder {
 	transition: all 0.218s;
 	border: 1px solid #dcdcdc;
 	border: 1px solid rgba(0, 0, 0, 0.1);
-	background-color: #C53727;
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#C53727),to(#C53727));
-	background-image: -webkit-linear-gradient(top,#C53727,#C53727);
-	background-image: -moz-linear-gradient(top,#C53727,#C53727);
+	background-color: #660198;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#660198),to(#660198));
+	background-image: -webkit-linear-gradient(top,#660198,#660198);
+	background-image: -moz-linear-gradient(top,#660198,#660198);
 	font-family: helvetica, arial;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
-	cursor: default;
+	cursor: pointer;
+	font-weight: bolder;
 }
 .button:hover {
 	border: 1px solid black;
@@ -192,7 +190,7 @@ input:-moz-placeholder {
 	background: whitesmoke;
 	border: 1px solid #E5E5E5;
 	display: block;
-	width: 362px;
+	width: auto;
 }
 
 .othertext {
@@ -223,17 +221,21 @@ input:-moz-placeholder {
 	border-left: 1px solid #CCC;
 	text-align: center;
 }
+.purpleelement{
+	color:#660198;
+}
 
+textarea{
+	width: 182px;
+	height: 100px;
+}
 
-
-
-
-
-
-
-
-
-
+#wrapper {
+	min-height: 80%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+}
 
 #footer .upper_footer ul.footer_nav h4 {
 	border-bottom: thin solid #E1E1E1;
@@ -303,14 +305,3 @@ input:-moz-placeholder {
 	clear: both;
 }
 
-#wrapper {
-	min-height: 80%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
-}
-
-textarea {
-	width: 250px;
-	height: 100px;
-}

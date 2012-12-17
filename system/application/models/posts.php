@@ -9,7 +9,7 @@ class Posts extends Doctrine_Record {
 
     public function setUp() {
         $this -> setTableName('posts');
-        //$this -> hasOne('Groups', array('local' => 'Member_Group', 'foreign' => 'id'));
+        $this -> hasMany('Employee', array('local' => 'id', 'foreign' => 'Post'));
     }//end setUp
 
     public function getAll() {
