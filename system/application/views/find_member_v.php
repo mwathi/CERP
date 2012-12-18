@@ -1,10 +1,16 @@
-<div id="view_content">    
-    <a class="action_button" id="new_flock" href="<?php echo site_url("flock_management/add"); ?>">New Member</a>
-    <a class="action_button" id="new_group" href="<?php echo site_url("group_management/listing"); ?>" style="width: 50px">Groups</a>
+<div id="view_content">      
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>
         <table class="reporttable">
-            <tr><th>Adults</th></tr>
+             <tr>
+                <th>
+                    <?php echo form_open('flock_management/searchMember');?>
+                        <input type="text" name="search" placeholder="Enter Search Field"/></th><td style="border-bottom: 0; color: #FFF">
+                        <input type="submit" value="Search" class="button"/>
+                    <?php echo form_close();?>
+                </td>
+            </tr>
+            <tr><th>Member Information</th></tr>
             <tr class="yellow">
                 <th>Member</th>
                 <th>Group</th>
@@ -17,9 +23,9 @@
                 <th>Email Address</th>                
             </tr>
                     <?php
-                    foreach($parents as $parentmember_data){?>
+                    foreach($memberinfo as $parentmember_data){?>
                         <tr>                                                                        
-                        <td><?php echo $parentmember_data -> First_Name ." ". $parentmember_data -> Last_Name ." ". $parentmember_data -> Surname ?></td>
+                        <td><?php echo $parentmember_data -> First_Name ." ". $parentmember_data -> Last_Name ." ". $parentmember_data -> Surname ?></td>     
                         <td><?php echo $parentmember_data -> Groups -> Group_Name ?></td>                                             
                         <td><?php echo $parentmember_data -> Phone ?></td>                       
                         <td id="gender"><?php echo $parentmember_data -> Gender ?></td>

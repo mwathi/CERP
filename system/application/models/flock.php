@@ -33,11 +33,14 @@ class Flock extends Doctrine_Record {
 
         $this -> hasColumn('Email', 'varchar', 40);
         $this -> hasColumn('Date_Created', 'timestamp');
+        
+        $this -> hasColumn('Nationality', 'int', 2);
     }
 
     public function setUp() {
         $this -> setTableName('flock');
         $this -> hasOne('Groups', array('local' => 'Member_Group', 'foreign' => 'id'));
+        $this -> hasOne('Countries', array('local' => 'Nationality', 'foreign' => 'id'));
     }//end setUp
 
     public function getAll() {
@@ -48,6 +51,12 @@ class Flock extends Doctrine_Record {
 
     public function getMember($id) {
         $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("id = '$id'");
+        $flockData = $query -> execute();
+        return $flockData;
+    }
+
+    public function getMemberInformation($name) {
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("First_Name LIKE '%$name%' OR Last_Name LIKE '%$name%' OR Surname LIKE '%$name%'");
         $flockData = $query -> execute();
         return $flockData;
     }
@@ -94,8 +103,8 @@ class Flock extends Doctrine_Record {
         return $flockData;
     }
 
-    public function getLatestParents() {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24") -> limit('10');
+    public function getLatestParents($orderitem) {
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24") -> orderBy($orderitem) -> limit('10');
         $flockData = $query -> execute();
         return $flockData;
     }

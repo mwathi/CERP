@@ -67,8 +67,9 @@ class Flock_Management extends Controller {
         $this -> base_params($data);
     }//end listing
 
-    public function listing() {
-        $data['parentmembers'] = Flock::getLatestParents();
+    public function listing($orderitem = '') {
+        $orderitem = 'First_Name';
+        $data['parentmembers'] = Flock::getLatestParents($orderitem);
         $data['youthmembers'] = Flock::getLatestYouth();
         $data['childrenmembers'] = Flock::getLatestChildren();
         $data['title'] = "Flock Management::All Flock";
@@ -76,8 +77,19 @@ class Flock_Management extends Controller {
         $this -> base_params($data);
     }//end listing
 
+    public function searchMember($name) {
+        if ($this -> input -> post('search')) {
+            redirect('/flock_management/searchMember/' . $this -> input -> post('search'));
+        }
+        $memberinfo = Flock::getMemberInformation($name);                                   
+        $data['content_view'] = "find_member_v";
+        $data['memberinfo'] = $memberinfo;
+        $data['title'] = "Church ERP Search Results";
+        $this -> load -> view('template', $data);
+    }
+
     public function professionListing() {
-        error_reporting(E_ALL^E_NOTICE);
+        error_reporting(E_ALL ^ E_NOTICE);
         $profession = $_POST['profession'];
         //$data['totalmembers'] = Flock::getTotalMembers();
         $data['professions'] = Flock::getProfessions($profession);
@@ -88,9 +100,9 @@ class Flock_Management extends Controller {
     }//end listing
 
     public function genderListing() {
-        error_reporting(E_ALL^E_NOTICE);
+        error_reporting(E_ALL ^ E_NOTICE);
         $gender = $_POST['member_gender'];
-        $data['members'] = Flock::getAll();  
+        $data['members'] = Flock::getAll();
         //$data['totalmembers'] = Flock::getTotalMembers();
         $data['genders'] = Flock::getGenders($gender);
         $data['allgenders'] = Flock::getAllGenders();
@@ -100,8 +112,8 @@ class Flock_Management extends Controller {
     }//end listing
 
     public function groupListing() {
-        error_reporting(E_ALL^E_NOTICE);
-        $group = $_POST['member_group'];        
+        error_reporting(E_ALL ^ E_NOTICE);
+        $group = $_POST['member_group'];
         $data['groups'] = Flock::getGroup($group);
         $data['member_groups'] = Groups::getAll();
         $data['title'] = "Flock Management::Groups";
@@ -110,7 +122,7 @@ class Flock_Management extends Controller {
     }//end listing
 
     public function statusListing() {
-        error_reporting(E_ALL^E_NOTICE);
+        error_reporting(E_ALL ^ E_NOTICE);
         $status = $_POST['member_status'];
         //$data['totalmembers'] = Flock::getTotalMembers();
         $data['statuses'] = Flock::getStatus($status);
@@ -121,13 +133,12 @@ class Flock_Management extends Controller {
     }//end listing
 
     public function allListing() {
-        $data['members'] = Flock::getAll();        
-        
+        $data['members'] = Flock::getAll();
+
         $data['allprofessions'] = Flock::getAllProfessions();
         $data['allgenders'] = Flock::getAllGenders();
         $data['allstatuses'] = Flock::getAllStatuses();
-        
-        
+
         $data['totalmembers'] = Flock::getTotalMembers();
         $data['title'] = "Flock Management::All Flock";
         $data['content_view'] = "all_flock_v";
@@ -141,6 +152,7 @@ class Flock_Management extends Controller {
         $data['maxno'] = $query -> result();
 
         $data['member_groups'] = Groups::getAll();
+        $data['countries'] = Countries::getAll();
         $data['maleparents'] = Flock::getMaleParents();
         $data['femaleparents'] = Flock::getFemaleParents();
         $data['title'] = "Flock Management::Add New Flock";
@@ -153,6 +165,7 @@ class Flock_Management extends Controller {
         $parentyesno = 0;
 
         $member_number = $this -> input -> post("member_number");
+        $nationality = $this -> input -> post("nationality");
         $member_id = $this -> input -> post("member_id");
         $first_name = $this -> input -> post("first_name");
         $last_name = $this -> input -> post("last_name");
@@ -200,10 +213,12 @@ class Flock_Management extends Controller {
         if ($valid == false) {
             $this -> listing();
         } else {
-            $member -> Member_Number = $member_number + 1;
+            $member -> Member_Number = $member_number;
             $member -> Member_Group = $member_group;
             $member -> Gender = $member_gender;
             $member -> Parent = $parentyesno;
+            
+            $member -> Nationality =  $nationality;
 
             $member -> First_Name = $first_name;
             $member -> Surname = $surname;
@@ -244,6 +259,16 @@ class Flock_Management extends Controller {
         $sql = 'delete from flock where id =' . $id . ' ';
         $query = $this -> db -> query($sql);
         redirect("flock_management/listing", "refresh");
+    }//end save
+    
+    public function order($orderitem) {
+        //$orderitem = 'First_Name';        
+        $data['parentmembers'] = Flock::getLatestParents($orderitem);
+        $data['youthmembers'] = Flock::getLatestYouth();
+        $data['childrenmembers'] = Flock::getLatestChildren();
+        $data['title'] = "Flock Management::All Flock";
+        $data['content_view'] = "flock_v";
+        $this -> base_params($data);
     }//end save
 
     public function edit_member($id) {
