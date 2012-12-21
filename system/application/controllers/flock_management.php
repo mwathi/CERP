@@ -3,6 +3,7 @@ class Flock_Management extends Controller {
     function __construct() {
         parent::__construct();
         $this -> load -> library("pagination");
+
     }//end constructor
 
     public function index() {
@@ -81,7 +82,7 @@ class Flock_Management extends Controller {
         if ($this -> input -> post('search')) {
             redirect('/flock_management/searchMember/' . $this -> input -> post('search'));
         }
-        $memberinfo = Flock::getMemberInformation($name);                                   
+        $memberinfo = Flock::getMemberInformation($name);
         $data['content_view'] = "find_member_v";
         $data['memberinfo'] = $memberinfo;
         $data['title'] = "Church ERP Search Results";
@@ -163,9 +164,19 @@ class Flock_Management extends Controller {
 
     public function save() {
         $parentyesno = 0;
-
+        $i = 0;
+        
+        
+        $other_member_groups = $this -> input -> post("other_member_groups");        
         $member_number = $this -> input -> post("member_number");
+
+        $child_firstname = $this -> input -> post("child_firstname");
+        $handler = $this -> input -> post("child_firstname");
+        $child_surname = $this -> input -> post("child_surname");
+        $child_lastname = $this -> input -> post("child_lastname");
+
         $nationality = $this -> input -> post("nationality");
+        $otherlanguage = $this -> input -> post("otherlanguage");
         $member_id = $this -> input -> post("member_id");
         $first_name = $this -> input -> post("first_name");
         $last_name = $this -> input -> post("last_name");
@@ -200,25 +211,56 @@ class Flock_Management extends Controller {
         } else {
             $parentyesno = 0;
         }
+        if ($number_of_children > 0) {
+            foreach ($child_firstname as $childrens) {
+                $member = new Flock();
+                $member -> Member_Number = $member_number;
+                $member -> Member_Group = $member_group;
+                $member -> Gender = $member_gender;
+                $member -> Parent = $parentyesno;
 
-        if (strlen($member_id) > 0) {
-            $member = Flock::getMember($member_id);
-            $member = $member[0];
+                $member -> Nationality = $nationality;
+                $member -> Other_Language = $otherlanguage;
 
+                $member -> First_Name = $first_name;
+                $member -> Surname = $surname;
+                $member -> Last_Name = $last_name;
+                $member -> House = $house;
+
+                $member -> Profession = $profession;
+                $member -> Marital_Status = $marital_status;
+                $member -> Disability_Status = $disability_status;
+                $member -> Level_of_education = $level_of_education;
+                $member -> Place_of_work = $place_of_work;
+                $member -> Darasa = $darasa;
+                $member -> School = $school;
+                $member -> National_id = $national_id;
+                $member -> Passport = $passport;
+                $member -> Country = $country;
+                $member -> Residence = $residence;
+                $member -> Physical_Address = $physical_address;
+
+                $member -> Phone = $member_phone_number;
+                $member -> Date_of_Birth = $date_of_birth;
+                $member -> Spouse = $spouse;
+                $member -> Children = $number_of_children;
+                $member -> Email = $email;
+
+                $member -> Child_First_Name = $handler[$i];
+                $member -> Child_Surname = $child_surname[$i];
+                $member -> Child_Last_Name = $child_lastname[$i];
+                $member -> save();
+                $i++;
+            }//end for
         } else {
             $member = new Flock();
-        }
-
-        $valid = $this -> _validate_submission();
-        if ($valid == false) {
-            $this -> listing();
-        } else {
             $member -> Member_Number = $member_number;
             $member -> Member_Group = $member_group;
             $member -> Gender = $member_gender;
             $member -> Parent = $parentyesno;
-            
-            $member -> Nationality =  $nationality;
+
+            $member -> Nationality = $nationality;
+            $member -> Other_Language = $otherlanguage;
 
             $member -> First_Name = $first_name;
             $member -> Surname = $surname;
@@ -241,18 +283,22 @@ class Flock_Management extends Controller {
             $member -> Phone = $member_phone_number;
             $member -> Date_of_Birth = $date_of_birth;
             $member -> Spouse = $spouse;
-            $member -> Children = $number_of_children;
+
             $member -> Email = $email;
-
             $member -> save();
-            redirect("flock_management/listing");
-        }//end else
-    }//end save
 
-    private function _validate_submission() {
-        $this -> form_validation -> set_rules('first_name', 'First Name', 'trim|required|min_length[1]');
-        return $this -> form_validation -> run();
-    }//end validate_submission
+            $j = 0;
+            foreach ($other_member_groups as $r) {
+                $member_groups = new Member_Groups();
+                $member_groups -> Groups = $r;
+                $member_groups -> Member_Number = $member_number;
+                $member_groups -> save();
+                $j++;
+            }
+        }
+
+        redirect("flock_management/listing");
+    }//end save
 
     public function delete($id) {
         $this -> load -> database();
@@ -260,9 +306,9 @@ class Flock_Management extends Controller {
         $query = $this -> db -> query($sql);
         redirect("flock_management/listing", "refresh");
     }//end save
-    
+
     public function order($orderitem) {
-        //$orderitem = 'First_Name';        
+        //$orderitem = 'First_Name';
         $data['parentmembers'] = Flock::getLatestParents($orderitem);
         $data['youthmembers'] = Flock::getLatestYouth();
         $data['childrenmembers'] = Flock::getLatestChildren();
@@ -280,6 +326,36 @@ class Flock_Management extends Controller {
         $data['content_view'] = "add_flock_v";
         $data['quick_link'] = "new_flock";
         $this -> base_params($data);
+    }
+
+    function fatherSuggestions() {
+        $term = $this -> input -> post('term', TRUE);
+        $manname = Flock::getFatherPersonName($term);
+        $json_array = array();
+        foreach ($manname as $row)
+            array_push($json_array, $row -> First_Name . " " . $row -> Last_Name);
+
+        echo json_encode($json_array);
+    }
+
+    function motherSuggestions() {
+        $term = $this -> input -> post('term', TRUE);
+        $womanname = Flock::getMotherPersonName($term);
+        $json_array = array();
+        foreach ($womanname as $row)
+            array_push($json_array, $row -> First_Name . " " . $row -> Last_Name);
+
+        echo json_encode($json_array);
+    }
+
+    function employerSuggestions() {
+        $term = $this -> input -> post('term', TRUE);
+        $companyname = Employers::getCompanyName($term);
+        $json_array = array();
+        foreach ($companyname as $row)
+            array_push($json_array, $row -> Company);
+
+        echo json_encode($json_array);
     }
 
     public function base_params($data) {

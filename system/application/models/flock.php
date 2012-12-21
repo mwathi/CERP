@@ -14,6 +14,14 @@ class Flock extends Doctrine_Record {
         $this -> hasColumn('House', 'varchar', 40);
 
         $this -> hasColumn('Profession', 'varchar', 40);
+        $this -> hasColumn('Other_Language', 'varchar', 15);
+        
+        $this -> hasColumn('Child_First_Name', 'varchar', 20);
+        $this -> hasColumn('Child_Surname', 'varchar', 20);
+        $this -> hasColumn('Child_Last_Name', 'varchar', 20);
+        
+        $this -> hasColumn('Employer', 'int', 2);
+        
         $this -> hasColumn('Marital_Status', 'varchar', 20);
         $this -> hasColumn('Disability_Status', 'varchar', 20);
         $this -> hasColumn('Level_of_education', 'varchar', 25);
@@ -33,7 +41,7 @@ class Flock extends Doctrine_Record {
 
         $this -> hasColumn('Email', 'varchar', 40);
         $this -> hasColumn('Date_Created', 'timestamp');
-        
+
         $this -> hasColumn('Nationality', 'int', 2);
     }
 
@@ -62,7 +70,7 @@ class Flock extends Doctrine_Record {
     }
 
     public function getParents() {
-        $query = Doctrine_Query::create() -> select("First_Name,Last_Name,Surname") -> from("flock") -> where("Parent = '1'");
+        $query = Doctrine_Query::create() -> select("First_Name,Last_Name,Surname") -> from("flock") -> where("Parent = '1' GROUP BY Member_Number");
         $flockData = $query -> execute();
         return $flockData;
     }
@@ -104,13 +112,13 @@ class Flock extends Doctrine_Record {
     }
 
     public function getLatestParents($orderitem) {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24") -> orderBy($orderitem) -> limit('10');
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24 GROUP BY Member_Number") -> orderBy($orderitem) -> limit('10');
         $flockData = $query -> execute();
         return $flockData;
     }
 
     public function getPagedAdults($offset, $items) {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24") -> orderBy("Date_Created") -> offset($offset) -> limit($items);
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24 GROUP BY Member_Number") -> orderBy("Date_Created") -> offset($offset) -> limit($items);
         $flockData = $query -> execute();
         return $flockData;
     }
@@ -123,25 +131,25 @@ class Flock extends Doctrine_Record {
 
     //Begin Report Data
     public function getProfessions($profession) {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Profession LIKE '%$profession%' ") -> orderBy("First_Name");
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Profession LIKE '%$profession%' GROUP BY Member_Number") -> orderBy("First_Name");
         $flockData = $query -> execute();
         return $flockData;
     }
 
     public function getGenders($gender) {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Gender = '$gender' ") -> orderBy("First_Name");
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Gender = '$gender' GROUP BY Member_Number") -> orderBy("First_Name");
         $flockData = $query -> execute();
         return $flockData;
     }
 
     public function getStatus($status) {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Marital_Status LIKE '%$status%' ") -> orderBy("First_Name");
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Marital_Status LIKE '%$status%' GROUP BY Member_Number") -> orderBy("First_Name");
         $flockData = $query -> execute();
         return $flockData;
     }
 
     public function getGroup($group) {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Member_Group LIKE '%$group%' ") -> orderBy("First_Name");
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Member_Group LIKE '%$group%' GROUP BY Member_Number") -> orderBy("First_Name");
         $flockData = $query -> execute();
         return $flockData;
     }
@@ -214,18 +222,16 @@ class Flock extends Doctrine_Record {
         return $count[0] -> Total_Children;
     }
 
-    function get_name($q) {
-        $this -> db -> select('First_Name');
-        $this -> db -> like('First_Name', $q);
-        $query = $this -> db -> get('Flock');
-        if ($query -> num_rows > 0) {
-            foreach ($query->result_array() as $row) {
-                $row_set[] = htmlentities(stripslashes($row['First_Name']));
-                //build an array
-            }
-            echo json_encode($row_set);
-            //format the array into json data
-        }
+    public function getFatherPersonName($term) {
+        $query = Doctrine_Query::create() -> select("First_Name, Surname, Last_Name") -> from("flock") -> where("First_Name LIKE '%$term%' ");
+        $flockData = $query -> execute();
+        return $flockData;
+    }
+
+    public function getMotherPersonName($term) {
+        $query = Doctrine_Query::create() -> select("First_Name, Surname, Last_Name") -> from("flock") -> where("First_Name LIKE '%$term%' ");
+        $flockData = $query -> execute();
+        return $flockData;
     }
 
 }

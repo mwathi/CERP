@@ -25,7 +25,7 @@
                     <?php
                     foreach($memberinfo as $parentmember_data){?>
                         <tr>                                                                        
-                        <td><?php echo $parentmember_data -> First_Name ." ". $parentmember_data -> Last_Name ." ". $parentmember_data -> Surname ?></td>     
+                        <td><?php echo $parentmember_data -> Surname ." ". $parentmember_data -> First_Name ." ". $parentmember_data -> Last_Name ?></td>     
                         <td><?php echo $parentmember_data -> Groups -> Group_Name ?></td>                                             
                         <td><?php echo $parentmember_data -> Phone ?></td>                       
                         <td id="gender"><?php echo $parentmember_data -> Gender ?></td>

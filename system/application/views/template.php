@@ -35,11 +35,14 @@ if (isset($styles)) {
             </div>
         </div>    
 <div id="wrapper">
+    <a class="action_button" id="employees" href="<?php echo site_url("employee_management/listing"); ?>">Employees</a>
      <a class="action_button" id="parents" href="<?php echo site_url("flock_management/allParentsListing"); ?>">Adults</a>
     <a class="action_button" id="youth" href="<?php echo site_url("flock_management/allYouthListing"); ?>">Youth</a>
     <a class="action_button" id="children" href="<?php echo site_url("flock_management/allChildrenListing"); ?>">Children</a>    
     <a class="action_button" id="reports" href="<?php echo site_url("flock_management/allListing"); ?>">Member Reports</a>
-    <!--a class="action_button" id="youth" href="<?php echo site_url("employee_management/listing"); ?>">Employees</a-->
+    <a class="action_button" id="pledges" href="<?php echo site_url("pledge_controller/causelisting"); ?>">Causes</a>
+    
+    
     
     <div id="main_wrapper"> 
         <?php $this -> load -> view($content_view); ?>

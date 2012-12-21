@@ -4,11 +4,13 @@ if (isset($cause)) {
     $cause_name = $cause -> Name;
     $description = $cause -> Description;
     $deadline = $cause -> Deadline;
+    $target = $cause -> Target;
 } else {
     $cause_id = "";
     $cause_name = "";
     $description = "";
     $deadline = "";
+    $target = "";
 }
 $attributes = array('enctype' => 'multipart/form-data');
 echo form_open('pledge_controller/savecause', $attributes);
@@ -18,7 +20,8 @@ echo validation_errors('
 ?>
 <script>
     $(function() {
-        $("#deadline").datepicker({            
+        $("#deadline").datepicker({                 
+            minDate: "1D"       
         });
     });
 </script>
@@ -46,6 +49,15 @@ echo validation_errors('
             <td class="othertext"><?php
 
             $data_search = array('id' => 'deadline', 'name' => 'deadline', 'value' => $deadline, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+        <tr>
+            <td>Targeted Amount</td>
+            <td class="othertext"><?php
+
+            $data_search = array('id' => 'target', 'name' => 'target', 'value' => $target, 'class' => 'othertext');
             echo form_input($data_search);
             ?></td>
         </tr>

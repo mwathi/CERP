@@ -1,6 +1,5 @@
 <div id="view_content">
-    <a class="action_button" id="pledges" href="<?php echo site_url("pledge_controller/makepledge"); ?>" style="width: 100px">Make a Pledge</a>
-    <a class="action_button" id="new_pledge" href="<?php echo site_url("pledge_controller/add"); ?>" style="width: 100px">New Cause</a>
+    <a class="action_button" id="new_pledge" href="<?php echo site_url("pledge_controller/add"); ?>">New Cause</a>
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>
         <table class="reporttable">
@@ -23,7 +22,7 @@
                 <th>Deadline</th>                        
             </tr>
                     <?php
-                    foreach($causedata as $cause_data){?>
+                    foreach($pledgeinfo as $cause_data){?>
                         <tr>                                                                        
                         <td><?php echo $cause_data -> Name ?></td>                                                                      
                         <td><?php echo $cause_data -> Description ?></td>                       
