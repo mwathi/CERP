@@ -16,7 +16,9 @@ class Employee_Management extends Controller {
     }//end listing
 
     public function add() {
+        $data['qualifications'] = Qualifications::getAll();
         $data['posts'] = Posts::getAll();
+        $data['banks'] = Banks::getAll();
         $data['title'] = "Employee Management::Add New Employee";
         $data['quick_link'] = "new_employee";
         $data['content_view'] = "add_employee_v";
@@ -24,13 +26,31 @@ class Employee_Management extends Controller {
     }
 
     public function save() {
-        $employee_name = $this -> input -> post("employee_name");
-        $phone_number = $this -> input -> post("phone_number");
+        $employment_status = $this -> input -> post("employment_status");
         $gender = $this -> input -> post("gender");
-        $employee_id = $this -> input -> post("employee_id");
-        $date_of_birth = $this -> input -> post("date_of_birth");
-        $address = $this -> input -> post("address");
+        $marital_status = $this -> input -> post("marital_status");
+        $employee_name = $this -> input -> post("employee_name");
         $employee_post = $this -> input -> post("posts");
+        $date_of_birth = $this -> input -> post("date_of_birth");
+        $nssf_number = $this -> input -> post("nssf_number");
+        $kra_pin = $this -> input -> post("kra_pin");
+        $mailing_address = $this -> input -> post("mailing_address");
+        $address = $this -> input -> post("address");
+        $phone_number = $this -> input -> post("phone_number");
+        $schools_attended = $this -> input -> post("schools_attended");
+        $religion = $this -> input -> post("religion");
+        $general_qualifications = $this -> input -> post("general_qualifications");
+        $technical_qualifications = $this -> input -> post("technical_qualifications");
+        $number_of_children = $this -> input -> post("number_of_children");
+
+        $spouse = $this -> input -> post("spouse");
+        $bank_name = $this -> input -> post("bank_name");
+        $account_number = $this -> input -> post("account_number");
+
+        $contact_telephone = $this -> input -> post("contact_telephone");
+        $contact_person = $this -> input -> post("contact_person");
+
+        $employee_id = $this -> input -> post("employee_id");
 
         if (strlen($employee_id) > 0) {
             $employee = Employee::getEmployee($employee_id);
@@ -44,6 +64,23 @@ class Employee_Management extends Controller {
         if ($valid == false) {
             $this -> listing();
         } else {
+
+            $employee -> Employment_Status = $employment_status;
+            $employee -> Marital_Status = $marital_status;
+            $employee -> NSSF_Number = $nssf_number;
+            $employee -> KRA_PIN = $kra_pin;
+            $employee -> Mailing_Address = $mailing_address;
+            $employee -> Religion = $religion;
+            $employee -> General_Qualifications = $general_qualifications;
+            $employee -> Technical_Qualifications = $technical_qualifications;
+            $employee -> Number_of_Children = $number_of_children;
+            $employee -> Spouse = $spouse;
+            $employee -> Bank_Name = $bank_name;
+            $employee -> Account_Number = $account_number;
+            $employee -> Schools_Attended = $schools_attended;
+            $employee -> Contact_Telephone = $contact_telephone;
+            $employee -> Contact_Person = $contact_person;
+
             $employee -> Post = $employee_post;
             $employee -> Name = $employee_name;
             $employee -> Phone = $phone_number;
@@ -105,25 +142,46 @@ class Employee_Management extends Controller {
         $employee_benefits = $this -> input -> post("benefit");
         $employee_id = $this -> input -> post("employee_id");
         $i = 0;
+        $this -> load -> database();
 
-        $valid = $this -> _submit_validate();
-        if ($valid == false) {
-            $this -> listing();
-        } else {
-            foreach ($employee_benefits as $r) {
-                $benefits = new Employee_Benefits();
-                $benefits -> Benefit = $r;
-                $benefits -> Employee = $employee_id;
-                $benefits -> save();
-                $i++;
-            }
+        foreach ($employee_benefits as $r) {
+            $sql = 'UPDATE employee_benefits SET benefit="'.$r.'", employee = "'.$employee_id.'" WHERE employee = "'.$employee_id.'" ';
+            $query = $this -> db -> query($sql);
+            $i++;
         }
+
         redirect("employee_management/listing");
+    }//end save
+
+    public function qualification_listing() {
+        $data['qualifications'] = Qualifications::getAll();
+        $data['title'] = "Employee Management::All Qualifications";
+        $data['content_view'] = "qualifications_v";
+        $this -> base_params($data);
+    }
+
+    public function savequalifications() {
+        $qualification_name = $this -> input -> post("qualification_name");
+        $description = $this -> input -> post("description");
+
+        $qualification = new Qualifications();
+        $qualification -> Name = $qualification_name;
+        $qualification -> Description = $description;
+        $qualification -> save();
+
+        redirect("employee_management/qualification_listing");
+    }//end save
+
+    public function add_qualifications() {
+        $data['title'] = "Employee Management::Add New Qualification";
+        $data['quick_link'] = "new_qualification";
+        $data['content_view'] = "add_qualifications_v";
+        $this -> base_params($data);
     }//end save
 
     private function _submit_validate() {
         // validation rules
-        $this -> form_validation -> set_rules('benefit[]', 'Username', 'required|min_length[5]|max_length[20]|is_unique[users.username]');        
+        $this -> form_validation -> set_rules('benefit[]', 'Username', 'required|min_length[5]|max_length[20]|is_unique[users.username]');
         return $this -> form_validation -> run();
     }
 

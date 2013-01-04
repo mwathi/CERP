@@ -8,8 +8,8 @@ class Benefits extends Doctrine_Record {
     }
 
     public function setUp() {
-        $this -> setTableName('benefits');
-        $this -> hasOne('Employee_Benefits', array('local' => 'id', 'foreign' => 'Benefits'));
+        $this -> setTableName('benefits');        
+        $this -> hasMany('Job_Groups', array('local' => 'id', 'foreign' => 'Benefit'));
     }//end setUp
 
     public function getAll() {

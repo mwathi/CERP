@@ -33,11 +33,11 @@ echo validation_errors('
         <tr height="10px"></tr>
         <tr>
              <td style="font-weight: bold">Benefit</td>
-             <td>  <?php
+             <td><select multiple="multiple" name="benefit[]" style="height: 120px">  <?php
             foreach ($benefits as $benefit) {
-                echo "<tr><td><input type=checkbox name='benefit[]' value='$benefit->id'> $benefit->Name</td><tr/>";
+                echo "<option value='$benefit->id'>$benefit->Name</option>";
             }
-              ?></td>
+              ?></select></td>
            
         </tr>
         <tr>

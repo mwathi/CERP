@@ -6,7 +6,7 @@ class Pledge_Controller extends Controller {
     }//end constructor
 
     public function index() {
-        $this -> listing();
+        $this -> makepledge();
     }//end index
 
     public function searchPledge($name) {
@@ -49,94 +49,25 @@ class Pledge_Controller extends Controller {
 
     public function save() {
         //$cause_id = $this -> input -> post("cause_id");
-        $smallpledgecause = $this -> input -> post("smallpledgecause");
-        $mediumpledgecause = $this -> input -> post("mediumpledgecause");
-        $greatpledgecause = $this -> input -> post("greatpledgecause");
-        $majorpledgecause = $this -> input -> post("majorpledgecause");
+        $pledgecause = $this -> input -> post("pledgecause");
+        $pledgemade = $this -> input -> post("pledge");
+        $pledgeplan = $this -> input -> post("pledgeplan");
+        $pledgename = $this -> input -> post("pledgename");
+        $pledgetelephone = $this -> input -> post("pledgetelephone");
+        $pledgeaddress = $this -> input -> post("pledgeaddress");
+        $pledgeemail = $this -> input -> post("pledgeemail");
 
-        $smallpledge = $this -> input -> post("smallpledge");
-        $mediumpledge = $this -> input -> post("mediumpledge");
-        $greatpledge = $this -> input -> post("greatpledge");
-        $majorpledge = $this -> input -> post("majorpledge");
+        $pledge = new Pledges();
 
-        $smallpledgeplan = $this -> input -> post("smallpledgeplan");
-        $mediumpledgeplan = $this -> input -> post("mediumpledgeplan");
-        $greatpledgeplan = $this -> input -> post("greatpledgeplan");
-        $majorpledgeplan = $this -> input -> post("majorpledgeplan");
-
-        //memberdata
-        $smallpledgename = $this -> input -> post("smallpledgename");
-        $smallpledgetelephone = $this -> input -> post("smallpledgetelephone");
-        $smallpledgeaddress = $this -> input -> post("smallpledgeaddress");
-        $smallpledgeemail = $this -> input -> post("smallpledgeemail");
-
-        $mediumpledgename = $this -> input -> post("mediumpledgename");
-        $mediumpledgetelephone = $this -> input -> post("mediumpledgetelephone");
-        $mediumpledgeaddress = $this -> input -> post("mediumpledgeaddress");
-        $mediumpledgeemail = $this -> input -> post("mediumpledgeemail");
-
-        $greatpledgename = $this -> input -> post("greatpledgename");
-        $greatpledgetelephone = $this -> input -> post("greatpledgetelephone");
-        $greatpledgeaddress = $this -> input -> post("greatpledgeaddress");
-        $greatpledgeemail = $this -> input -> post("greatpledgeemail");
-
-        $majorpledgename = $this -> input -> post("majorpledgename");
-        $majorpledgetelephone = $this -> input -> post("majorpledgetelephone");
-        $majorpledgeaddress = $this -> input -> post("majorpledgeaddress");
-        $majorpledgeemail = $this -> input -> post("majorpledgeemail");
-
-        if ($smallpledgecause != "" && $smallpledge != "" && $smallpledgeplan != "" && $smallpledgename != "" && $smallpledgetelephone != "" && $smallpledgeaddress != "" && $smallpledgeemail != "") {
-            $pledge = new Pledges();
-
-            $pledge -> Cause = $smallpledgecause;
-            $pledge -> Small_Pledge = $smallpledge;
-            $pledge -> Pledge_Plan = $smallpledgeplan;
-            $pledge -> Name = $smallpledgename;
-            $pledge -> Telephone = $smallpledgetelephone;
-            $pledge -> Address = $smallpledgeaddress;
-            $pledge -> Email = $smallpledgeemail;
-            $pledge -> save();
-            redirect("pledge_controller/causelisting");
-        }
-
-        if ($mediumpledgecause != "" && $mediumpledge != "" && $mediumpledgeplan != "" && $mediumpledgename != "" && $mediumpledgetelephone != "" && $mediumpledgeaddress != "" && $mediumpledgeemail != "") {
-            $pledge = new Pledges();
-            $pledge -> Cause = $mediumpledgecause;
-            $pledge -> Medium_Pledge = $mediumpledge;
-            $pledge -> Pledge_Plan = $mediumpledgeplan;
-            $pledge -> Name = $mediumpledgename;
-            $pledge -> Telephone = $mediumpledgetelephone;
-            $pledge -> Address = $mediumpledgeaddress;
-            $pledge -> Email = $mediumpledgeemail;
-            $pledge -> save();
-            redirect("pledge_controller/causelisting");
-        }
-
-        if ($greatpledgecause != "" && $greatpledge != "" && $greatpledgeplan != "" && $greatpledgename != "" && $greatpledgetelephone != "" && $greatpledgeaddress != "" && $greatpledgeemail) {
-            $pledge = new Pledges();
-            $pledge -> Cause = $greatpledgecause;
-            $pledge -> Great_Pledge = $greatpledge;
-            $pledge -> Pledge_Plan = $greatpledgeplan;
-            $pledge -> Name = $greatpledgename;
-            $pledge -> Telephone = $greatpledgetelephone;
-            $pledge -> Address = $greatpledgeaddress;
-            $pledge -> Email = $greatpledgeemail;
-            $pledge -> save();
-            redirect("pledge_controller/causelisting");
-        }
-
-        if ($majorpledgecause != "" && $majorpledge != "" && $majorpledgeplan != "" && $majorpledgename != "" && $majorpledgetelephone != "" && $majorpledgeaddress != "" && $majorpledgeemail) {
-            $pledge = new Pledges();
-            $pledge -> Cause = $majorpledgecause;
-            $pledge -> Major_Pledge = $majorpledge;
-            $pledge -> Pledge_Plan = $majorpledgeplan;
-            $pledge -> Name = $majorpledgename;
-            $pledge -> Telephone = $majorpledgetelephone;
-            $pledge -> Address = $majorpledgeaddress;
-            $pledge -> Email = $majorpledgeemail;
-            $pledge -> save();
-            redirect("pledge_controller/causelisting");
-        }
+        $pledge -> Cause = $pledgecause;
+        $pledge -> Pledge = $pledgemade;
+        $pledge -> Pledge_Plan = $pledgeplan;
+        $pledge -> Name = $pledgename;
+        $pledge -> Telephone = $pledgetelephone;
+        $pledge -> Address = $pledgeaddress;
+        $pledge -> Email = $pledgeemail;
+        $pledge -> save();
+        redirect("pledge_controller/causelisting");
 
     }//end save
 

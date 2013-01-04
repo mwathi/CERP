@@ -32,7 +32,7 @@ class Group_Management extends Controller {
             $group = $group[0];
 
         } else {
-            $group = new Group();
+            $group = new Groups();
         }
 
         $valid = $this -> _validate_submission();

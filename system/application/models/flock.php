@@ -6,7 +6,7 @@ class Flock extends Doctrine_Record {
         $this -> hasColumn('First_Name', 'varchar', 20);
         $this -> hasColumn('Surname', 'varchar', 20);
         $this -> hasColumn('Last_Name', 'varchar', 20);
-        $this -> hasColumn('Member_Group', 'varchar', 40);
+        $this -> hasColumn('Member_Group', 'int', 10);
         $this -> hasColumn('Phone', 'varchar', 20);
         $this -> hasColumn('Gender', 'varchar', 6);
         $this -> hasColumn('Date_of_Birth', 'date', 15);
@@ -15,13 +15,13 @@ class Flock extends Doctrine_Record {
 
         $this -> hasColumn('Profession', 'varchar', 40);
         $this -> hasColumn('Other_Language', 'varchar', 15);
-        
+
         $this -> hasColumn('Child_First_Name', 'varchar', 20);
         $this -> hasColumn('Child_Surname', 'varchar', 20);
         $this -> hasColumn('Child_Last_Name', 'varchar', 20);
-        
+
         $this -> hasColumn('Employer', 'int', 2);
-        
+
         $this -> hasColumn('Marital_Status', 'varchar', 20);
         $this -> hasColumn('Disability_Status', 'varchar', 20);
         $this -> hasColumn('Level_of_education', 'varchar', 25);
@@ -77,6 +77,12 @@ class Flock extends Doctrine_Record {
 
     public function getFemaleParents() {
         $query = Doctrine_Query::create() -> select("First_Name,Last_Name,Surname") -> from("flock") -> where("Parent = '1' OR (YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24 AND Gender = 'Female'");
+        $flockData = $query -> execute();
+        return $flockData;
+    }
+
+    public function getBirthdaysToday() {
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) = 0");
         $flockData = $query -> execute();
         return $flockData;
     }

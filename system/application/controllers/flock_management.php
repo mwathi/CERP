@@ -165,9 +165,8 @@ class Flock_Management extends Controller {
     public function save() {
         $parentyesno = 0;
         $i = 0;
-        
-        
-        $other_member_groups = $this -> input -> post("other_member_groups");        
+
+        $other_member_groups = $this -> input -> post("other_member_groups");
         $member_number = $this -> input -> post("member_number");
 
         $child_firstname = $this -> input -> post("child_firstname");
@@ -324,6 +323,14 @@ class Flock_Management extends Controller {
         $data['member'] = $member[0];
         $data['title'] = "Flock Management";
         $data['content_view'] = "add_flock_v";
+        $data['quick_link'] = "new_flock";
+        $this -> base_params($data);
+    }
+
+    public function birthdays() {
+        $data['members'] = Flock::getBirthdaysToday();      
+        $data['title'] = "Flock Management";
+        $data['content_view'] = "birthdays_v";
         $data['quick_link'] = "new_flock";
         $this -> base_params($data);
     }

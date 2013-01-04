@@ -25,8 +25,8 @@
                         <td><?php echo $youthmember_data -> Physical_Address ?></td>
                         <td><?php echo $youthmember_data -> Email ?></td>
                    
-                        <td><a href="<?php echo base_url()."flock_management/delete/".$youthmember_data -> id ?>" onclick="return confirm('Are you sure you want to delete this member?')" >Delete</a></td>
-                        <td><a href="<?php echo base_url()."flock_management/edit_member/".$youthmember_data ->id ?>">Edit</a></td>
+                        <!--<td><a href="<?php echo base_url()."flock_management/delete/".$youthmember_data -> id ?>" onclick="return confirm('Are you sure you want to delete this member?')" >Delete</a></td>
+                        <td><a href="<?php echo base_url()."flock_management/edit_member/".$youthmember_data ->id ?>">Edit</a></td>-->
                         
                       
                         </tr>

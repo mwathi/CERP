@@ -21,6 +21,7 @@
                <th>Previous Employer</th>
                <th>Schools Attended</th>
                <th>Contact Person</th>
+               <th>Contact Telephone</th>
                <th>Qualifications</th>               
            </tr>
            <tr>
@@ -29,7 +30,8 @@
                <td><?php echo $employee -> Previous_Employer; ?></td>
                <td><?php echo $employee -> Schools_Attended; ?></td>
                <td><?php echo $employee -> Contact_Person; ?></td>
-               <td><?php echo $employee -> Qualifications; ?></td>
+               <td><?php echo $employee -> Contact_Telephone; ?></td>
+               <td><?php echo $employee -> General_Qualifications; ?></td>
            </tr>
            <tr style="height: 30px"></tr>
            <!--Work Details-->

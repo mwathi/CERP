@@ -9,7 +9,8 @@ class Groups extends Doctrine_Record {
 
     public function setUp() {
         $this -> setTableName('groups');
-        $this -> hasMany('Members', array('local' => 'id', 'foreign' => 'Member_Group'));
+        $this -> hasMany('Flock', array('local' => 'id', 'foreign' => 'Member_Group'));
+        $this -> hasMany('Job_Groups', array('local' => 'id', 'foreign' => 'Benefit'));
     }//end setUp
 
     public function getAll() {

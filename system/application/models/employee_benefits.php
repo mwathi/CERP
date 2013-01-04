@@ -19,7 +19,7 @@ class Employee_Benefits extends Doctrine_Record {
     }//end getall
 
     public function getEmployeeBenefit($id) {
-        $query = Doctrine_Query::create() -> select("Benefit") -> from("employee_benefits") -> where("Employee = '$id'");
+        $query = Doctrine_Query::create() -> select("*") -> from("employee_benefits") -> where("Employee = '$id'");
         $benefitData = $query -> execute();
         return $benefitData;
     }

@@ -7,10 +7,7 @@ class Pledges extends Doctrine_Record {
         $this -> hasColumn('Address', 'varchar', 25);
         $this -> hasColumn('Email', 'varchar', 25);
         $this -> hasColumn('Cause', 'int', 2);
-        $this -> hasColumn('Small_Pledge', 'varchar', 25);
-        $this -> hasColumn('Medium_Pledge', 'varchar', 25);
-        $this -> hasColumn('Great_Pledge', 'varchar', 25);
-        $this -> hasColumn('Major_Pledge', 'varchar', 25);
+        $this -> hasColumn('Pledge', 'varchar', 25);
         $this -> hasColumn('Pledge_Plan', 'varchar', 25);
     }
 
@@ -31,13 +28,13 @@ class Pledges extends Doctrine_Record {
     }
 
     public function getContribootions($id) {
-        $query = Doctrine_Query::create() -> select("*") -> from("pledges") -> where("Cause = '$id'");
+        $query = Doctrine_Query::create() -> select("Name,Pledge AS Ple") -> from("pledges") -> where("Cause = '$id'");
         $pledgeData = $query -> execute();
         return $pledgeData;
     }
     
     public function getTotalContribootions($id) {
-        $query = Doctrine_Query::create() -> select("SUM(Small_Pledge + Medium_Pledge + Great_Pledge + Major_Pledge) AS Total") -> from("pledges") -> where("Cause = '$id'");
+        $query = Doctrine_Query::create() -> select("SUM(Pledge) AS Total") -> from("pledges") -> where("Cause = '$id'");
         $pledgeData = $query -> execute();
         return $pledgeData;
     }

@@ -2,13 +2,18 @@
 .holder input, select{
     font-family: calibri;
     font-size: 16px;
-}    
+} 
+
+.segoe {
+        font: .75em "Segoe UI", Segoe, Arial, Sans-Serif;
+    }   
 </style>
 <script>
     $(function() {
         $("#date_of_birth").datepicker({
             changeMonth : true,
             changeYear : true,
+            yearRange: "-100",
             maxDate: "0D"
         });
     });
@@ -104,10 +109,10 @@ echo validation_errors('
 
 
 <input type="hidden" name="member_id" value = "<?php echo $member_id; ?>"/>
-<div class="holder" style="width: 70%; margin-left: 13%" align="center">
-    <table class="othertext">        
+<div class="holder" style="width: 1100px; margin-left: 10%" align="center">
+    <table class="segoe">        
         <tr>
-            <th class="" colspan="2">Congregation Member Details</th>
+            <th class="" colspan="2">CONREGATION MEMBER DETAILS</th>
         </tr>
         <tr>
             <th>Member Number</th>
@@ -116,10 +121,22 @@ echo validation_errors('
             </td>
         </tr>        
         <tr>
-            <th colspan="2">Personal Information</th>
+            <th colspan="2">PERSONAL INFORMATION</th>
         </tr>
         <tr style="height: 10px"></tr>
         <tr>
+            
+            <!--SURNAME-->
+            <td>Surname<sup>*</sup></td>
+            <td>
+                <?php
+            $data_search = array('name' => 'surname', 'value' => $surname, 'required' => 'required');
+            echo form_input($data_search);
+            ?>
+           
+            </td>
+            
+            
             <td>First Name<sup>*</sup> </td>
             <td>
             <?php
@@ -128,21 +145,15 @@ echo validation_errors('
             ?>
             </td>
             
-            <td>Surname<sup>*</sup></td>
-            <td>
-            <?php
-            $data_search = array('name' => 'surname', 'value' => $surname, 'required' => 'required');
-            echo form_input($data_search);
-            ?>
-            </td>
-            
             <td>Middle Name</td>
             <td>
-            <?php
+             <?php
             $data_search = array('name' => 'last_name', 'value' => $last_name);
             echo form_input($data_search);
             ?>
             </td>
+            
+
         </tr>
         
         <tr>
@@ -198,9 +209,64 @@ echo validation_errors('
             </select>
             </td>          
         </tr>
+        
+                <tr id="statusrow">
+            <td>Marital Status</td>
+            <td>
+                <select name="marital_status" id="marital_status">
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                    <option value="Widow">Widow</option>
+                    <option value="Widower">Widower</option>
+                    <option value="N/A">N/A</option>
+                </select>
+            </td>
+        </tr>
+        
+                <tr>
+            <td>Physical Address</td>
+            <td><?php
+
+            $data_search = array('name' => 'physical_address', 'value' => $physical_address);
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+                
+        <tr>
+            <td>Residence/Area/Estate</td>
+            <td><?php
+
+            $data_search = array('name' => 'residence', 'value' => $residence);
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+                
+        <tr>
+            <td>House Number</td>
+            <td><?php
+
+            $data_search = array('name' => 'house', 'value' => $house);
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+                
+        
+        <!------->
+        
+        <tr>
+            <td>Email</td>
+            <td><?php
+
+            $data_search = array('name' => 'email', 'value' => $email);
+            echo form_input($data_search);
+            ?></td>
+        </tr>
         <tr style="height: 10px"></tr>
         <tr>
-            <th colspan="2">Other Information</th>
+            <th colspan="2">OTHER INFORMATION</th>
         </tr>
         <tr style="height: 10px"></tr>
 
@@ -244,12 +310,7 @@ echo validation_errors('
 
 
         <tr id="spouserow">
-            <td>Spouse</td>
-            <td><?php
-
-            $data_search = array('name' => 'spouse', 'id' => 'spouse','value' => $spouse);
-            echo form_input($data_search);
-            ?></td>
+            
         </tr>
 
         <tr id="childrenrow">
@@ -276,8 +337,6 @@ echo validation_errors('
         <!--end teatsuckers-->
         
         
-<tr style="height: 10px"></tr>
-        
         <tr id="professionrow">
             <td>Profession<sup>*</sup></td>
             <td><?php
@@ -287,26 +346,14 @@ echo validation_errors('
             ?></td>
         </tr>
         <tr id="x"></tr>
-        <tr id="statusrow">
-            <td>Marital Status</td>
-            <td>
-                <select name="marital_status">
-                    <option value="Single">Single</option>
-                    <option value="Married">Married</option>
-                    <option value="Divorced">Divorced</option>
-                    <option value="Widow">Widow</option>
-                    <option value="Widower">Widower</option>
-                    <option value="N/A">N/A</option>
-                </select>
-            </td>
-        </tr>
+
         
         <tr>
             <td>Highest Level of Education</td>
             <td>
                 <select name="level_of_education">
-                    <option value="secondary">High School Diploma</option>
-                    <option value="college">College Diploma</option>
+                    <option value="secondary">High School</option>
+                    <option value="college">College</option>
                     <option value="degree">Undergraduate Degree</option>
                     <option value="masters">Masters Degree</option>
                     <option value="doctor">Doctorate</option>
@@ -328,8 +375,9 @@ echo validation_errors('
             <td>Primary Language</td>
             <td>
                 <select name="country">
-                    <option value="english">English</option>
-                    <option value="swahili">Swahili</option>
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="French">French</option>
                 </select>
             </td>
         </tr>           
@@ -343,55 +391,7 @@ echo validation_errors('
             </td>
         </tr>       
         
-        <tr>
-            <td>Physical Address</td>
-            <td><?php
 
-            $data_search = array('name' => 'physical_address', 'value' => $physical_address);
-            echo form_input($data_search);
-            ?></td>
-        </tr>
-        
-                
-        <tr>
-            <td>Residence/Area/Estate</td>
-            <td><?php
-
-            $data_search = array('name' => 'residence', 'value' => $residence);
-            echo form_input($data_search);
-            ?></td>
-        </tr>
-        
-                
-        <tr>
-            <td>House Number</td>
-            <td><?php
-
-            $data_search = array('name' => 'house', 'value' => $house);
-            echo form_input($data_search);
-            ?></td>
-        </tr>
-        
-        <tr>
-            <td>
-                Man
-            </td>
-            <td>
-                <input type="text" id="father" />
-            </td>
-        </tr>
-        
-        
-        <!------->
-        
-        <tr>
-            <td>Email</td>
-            <td><?php
-
-            $data_search = array('name' => 'email', 'value' => $email);
-            echo form_input($data_search);
-            ?></td>
-        </tr>
         <tr style="height: 10px"></tr>
         <tr>
             <td style="font-size: 11px">Mandatory fields denoted by <sup>*</sup></td>
@@ -551,7 +551,7 @@ echo validation_errors('
 
  <script>
             $("#yeslanguage").click(function(){
-               $(document.getElementById("otherlanguagerow")).replaceWith('<tr><td>Other Language</td><td><select name="otherlanguage"><option value="french">French</option><option value="german">German</option><option value="italian">Italian</option><option value="arabic">Arabic</option><option value="other">Other</option></select></td></tr>');
+               $(document.getElementById("otherlanguagerow")).replaceWith('<tr><td>Other Language</td><td><select name="otherlanguage"><option value="Swahili">Swahili</option><option value="Baganda">Baganda</option><option value="Afrikaans">Afrikaans</option><option value="german">German</option><option value="italian">Italian</option><option value="arabic">Arabic</option><option value="other">Other</option></select></td></tr>');
                $(document.getElementById("otherlanguagerownested")).replaceWith(''); 
             });
             $("#nolanguage").click(function(){
@@ -559,3 +559,13 @@ echo validation_errors('
                $(document.getElementById("otherlanguagerownested")).replaceWith(''); 
             });
         </script>
+        
+<script>
+    $("#marital_status").change(function () {
+        if(document.getElementById("marital_status").value == "Married" || document.getElementById("marital_status").value == "N/A"){
+        $(document.getElementById("spouserow")).replaceWith('<tr id="spouserow"><td>Spouse</td><td><?php $data_search = array("name" => "spouse", "id" => "spouse","value" => $spouse); echo form_input($data_search);?></td></tr>');
+        }else if (document.getElementById("marital_status").value == "Single" || document.getElementById("marital_status").value == "Divorced" || document.getElementById("marital_status").value == "Widow" || document.getElementById("marital_status").value == "Widower"){
+            $(document.getElementById("spouserow")).replaceWith('<tr id="spouserow"></tr>');
+        }     
+    });
+</script>

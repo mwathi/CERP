@@ -1,5 +1,23 @@
 <?php
-if (isset($employee)) {
+if (isset($employee)) {    
+    $employment_status = $employee -> Employment_Status;
+    $marital_status = $employee -> Marital_Status;
+    $nssf_number = $employee -> NSSF_Number;
+    $kra_pin = $employee -> KRA_PIN;
+    $mailing_address = $employee -> Mailing_Address;
+    $religion = $employee -> Religion;
+    $general_qualifications = $employee -> General_Qualifications;
+    $technical_qualifications = $employee -> Technical_Qualifications;
+    $number_of_children = $employee -> Number_of_Children;
+    $spouse = $employee -> Spouse;
+    $bank_name = $employee -> Bank_Name;
+    $account_number = $employee -> Account_Number;
+    
+    $contact_telephone = $employee -> Contact_Telephone;
+    $contact_person = $employee -> Contact_Person;
+    
+    $schools_attended = $employee -> Schools_Attended;            
+
     $employee_id = $employee -> id;
     $employee_name = $employee -> Name;
     $date_of_birth = $employee -> Date_of_Birth;
@@ -11,6 +29,22 @@ if (isset($employee)) {
     $address = "";
     $phone_number = "";
     $date_of_birth = "";
+    
+    $contact_telephone = "";
+    $contact_person = "";
+    $schools_attended = "";
+    $employment_status = "";
+    $marital_status = "";
+    $nssf_number = "";
+    $kra_pin = "";
+    $mailing_address = "";
+    $religion = "";
+    $general_qualifications = "";
+    $technical_qualifications = "";
+    $number_of_children = "";
+    $spouse = "";
+    $bank_name = "";
+    $account_number = "";
 }
 $attributes = array('enctype' => 'multipart/form-data');
 echo form_open('employee_management/save', $attributes);
@@ -22,7 +56,9 @@ echo validation_errors('
 	$(function() {
 		$("#date_of_birth").datepicker({
 			changeMonth : true,
-			changeYear : true
+			changeYear : true,
+			yearRange: "-100",
+			maxDate: "-6570D"
 		});
 	});
 </script>
@@ -35,9 +71,10 @@ echo validation_errors('
         <th class="" colspan="2">Employee Details</th>
         </tr>
         <tr>
-            <td>Status </td>
-            <td><select name="gender" id="gender" class="othertext">
+            <td>Work Status </td>
+            <td><select name="employment_status" id="employment_status" class="othertext">
                 <option value="" selected>Select Status</option>
+                <option value="Permanent">Contract</option>
                 <option value="Permanent">Permanent</option>
                 <option value="Daily Wages">Daily Wages</option>
                 <option value="Other">Other</option>
@@ -56,14 +93,12 @@ echo validation_errors('
         <tr>
             <td>Married/Unmarried</td>
             <td>
-                <select>
+                <select name="marital_status">
                     <option>Married</option>
                     <option>Unmarried</option>
                 </select>
             </td>
         </tr>
-
-
         
         <tr>
             <td>Employee Name</td>
@@ -98,17 +133,49 @@ echo validation_errors('
         
         <tr>
             <td>NSSF Number</td>
-            <td><input type="text" /></td>
+            <td><?php
+
+            $data_search = array('name' => 'nssf_number', 'value' => $nssf_number, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
         </tr>
         
         <tr>
-            <td>Kenya Revenue Authority PIN Number</td>
-            <td><input type="text" /></td>
+            <td>KRA PIN Number</td>
+            <td><?php
+
+            $data_search = array('name' => 'kra_pin', 'value' => $kra_pin, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+        <tr>
+            <td>NHIF Number</td>
+            <td><?php
+
+            $data_search = array('name' => 'nhif_number', 'value' => $nhif_number, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+        <tr>
+            <td>Pension Fund Number</td>
+            <td><?php
+
+            $data_search = array('name' => 'pension_fund_number', 'value' => $pension_fund_number, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
         </tr>
         
         <tr>
             <td>Mailing Address</td>
-            <td><input type="text" /></td>
+            <td>
+                <?php
+
+            $data_search = array('name' => 'mailing_address', 'value' => $mailing_address, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?>
+            </td>
         </tr>
         
         
@@ -135,17 +202,43 @@ echo validation_errors('
         
         <tr>
             <td>Religion</td>
-            <td><input type="text" /></td>
+            <td><?php
+
+            $data_search = array('name' => 'religion', 'value' => $religion, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
         </tr>
         
         <tr>
-            <td>Qualification(General)</td>
-            <td><input type="text" /></td>
+            <td>Academic Qualifications</td>
+            <td><?php
+
+            $data_search = array('name' => 'academic_qualifications', 'value' => $academic_qualifications, 'class' => 'othertext');
+            echo form_textarea($data_search);
+            ?></td>
         </tr>
      
        <tr>
-            <td>Qualification(Technical)</td>
-            <td><input type="text" /></td>
+            <td>Professional Qualifications</td>
+            <td><select name="professional_qualifications[]" id="professional_qualifications" multiple="multiple">
+                <option value="">Select Qualification</option>
+                <?php
+                foreach ($qualifications as $qualification) {
+                    echo "<option value='$qualification->id'>$qualification->Name</option>";
+                }
+                ?>
+            </select></td>
+        </tr>
+        
+        <tr>
+            <td>Schools Attended</td>
+            <td>
+              <?php
+
+            $data_search = array('name' => 'schools_attended', 'value' => $schools_attended, 'class' => 'othertext');
+            echo form_textarea($data_search);
+            ?>  
+            </td>
         </tr>
      
        <tr>
@@ -163,37 +256,69 @@ echo validation_errors('
      
        <tr>
             <td>Number of Children</td>
-            <td><input type="text" /></td>
+            <td><input type="text" name="number_of_children"/></td>
         </tr>
         
           <tr>
             <td>Name of Spouse</td>
-            <td><input type="text" /></td>
+            <td><?php
+
+            $data_search = array('name' => 'spouse', 'value' => $spouse, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
         </tr>
         
+        <tr>
+            <td>Contact Person</td>
+            <td><?php
+
+            $data_search = array('name' => 'contact_person', 'value' => $contact_person, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+        <tr>
+            <td>Contact Telephone</td>
+            <td><?php
+
+            $data_search = array('name' => 'contact_telephone', 'value' => $contact_telephone, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+        
           <tr>
-            <td>Bank's Name &amp; Branch</td>
-            <td><input type="text" /></td>
+            <td>Bank's Name</td>
+            <td><select name="bank_name" id="bank_name" >
+                <option value="">Select Bank</option>
+                <?php
+                foreach ($banks as $bank) {
+                    echo "<option value='$bank->id'>$bank->Name</option>";
+                }
+                ?>
+            </select></td>
+        </tr>
+        
+        <tr>
+            <td>Bank's Branch</td>
+            <td><?php
+
+            $data_search = array('name' => 'bank_branch', 'value' => $bank_branch, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
         </tr>
      
      
        <tr>
             <td>Account Number</td>
-            <td><input type="text" /></td>
+            <td><?php
+
+            $data_search = array('name' => 'account_number', 'value' => $account_number, 'class' => 'othertext');
+            echo form_input($data_search);
+            ?></td>
         </tr>
         
-          <tr>
-            <td>Accommodation</td>
-            <td>
-                <select>
-                    <option>Rented</option>
-                    <option>Self-Owned</option>
-                    <option>House/Rent Allowance</option>
-                </select>
-            </td>
-        </tr>
-        
-        
+
        <tr>
             <td>Medical Facility</td>
             <td>Cash Medical Allowance</td>
