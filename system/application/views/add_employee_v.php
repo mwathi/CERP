@@ -6,12 +6,17 @@ if (isset($employee)) {
     $kra_pin = $employee -> KRA_PIN;
     $mailing_address = $employee -> Mailing_Address;
     $religion = $employee -> Religion;
-    $general_qualifications = $employee -> General_Qualifications;
     $technical_qualifications = $employee -> Technical_Qualifications;
     $number_of_children = $employee -> Number_of_Children;
     $spouse = $employee -> Spouse;
     $bank_name = $employee -> Bank_Name;
     $account_number = $employee -> Account_Number;
+    
+    
+    $nhif_number = $employee -> NHIF_Number;
+    $pension_fund_number = $employee -> Pension_Fund_Number;
+    $academic_qualifications = $employee -> Academic_Qualifications;
+    $bank_branch = $employee -> Bank_Branch;
     
     $contact_telephone = $employee -> Contact_Telephone;
     $contact_person = $employee -> Contact_Person;
@@ -24,6 +29,12 @@ if (isset($employee)) {
     $phone_number = $employee -> Phone;
     $address = $employee -> Address;
 } else {
+    $nhif_number = "";
+    $pension_fund_number = "";
+    $academic_qualifications = "";
+    $bank_branch = "";
+    
+    
     $employee_id = "";
     $employee_name = "";
     $address = "";
@@ -39,7 +50,6 @@ if (isset($employee)) {
     $kra_pin = "";
     $mailing_address = "";
     $religion = "";
-    $general_qualifications = "";
     $technical_qualifications = "";
     $number_of_children = "";
     $spouse = "";
@@ -71,6 +81,12 @@ echo validation_errors('
         <th class="" colspan="2">Employee Details</th>
         </tr>
         <tr>
+            <th>Employee Number</th>
+            <td>
+                <input type="text" name="employee_number" value="<?php foreach($maxno as $max){ echo $max -> Employee_Number + 1; } ?>" style="border: 0; background-color: #FFF" readonly/>
+            </td>
+        </tr>      
+        <tr>
             <td>Work Status </td>
             <td><select name="employment_status" id="employment_status" class="othertext">
                 <option value="" selected>Select Status</option>
@@ -79,6 +95,19 @@ echo validation_errors('
                 <option value="Daily Wages">Daily Wages</option>
                 <option value="Other">Other</option>
             </select></td>
+        </tr>
+        
+         <tr>
+            <td>Job Group</td>
+             <td><select name="groups" id="groups" class="othertext">
+                <option value="0" selected>Select Group</option>
+                <?php
+                foreach ($groups as $group) {
+                    echo "<option selected value='$group->id'>$group->Job_Group</option>";
+                }
+                ?>
+            </select>
+            </td>          
         </tr>
         
         <tr>
@@ -220,7 +249,7 @@ echo validation_errors('
      
        <tr>
             <td>Professional Qualifications</td>
-            <td><select name="professional_qualifications[]" id="professional_qualifications" multiple="multiple">
+            <td><select name="professional_qualifications" id="professional_qualifications" multiple="multiple">
                 <option value="">Select Qualification</option>
                 <?php
                 foreach ($qualifications as $qualification) {
@@ -241,17 +270,7 @@ echo validation_errors('
             </td>
         </tr>
      
-       <tr>
-            <td>Post Grade</td>
-            <td><input type="text" /></td>
-        </tr>
-     
-     
-       <tr>
-            <td>Present Pay Scale</td>
-            <td><input type="text" /></td>
-            <td>* If Post Grade & Present Pay Scale are Not Same:</td>
-        </tr>
+       
      
      
        <tr>
@@ -319,14 +338,7 @@ echo validation_errors('
         </tr>
         
 
-       <tr>
-            <td>Medical Facility</td>
-            <td>Cash Medical Allowance</td>
-            <td><input type="text" /></td>
-            
-            <td>Medical Facility</td>
-            <td><input type="text" /></td>
-        </tr>
+       
      
      <tr style="height: 20px"></tr>
      <tr>
@@ -347,43 +359,12 @@ echo validation_errors('
                  <td><input type="text" id="designation" /></td>
                  <td><input type="text" id="office" /></td>
                  <td><input type="text" id="city" /></td>
-                 <td><input type="text" id="promotiondate" /></td>                 
+                              
              </tr>
          </table>
      </tr>
      <div id="space" style="height: 30px"></div>
-     <tr>
-         
-         <table class="othertext">
-             <th colspan="4" style="background-color: #999999">Detail of Departmental Training</th>
-            <th colspan="4" style="background-color: #999999">Detail of Departmental Exams</th>
-             <tr>
-                 <th style="background-color: #CCCCCC">Name of Training</th>
-                 <th style="background-color: #CCCCCC">Date From</th>
-                 <th style="background-color: #CCCCCC">Date To.</th>
-                 <th style="background-color: #CCCCCC">Training Station</th>
-                 <th style="background-color: #CCCCCC">Name of Exams</th>
-                 <th style="background-color: #CCCCCC">Date of Exam</th>
-                 <th style="background-color: #CCCCCC">Exam Station</th>
-                 <th style="background-color: #CCCCCC">Exam Status</th>
-             </tr>
-             <tr style="height: 20px"></tr>
-             <tr>
-                 <td><input type="text" id="datefrom" /></td>
-                 <td><input type="text" id="dateto" /></td>
-                 <td><input type="text" id="designation" /></td>
-                 <td><input type="text" id="office" /></td>
-                 <td><input type="text" id="city" /></td>
-                 <td><input type="text" id="promotiondate" /></td>
-                 <td><input type="text" id="promotiondate" /></td>
-                 <td><input type="text" id="promotiondate" /></td>                 
-             </tr>             
-         </table>
-     </tr>
-        
 
-     <div id="space" style="height: 20px"></div>
-      
         <tr>
             <td><input name="submit" type="submit" value="Save Employee" class="button" style="width: 150px; height: 30px; font-size: 13px"></td>
         </tr>

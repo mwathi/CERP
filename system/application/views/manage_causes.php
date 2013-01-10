@@ -5,7 +5,7 @@
 		<table class="reporttable">
 			<tr class="yellow">
 				<th>Contributors</th>
-				<th>Amount Removed</th>
+				<th>Amount Pledged</th>
 			</tr>
 			<?php
 
@@ -31,10 +31,10 @@
 			<tr>
 			    <?php
                 foreach ($totalcontribootions as $totse) {
-                    echo "<td style='color:purple' ><input id='total' style= 'text-align: center;border: 0; color:purple' type=text value=".$totse->Total." readonly></td>";
+                    echo "<td style='color:purple' ><input readonly id='total' style= 'text-align: center;border: 0; color:purple' type=text value=".$totse->Total."></td>";
                 }
 				foreach ($causedata as $causetarget) {
-                    echo "<td style='color:red' ><input id='target' style= 'text-align: center;border: 0; color:oilve' type=text value=".$causetarget->Target." readonly></td>";
+                    echo "<td style='color:red' ><input readonly id='target' style= 'text-align: center;border: 0; color:oilve' type=text value=".$causetarget->Target."></td>";
                 }
                 ?>
 			</tr>

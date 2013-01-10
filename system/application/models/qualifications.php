@@ -8,7 +8,7 @@ class Qualifications extends Doctrine_Record {
 
     public function setUp() {
         $this -> setTableName('qualifications');
-        //$this -> hasOne('Employee_Benefits', array('local' => 'id', 'foreign' => 'Benefits'));
+        $this -> hasMany('Employee', array('local' => 'id', 'foreign' => 'Technical_Qualifications'));
     }//end setUp
 
     public function getAll() {

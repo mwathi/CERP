@@ -10,6 +10,7 @@ class Groups extends Doctrine_Record {
     public function setUp() {
         $this -> setTableName('groups');
         $this -> hasMany('Flock', array('local' => 'id', 'foreign' => 'Member_Group'));
+        $this -> hasOne('Member_Groups', array('local' => 'id', 'foreign' => 'Groupings'));
         $this -> hasMany('Job_Groups', array('local' => 'id', 'foreign' => 'Benefit'));
     }//end setUp
 
@@ -24,5 +25,6 @@ class Groups extends Doctrine_Record {
         $groupData = $query -> execute();
         return $groupData;
     }
+
 }
 ?>

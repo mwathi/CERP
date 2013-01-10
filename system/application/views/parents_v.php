@@ -28,6 +28,7 @@
                         <td><?php echo $parentmember_data -> Children ?></td>
                         <td><?php echo $parentmember_data -> Physical_Address ?></td>
                         <td><?php echo $parentmember_data -> Email ?></td>
+                        <td><a href="<?php echo base_url()."flock_management/manage_member/".$parentmember_data ->Member_Number ?>">View More Information</a></td>
                    
                         <!--<td><a href="<?php echo base_url()."flock_management/delete/".$parentmember_data -> id ?>" onclick="return confirm('Are you sure you want to delete this member?')" >Delete</a></td>
                         <td><a href="<?php echo base_url()."flock_management/edit_member/".$parentmember_data ->id ?>">Edit</a></td>-->

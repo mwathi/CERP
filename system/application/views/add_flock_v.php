@@ -94,8 +94,7 @@ if (isset($member)) {
     $member_phone_number = "";
     $date_of_birth = "";
     $spouse = "";
-    $number_of_children = "";
-    $address = "";
+    $number_of_children = "";    
     $email = "";
 
 }

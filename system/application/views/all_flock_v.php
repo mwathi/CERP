@@ -50,6 +50,7 @@ if (isset($totalmembers)) {
                    
                         <!--<td><a href="<?php echo base_url()."flock_management/delete/".$member_data -> id ?>" onclick="return confirm('Are you sure you want to delete this member?')" >Delete</a></td>
                         <td><a href="<?php echo base_url()."flock_management/edit_member/".$member_data ->id ?>">Edit</a></td>-->
+                        <td><a href="<?php echo base_url()."flock_management/manage_member/".$member_data ->Member_Number ?>">View More Information</a></td>
                         
                       
                         </tr>

@@ -16,9 +16,15 @@ class Employee_Management extends Controller {
     }//end listing
 
     public function add() {
+        $this -> load -> database();
+        $sql = 'Select MAX(Employee_Number) as Employee_Number From Employee';
+        $query = $this -> db -> query($sql);
+        $data['maxno'] = $query -> result();
+
         $data['qualifications'] = Qualifications::getAll();
         $data['posts'] = Posts::getAll();
         $data['banks'] = Banks::getAll();
+        $data['groups'] = Job_Groups::getAll();
         $data['title'] = "Employee Management::Add New Employee";
         $data['quick_link'] = "new_employee";
         $data['content_view'] = "add_employee_v";
@@ -26,7 +32,9 @@ class Employee_Management extends Controller {
     }
 
     public function save() {
+        $employee_number = $this -> input -> post("employee_number");
         $employment_status = $this -> input -> post("employment_status");
+        $groups = $this -> input -> post("groups");
         $gender = $this -> input -> post("gender");
         $marital_status = $this -> input -> post("marital_status");
         $employee_name = $this -> input -> post("employee_name");
@@ -52,6 +60,19 @@ class Employee_Management extends Controller {
 
         $employee_id = $this -> input -> post("employee_id");
 
+        $nhif_number = $this -> input -> post("nhif_number");
+        $pension_fund_number = $this -> input -> post("pension_fund_number");
+        $academic_qualifications = $this -> input -> post("academic_qualifications");
+        $bank_branch = $this -> input -> post("bank_branch");
+        
+        
+        $datefrom = $this -> input -> post("datefrom");
+        $dateto = $this -> input -> post("dateto");
+        $designation = $this -> input -> post("designation");
+        $office = $this -> input -> post("office");
+        $city = $this -> input -> post("city");        
+        
+
         if (strlen($employee_id) > 0) {
             $employee = Employee::getEmployee($employee_id);
             $employee = $employee[0];
@@ -64,14 +85,14 @@ class Employee_Management extends Controller {
         if ($valid == false) {
             $this -> listing();
         } else {
-
+            $employee -> Employee_Number = $employee_number;
             $employee -> Employment_Status = $employment_status;
             $employee -> Marital_Status = $marital_status;
             $employee -> NSSF_Number = $nssf_number;
             $employee -> KRA_PIN = $kra_pin;
             $employee -> Mailing_Address = $mailing_address;
             $employee -> Religion = $religion;
-            $employee -> General_Qualifications = $general_qualifications;
+
             $employee -> Technical_Qualifications = $technical_qualifications;
             $employee -> Number_of_Children = $number_of_children;
             $employee -> Spouse = $spouse;
@@ -80,6 +101,7 @@ class Employee_Management extends Controller {
             $employee -> Schools_Attended = $schools_attended;
             $employee -> Contact_Telephone = $contact_telephone;
             $employee -> Contact_Person = $contact_person;
+            $employee -> Job_Group = $groups;
 
             $employee -> Post = $employee_post;
             $employee -> Name = $employee_name;
@@ -87,6 +109,23 @@ class Employee_Management extends Controller {
             $employee -> Gender = $gender;
             $employee -> Date_of_Birth = $date_of_birth;
             $employee -> Address = $address;
+
+            $employee -> NHIF_Number = $nhif_number;
+            $employee -> Pension_Fund_Number = $pension_fund_number;
+            $employee -> Academic_Qualifications = $academic_qualifications;
+            $employee -> Bank_Branch = $bank_branch;
+
+            foreach ($datefrom as $r) {
+                $service_background = new Service_Background();
+                $service_background -> Date_From = $r;
+                $service_background -> Date_To = $dateto;
+                $service_background -> Office = $office;
+                $service_background -> Designation = $designation;
+                $service_background -> City = $city;
+                $service_background -> Employee_Number = $employee_number;
+                $service_background -> save();
+                $j++;
+            }
 
             $employee -> save();
             redirect("employee_management/listing");
@@ -106,6 +145,14 @@ class Employee_Management extends Controller {
     }//end save
 
     public function edit_employee($id) {
+        $this -> load -> database();
+        $sql = 'Select MAX(Employee_Number) as Employee_Number From Employee';
+        $query = $this -> db -> query($sql);
+        $data['maxno'] = $query -> result();
+        
+        $data['qualifications'] = Qualifications::getAll();
+        $data['banks'] = Banks::getAll();
+        $data['groups'] = Job_Groups::getAll();
         $employee = Employee::getEmployee($id);
         $data['benefits'] = Benefits::getAll();
         $data['posts'] = Posts::getAll();
@@ -145,7 +192,7 @@ class Employee_Management extends Controller {
         $this -> load -> database();
 
         foreach ($employee_benefits as $r) {
-            $sql = 'UPDATE employee_benefits SET benefit="'.$r.'", employee = "'.$employee_id.'" WHERE employee = "'.$employee_id.'" ';
+            $sql = 'UPDATE employee_benefits SET benefit="' . $r . '", employee = "' . $employee_id . '" WHERE employee = "' . $employee_id . '" ';
             $query = $this -> db -> query($sql);
             $i++;
         }

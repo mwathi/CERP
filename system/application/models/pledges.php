@@ -2,6 +2,7 @@
 class Pledges extends Doctrine_Record {
 
     public function setTableDefinition() {
+        $this -> hasColumn('Member_Number', 'int', 10);    
         $this -> hasColumn('Name', 'varchar', 40);
         $this -> hasColumn('Telephone', 'varchar', 15);
         $this -> hasColumn('Address', 'varchar', 25);

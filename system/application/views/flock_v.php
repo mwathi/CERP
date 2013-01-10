@@ -36,6 +36,7 @@
                         <td><?php echo $parentmember_data -> Children ?></td>
                         <td><?php echo $parentmember_data -> Physical_Address ?></td>
                         <td><?php echo $parentmember_data -> Email ?></td>
+                        <td><a href="<?php echo base_url()."flock_management/manage_member/".$parentmember_data ->Member_Number ?>">View More Information</a></td>
                    
                         <!--<td><a href="<?php echo base_url()."flock_management/delete/".$parentmember_data -> id ?>" onclick="return confirm('Are you sure you want to delete this member?')" >Delete</a></td>
                         <td><a href="<?php echo base_url()."flock_management/edit_member/".$parentmember_data ->id ?>">Edit</a></td>-->
@@ -77,9 +78,9 @@
                         <td><?php echo $youthmember_data -> Physical_Address ?></td>                                                                       
                         <td><?php echo $youthmember_data -> Email ?></td>
                    
-                        <td><a href="<?php echo base_url()."flock_management/delete/".$youthmember_data -> id ?>" onclick="return confirm('Are you sure you want to delete this member?')" >Delete</a></td>
-                        <td><a href="<?php echo base_url()."flock_management/edit_member/".$youthmember_data ->id ?>">Edit</a></td>
-                        
+                        <!--td><a href="<?php echo base_url()."flock_management/delete/".$youthmember_data -> id ?>" onclick="return confirm('Are you sure you want to delete this member?')" >Delete</a></td>
+                        <td><a href="<?php echo base_url()."flock_management/edit_member/".$youthmember_data ->id ?>">Edit</a></td-->
+                        <td><a href="<?php echo base_url()."flock_management/manage_member/".$youthmember_data ->Member_Number ?>">View More Information</a></td>
                       
                         </tr>
                         <?php
@@ -118,8 +119,9 @@
                         <td><?php echo $childrenmember_data -> Physical_Address ?></td>                                                                       
                         <td><?php echo $childrenmember_data -> Email ?></td>
                    
-                        <td><a href="<?php echo base_url()."flock_management/delete/".$youthmember_data -> id ?>" onclick="return confirm('Are you sure you want to delete this member?')" >Delete</a></td>
-                        <td><a href="<?php echo base_url()."flock_management/edit_member/".$youthmember_data ->id ?>">Edit</a></td>
+                        <!--td><a href="<?php echo base_url()."flock_management/delete/".$childrenmember_data -> id ?>" onclick="return confirm('Are you sure you want to delete this member?')" >Delete</a></td>
+                        <td><a href="<?php echo base_url()."flock_management/edit_member/".$childrenmember_data ->id ?>">Edit</a></td-->
+                        <td><a href="<?php echo base_url()."flock_management/manage_member/".$childrenmember_data ->Member_Number ?>">View More Information</a></td>
                         
                       
                         </tr>

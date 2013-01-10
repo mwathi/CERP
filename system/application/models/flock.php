@@ -52,13 +52,19 @@ class Flock extends Doctrine_Record {
     }//end setUp
 
     public function getAll() {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock");
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Member_Number > 1000 ");
         $flockData = $query -> execute();
         return $flockData;
     }//end getall
 
     public function getMember($id) {
         $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("id = '$id'");
+        $flockData = $query -> execute();
+        return $flockData;
+    }
+
+    public function getMemberData($member_number) {
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Member_Number = '$member_number'");
         $flockData = $query -> execute();
         return $flockData;
     }
@@ -82,7 +88,13 @@ class Flock extends Doctrine_Record {
     }
 
     public function getBirthdaysToday() {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) = 0");
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("MONTH(Date_of_Birth) = MONTH(NOW()) AND DAY(Date_of_Birth) = DAY(NOW())");
+        $flockData = $query -> execute();
+        return $flockData;
+    }
+
+    public function getBirthdaysUpcoming() {
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("MONTH(Date_of_Birth) = MONTH(NOW()) AND DAY(Date_of_Birth) > DAY(NOW())");
         $flockData = $query -> execute();
         return $flockData;
     }

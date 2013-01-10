@@ -30,15 +30,19 @@ class Pledge_Controller extends Controller {
     public function makepledge() {
         $data['title'] = "Make a Pledge";
         $data['causedata'] = Causes::getAll();
+        $data['members'] = Flock::getAll();
         $data['content_view'] = "make_pledge_v";
         $this -> base_params($data);
     }//end listing
 
-    function suggestions() {
-        $this -> load -> model('Flock');
-        $q = strtolower($_GET['term']);
-        $this -> Flock -> get_name($q);
-    }
+    public function makecontribution() {
+        $data['title'] = "Make a Contribution";
+        $data['causedata'] = Causes::getAll();
+        $data['members'] = Flock::getAll();
+        $data['content_view'] = "make_contribution";
+        $this -> base_params($data);
+    }//end listing
+
 
     public function add() {
         $data['title'] = "Causes::Add New Cause";
@@ -56,10 +60,12 @@ class Pledge_Controller extends Controller {
         $pledgetelephone = $this -> input -> post("pledgetelephone");
         $pledgeaddress = $this -> input -> post("pledgeaddress");
         $pledgeemail = $this -> input -> post("pledgeemail");
+        $member_number = $this -> input -> post("member_number");
 
         $pledge = new Pledges();
 
         $pledge -> Cause = $pledgecause;
+        $pledge -> Member_Number = $member_number;
         $pledge -> Pledge = $pledgemade;
         $pledge -> Pledge_Plan = $pledgeplan;
         $pledge -> Name = $pledgename;

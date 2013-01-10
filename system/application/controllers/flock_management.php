@@ -248,6 +248,16 @@ class Flock_Management extends Controller {
                 $member -> Child_First_Name = $handler[$i];
                 $member -> Child_Surname = $child_surname[$i];
                 $member -> Child_Last_Name = $child_lastname[$i];
+
+                $j = 0;
+                foreach ($other_member_groups as $r) {
+                    $member_groups = new Member_Groups();
+                    $member_groups -> Groupings = $r;
+                    $member_groups -> Member_Number = $member_number;
+                    $member_groups -> save();
+                    $j++;
+                }
+                
                 $member -> save();
                 $i++;
             }//end for
@@ -289,7 +299,7 @@ class Flock_Management extends Controller {
             $j = 0;
             foreach ($other_member_groups as $r) {
                 $member_groups = new Member_Groups();
-                $member_groups -> Groups = $r;
+                $member_groups -> Groupings = $r;
                 $member_groups -> Member_Number = $member_number;
                 $member_groups -> save();
                 $j++;
@@ -327,8 +337,21 @@ class Flock_Management extends Controller {
         $this -> base_params($data);
     }
 
+    public function manage_member($member_number) {
+        $member = Flock::getMemberData($member_number);
+        $data['parents'] = Flock::getParents();
+        $data['member_groups'] = Groups::getAll();
+        $data['other_groups_for_me'] = Member_Groups::getMemberGroup($member_number);
+        $data['member'] = $member[0];
+        $data['title'] = "Flock Management";
+        $data['content_view'] = "member_details_v";
+        $data['quick_link'] = "new_flock";
+        $this -> base_params($data);
+    }
+
     public function birthdays() {
-        $data['members'] = Flock::getBirthdaysToday();      
+        $data['members'] = Flock::getBirthdaysToday();
+        $data['upcomingbdays'] = Flock::getBirthdaysUpcoming();
         $data['title'] = "Flock Management";
         $data['content_view'] = "birthdays_v";
         $data['quick_link'] = "new_flock";
