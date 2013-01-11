@@ -64,13 +64,13 @@
         
 <?php
 $attributes = array('enctype' => 'multipart/form-data');
-echo form_open('pledge_controller/save', $attributes);
+echo form_open('pledge_controller/save_contribution', $attributes);
 echo validation_errors('
 <p class="error">', '</p>
 ');
 ?>
 
-        <div id="250div" class="holder" style="width: 20%; margin-left: 8%;">
+        <div id="250div" class="holder" style="width: 25%; margin-left: 5%;">
             <!--i>In gratitude for God's blessings, I/we pledge to contribute for Christ's work for <?php echo date('Y')?></i-->
             <p>
                 <i> Make a Contribution</i>
@@ -82,7 +82,7 @@ echo validation_errors('
                 <option value="" id="">Select Member</option>
                 <?php
                 foreach ($members as $member) {
-                    echo '<option value="' . $member -> Member_Number . '" id="' . $member -> Member_Number . '">' . $member -> First_Name . '</option>';
+                    echo '<option value="' . $member -> Member_Number . '" id="' . $member -> Member_Number . '">' . $member -> First_Name . " ". $member -> Surname ." ". $member -> Last_Name . '</option>';
                 }//end foreach
                 ?>
             </select>
@@ -107,8 +107,10 @@ echo validation_errors('
             <p style="border-bottom: 1px solid grey"></p>
             <br />
             
-            Amount Pledged <input type="text" name="pledge" placeholder="Enter amount in Shillings">                
+            Amount Pledged <input type="text" name="pledge" id="pledge" readonly="" style="border: 0; " value="">                
             <br />
+            <br />
+            Amount to Contribute <input type="text" name="contribution">
             <br />
             <br />
             <p style="border-bottom: 1px solid grey"></p>
@@ -121,8 +123,12 @@ echo validation_errors('
             <br />
             <br />
             <input type="text" name="pledgeemail" id="pledgeemail" placeholder="Email Address" readonly=""/>
+            <br />
+            <br />
+            <input type="text" name="dateofcontribution" id="dateofcontribution" value="<?php echo date('Y-m-d')?>" readonly/>
             <input type="hidden" name="pledgename" id="pledgename" />
             <input type="hidden" name="member_number" id="member_number" />
+            <input type="hidden" name="pledgetobesaved" id="pledgetobesaved" />
             <br />
             <br />
             <br />
@@ -136,7 +142,14 @@ echo validation_errors('
 
 
 <script>
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+
     $(document.getElementById('member_name')).change(function() {
+
         $.ajax({
             url : '../contributors.php',
             data : "id=" + document.getElementById('member_name').value,
@@ -148,13 +161,16 @@ echo validation_errors('
                 var address = data[4];
                 var email = data[5];
                 var name = data[2];
+                var pledge = data[7];
+                var pledgetobesaved = data[7];
 
                 document.getElementById('pledgeemail').value = email;
                 document.getElementById('pledgename').value = name;
                 document.getElementById('pledgeaddress').value = address;
                 document.getElementById('pledgetelephone').value = phone;
                 document.getElementById('member_number').value = member_number;
-                document.getElementById('pledge').value = member_number;
+                document.getElementById('pledge').value = numberWithCommas(pledge);
+                document.getElementById('pledgetobesaved').value = pledgetobesaved;
             }
         });
     });

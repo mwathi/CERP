@@ -8,7 +8,7 @@ class Asset_Types extends Doctrine_Record {
 
     public function setUp() {
         $this -> setTableName('asset_types');
-        $this -> hasOne('Asset', array('local' => 'id', 'foreign' => 'Type'));
+        $this -> hasOne('Asset', array('local' => 'id', 'foreign' => 'Asset_Class'));
     }//end setUp
 
     public function getAll() {

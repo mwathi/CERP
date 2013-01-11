@@ -43,7 +43,6 @@ class Pledge_Controller extends Controller {
         $this -> base_params($data);
     }//end listing
 
-
     public function add() {
         $data['title'] = "Causes::Add New Cause";
         $data['quick_link'] = "new_cause";
@@ -73,6 +72,33 @@ class Pledge_Controller extends Controller {
         $pledge -> Address = $pledgeaddress;
         $pledge -> Email = $pledgeemail;
         $pledge -> save();
+        redirect("pledge_controller/causelisting");
+
+    }//end save
+
+    public function save_contribution() {
+        $pledgecause = $this -> input -> post("pledgecause");
+        $pledge = $this -> input -> post("pledgetobesaved");
+        $contribution = $this -> input -> post("contribution");
+        $pledgename = $this -> input -> post("pledgename");
+        $pledgetelephone = $this -> input -> post("pledgetelephone");
+        $pledgeaddress = $this -> input -> post("pledgeaddress");
+        $pledgeemail = $this -> input -> post("pledgeemail");
+        $member_number = $this -> input -> post("member_number");
+        $dateofcontribution = $this -> input -> post("dateofcontribution");
+
+        $contributions = new Contributions();
+
+        $contributions -> Cause = $pledgecause;
+        $contributions -> Date_of_Contribution = $dateofcontribution;
+        $contributions -> Pledge = $pledge;
+        $contributions -> Member_Number = $member_number;
+        $contributions -> Contribution_Made = $contribution;
+        $contributions -> Name = $pledgename;
+        $contributions -> Telephone = $pledgetelephone;
+        $contributions -> Address = $pledgeaddress;
+        $contributions -> Email = $pledgeemail;
+        $contributions -> save();
         redirect("pledge_controller/causelisting");
 
     }//end save
@@ -117,11 +143,22 @@ class Pledge_Controller extends Controller {
     }
 
     public function cause_details($id) {
-        $data['contribootions'] = Pledges::getContribootions($id);
+        $data['causename'] = Causes::getCauseName($id);
+        $data['contributions'] = Contributions::getContribution($id);
         $data['causedata'] = Causes::getContribootionTarget($id);
-        $data['totalcontribootions'] = Pledges::getTotalContribootions($id);
+        $data['totalcontribootions'] = Contributions::getTotalContribootions($id);
         $data['title'] = "Pledge Management";
         $data['content_view'] = "manage_causes";
+        $this -> base_params($data);
+    }
+
+    public function member_contribution_details($member_number,$cause_id) {
+        $data['contriboot'] = Contributions::getContributionPerMember($cause_id,$member_number);        
+        $data['causes'] = Causes::getAll();
+        $data['contributiondata'] = Contributions::getAllContributions($member_number);
+        $data['pledgedata'] = Pledges::getAllPledges($member_number);        
+        $data['title'] = "Pledge Management";
+        $data['content_view'] = "member_contributions_v";
         $this -> base_params($data);
     }
 

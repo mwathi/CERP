@@ -134,7 +134,8 @@ echo validation_errors('
             ?>
            
             </td>
-            
+           </tr>
+           <tr> 
             
             <td>First Name<sup>*</sup> </td>
             <td>
@@ -143,7 +144,8 @@ echo validation_errors('
             echo form_input($data_search);
             ?>
             </td>
-            
+            </tr>
+            <tr>
             <td>Middle Name</td>
             <td>
              <?php
@@ -184,7 +186,8 @@ echo validation_errors('
             $data_search = array('name' => 'national_id', 'value' => $national_id);
             echo form_input($data_search);
             ?></td>
-            
+            </tr>
+            <tr>
               <td>Passport Number</td>
             <td><?php
 
@@ -280,7 +283,9 @@ echo validation_errors('
                 ?>
             </select>
             </td>       
-            
+        </tr>
+        <tr style="height: 10px"></tr>
+        <tr>
               <td>Other Group(s)</td>
              <td><select name="other_member_groups[]" id="member_groups" multiple="multiple">
                 <option value="">Select Group</option>
@@ -351,12 +356,13 @@ echo validation_errors('
             <td>Highest Level of Education</td>
             <td>
                 <select name="level_of_education">
-                    <option value="secondary">High School</option>
-                    <option value="college">College</option>
-                    <option value="degree">Undergraduate Degree</option>
-                    <option value="masters">Masters Degree</option>
-                    <option value="doctor">Doctorate</option>
-                    <option value="n/a">N/A</option>
+                    <option value="Primary">Primary School</option>
+                    <option value="Secondary">High School</option>
+                    <option value="College">College</option>
+                    <option value="Degree">Undergraduate Degree</option>
+                    <option value="Masters">Masters Degree</option>
+                    <option value="Doctor">Doctorate</option>
+                    <option value="N/A">N/A</option>
                 </select>
             </td>
         </tr>

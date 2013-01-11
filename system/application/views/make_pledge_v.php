@@ -70,7 +70,7 @@ echo validation_errors('
 ');
 ?>
 
-		<div id="250div" class="holder" style="width: 20%; margin-left: 8%;">
+		<div id="250div" class="holder" style="width: 25%; margin-left: 5%;">
 		    <!--i>In gratitude for God's blessings, I/we pledge to contribute for Christ's work for <?php echo date('Y')?></i-->
 			<p>
 				<i> Make a Pledge</i>
@@ -82,7 +82,7 @@ echo validation_errors('
                 <option value="" id="">Select Member</option>
                 <?php
                 foreach ($members as $member) {
-                    echo '<option value="' . $member -> id . '" id="' . $member -> Member_Number . '">' . $member -> First_Name . " ". $member -> Surname ." ". $member -> Last_Name . '</option>';
+                    echo '<option value="' . $member -> id . '" id="' . $member -> Member_Number. '">' .$member -> First_Name." ".$member -> Surname." ".$member -> Last_Name. '</option>';
                 }//end foreach
                 ?>
             </select>
@@ -113,7 +113,7 @@ echo validation_errors('
 			<br />
 			<p style="border-bottom: 1px solid grey"></p>
 			<br />
-			<select style="width: 200px; height: 25px" name="pledgeplan">
+			Select Pledge Plan <select name="pledgeplan">
 			    <option value="">Select Pledge Plan</option>
 				<option value="One Off">One Off Pledge</option>
 				<option value="Weekly">Weekly</option>

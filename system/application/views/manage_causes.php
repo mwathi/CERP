@@ -3,22 +3,26 @@
 	<div align="center">
 		<?php echo validation_errors('<p class="error">', '</p>'); ?>
 		<table class="reporttable">
+        <!--td><input type="hidden" value="<?php foreach($causename as $causename)echo $causename -> id; ?>" name="causeid" /></td-->
 			<tr class="yellow">
 				<th>Contributors</th>
 				<th>Amount Pledged</th>
+				<th>Amount Contributed</th>
 			</tr>
+			
 			<?php
 
-            foreach($contribootions as $contriboot){
-			?>
-			<tr>
-				<td><?php echo $contriboot -> Name; ?></td>
-				<td><?php echo $contriboot -> Ple; ?></td>
-
-			</tr>
-			<?php
+            foreach($contributions as $contribution){
+            ?>
+            <tr>
+                <td><a href="<?php echo base_url()."pledge_controller/member_contribution_details/".$contribution ->Member_Number."/".$contribution->Cause ?>"><?php echo $contribution -> Name; ?></a></td>
+                <td><?php echo $contribution -> Pledge; ?></td>
+                <td><?php echo $contribution -> Contribution_Made; ?></td>
+                
+            </tr>
+            <?php
             }
-			?>
+            ?>
             
             <tr style="height: 20px">
                 

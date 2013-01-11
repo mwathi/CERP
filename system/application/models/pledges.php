@@ -14,10 +14,17 @@ class Pledges extends Doctrine_Record {
 
     public function setUp() {
         $this -> setTableName('pledges');
+        $this -> hasOne('Causes', array('local' => 'Cause', 'foreign' => 'id'));
     }//end setUp
 
     public function getAll() {
         $query = Doctrine_Query::create() -> select("*") -> from("pledges");
+        $pledgeData = $query -> execute();
+        return $pledgeData;
+    }//end getall
+    
+     public function getAllPledges($member_number) {
+        $query = Doctrine_Query::create() -> select("*") -> from("pledges") -> where("Member_Number = '$member_number'");
         $pledgeData = $query -> execute();
         return $pledgeData;
     }//end getall

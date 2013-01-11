@@ -26,13 +26,25 @@ class Asset_Management extends Controller {
     public function save() {
         $asset_id = $this -> input -> post("asset_id");
         $asset_name = $this -> input -> post("asset_name");
-        $asset_type = $this -> input -> post("asset_type");
+        
+        $asset_class = $this -> input -> post("asset_class");
+        
         $model = $this -> input -> post("model");
-        $number_of_assets = $this -> input -> post("number_of_assets");
+    
         $serial_number = $this -> input -> post("serial_number");
         $location = $this -> input -> post("location");
-        $value = $this -> input -> post("value");
+        
+        $asset_cost = $this -> input -> post("asset_cost");
+        
         $date_purchased = $this -> input -> post("date_purchased");
+        
+        $userorassingedto = $this -> input -> post("userorassingedto");
+        $supplier_name = $this -> input -> post("supplier_name");
+        $supplier_phone = $this -> input -> post("supplier_phone");
+        $asset_number = $this -> input -> post("asset_number");
+        $useful_life = $this -> input -> post("useful_life");
+        $salvage = $this -> input -> post("salvage");
+        
         $description = $this -> input -> post("description");
 
         if (strlen($asset_id) > 0) {
@@ -48,13 +60,22 @@ class Asset_Management extends Controller {
             $this -> listing();
         } else {
             $asset -> Name = $asset_name;
-            $asset -> Type = $asset_type;
+            $asset -> Asset_Class = $asset_class;
+            $asset -> Asset_Cost = $asset_cost;
             $asset -> Model = $model;
-            $asset -> Number_of_Assets = $number_of_assets;
+  
             $asset -> Serial_Number = $serial_number;
             $asset -> Location = $location;
-            $asset -> Value = $value;
+            $asset -> Asset_Cost = $asset_cost;
             $asset -> Date_Purchased = $date_purchased;
+            
+            $asset -> User = $userorassingedto;
+            $asset -> Supplier_Name = $supplier_name;
+            $asset -> Supplier_Phone = $supplier_phone;
+            $asset -> Asset_Number = $asset_number;
+            $asset -> Useful_Life = $useful_life;
+            $asset -> Salvage_Value = $salvage;
+            
             $asset -> Description = $description;
 
             $asset -> save();

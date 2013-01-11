@@ -11,7 +11,8 @@ class Causes extends Doctrine_Record {
 
     public function setUp() {
         $this -> setTableName('causes');
-        //$this -> hasOne('Employee_causes', array('local' => 'id', 'foreign' => 'causes'));
+        $this -> hasOne('Pledges', array('local' => 'id', 'foreign' => 'Cause'));
+        $this -> hasOne('Contributions', array('local' => 'id', 'foreign' => 'Cause'));
     }//end setUp
 
     public function getAll() {
@@ -19,6 +20,12 @@ class Causes extends Doctrine_Record {
         $causeData = $query -> execute();
         return $causeData;
     }//end getall
+
+    public function getCauseName($id) {
+        $query = Doctrine_Query::create() -> select("Name") -> from("causes") -> where("id = '$id'");
+        $causeData = $query -> execute();
+        return $causeData;
+    }
 
     public function getCause($id) {
         $query = Doctrine_Query::create() -> select("*") -> from("causes") -> where("id = '$id'");

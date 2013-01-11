@@ -3,22 +3,34 @@ if (isset($asset)) {
     $asset_id = $asset -> id;
     $asset_name = $asset -> Name;
     $model = $asset -> Model;
-    $number_of_assets = $asset -> Number_of_Assets;
+
     $serial_number = $asset -> Serial_Number;
     $location = $asset -> Location;
-    $value = $asset -> Value;
+    $asset_cost = $asset -> Asset_Cost;
     $date_purchased= $asset -> Date_Purchased;
     $description = $asset -> Description;
+    $userorassingedto = $asset -> User;
+    $supplier_name = $asset -> Supplier_Name;
+    $supplier_phone = $asset -> Supplier_Phone;
+    $asset_number = $asset -> Asset_Number;
+    $useful_life = $asset -> Useful_Life;
+    $salvage = $asset -> Salvage_Value;
 } else {
     $asset_id = "";
     $asset_name = "";
     $model = "";
-    $number_of_assets = "";
+
     $serial_number = "";
     $location = "";
-    $value = "";
+    $asset_cost = "";
     $date_purchased= "";
     $description = "";
+    $userorassingedto = "";
+    $supplier_name = "";
+    $supplier_phone = "";
+    $asset_number = "";
+    $useful_life = "";
+    $salvage = "";
 }
 
 $attributes = array('enctype' => 'multipart/form-data');
@@ -75,12 +87,12 @@ echo validation_errors('
         </tr>
         
          <tr>
-            <td>Asset Type</td>
-            <td><select name="asset_type" id="asset_type" required>
+            <td>Asset Class</td>
+            <td><select name="asset_class" id="asset_class" required>
                 <option value="">Select Asset Type</option>
                 <?php
-                foreach ($assetes as $asset_type) {
-                    echo "<option value='$asset_type->id'>$asset_type->Type</option>";
+                foreach ($assetes as $asset_class) {
+                    echo "<option value='$asset_class->id'>$asset_class->Type</option>";
                 }
                 ?>
             </select></td>
@@ -96,22 +108,14 @@ echo validation_errors('
         </tr>
         
          <tr>
-            <td>Asset Value</td>
+            <td>Cost of Asset</td>
             <td class="othertext"><?php
 
-            $data_search = array('name' => 'value', 'value' => $value, 'class' => 'othertext');
+            $data_search = array('name' => 'asset_cost', 'value' => $asset_cost, 'class' => 'othertext');
             echo form_input($data_search);
             ?></td>
         </tr>
-        
-         <tr>
-            <td>Number of Assets</td>
-            <td class="othertext"><?php
-
-            $data_search = array('name' => 'number_of_assets', 'value' => $number_of_assets, 'class' => 'othertext');
-            echo form_input($data_search);
-            ?></td>
-        </tr>
+                 
         
          <tr>
             <td>Model</td>
@@ -145,6 +149,61 @@ echo validation_errors('
             <td class="othertext"><?php
 
             $data_search = array('name' => 'date_purchased', 'value' => $date_purchased, 'class' => 'othertext','id' => 'date_purchased');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+         <tr>
+            <td>User/Assigned To</td>
+            <td class="othertext"><?php
+
+            $data_search = array('name' => 'userorassingedto', 'value' => $userorassingedto, 'class' => 'othertext','id' => 'userorassingedto');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+         <tr>
+            <td>Supplier Name</td>
+            <td class="othertext"><?php
+
+            $data_search = array('name' => 'supplier_name', 'value' => $supplier_name, 'class' => 'othertext','id' => 'supplier_name');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+         <tr>
+            <td>Supplier Telephone Number</td>
+            <td class="othertext"><?php
+
+            $data_search = array('name' => 'supplier_phone', 'value' => $supplier_phone, 'class' => 'othertext','id' => 'supplier_phone');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+         <tr>
+            <td>Asset Number</td>
+            <td class="othertext"><?php
+
+            $data_search = array('name' => 'asset_number', 'value' => $asset_number, 'class' => 'othertext','id' => 'asset_number');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+        
+         <tr>
+            <td>Useful Life</td>
+            <td class="othertext"><?php
+
+            $data_search = array('name' => 'useful_life', 'value' => $useful_life, 'class' => 'othertext','id' => 'useful_life');
+            echo form_input($data_search);
+            ?></td>
+        </tr>
+        
+         <tr>
+            <td>Salvage Value</td>
+            <td class="othertext"><?php
+
+            $data_search = array('name' => 'salvage', 'value' => $salvage, 'class' => 'othertext','id' => 'salvage');
             echo form_input($data_search);
             ?></td>
         </tr>
