@@ -129,6 +129,16 @@ input:-moz-placeholder {
 	background-image: -webkit-linear-gradient(top,#BDA0CB,#BDA0CB);
 	background-image: -moz-linear-gradient(top,#BDA0CB,#BDA0CB);
 }
+.header_action_button:hover {
+	cursor: pointer;
+	border: 1px solid blue;
+	color: #fff;
+	text-shadow: 0 1px rgba(0,0,0,0.3);
+	background-color: #BDA0CB;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#BDA0CB),to(#BDA0CB));
+	background-image: -webkit-linear-gradient(top,#BDA0CB,#BDA0CB);
+	background-image: -moz-linear-gradient(top,#BDA0CB,#BDA0CB);
+}
 .action_button {
 	width: 150px;
 	height: 15px;
@@ -149,6 +159,26 @@ input:-moz-placeholder {
 	letter-spacing: 1px;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.1);
 	margin: 5px 10px;
+}
+.header_action_button {
+	width: 150px;
+	height: 15px;
+	line-height: 15px;
+	color: white;
+	text-decoration: none;
+	font-size: 12px;
+	font-family: helvetica, arial;
+	font-weight: bolder;
+	text-align: center;
+	background: #660198;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 5px 20px;
+	letter-spacing: 1px;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+	margin: 0.2%;
 }
 .button {
 	display: block;
@@ -232,8 +262,7 @@ textarea{
 
 #wrapper {
 	min-height: 80%;
-	height: auto !important;
-	height: 100%;
+	height: auto !important;	
 	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
 }
 

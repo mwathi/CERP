@@ -1,4 +1,6 @@
-<div id="view_content">      
+<div id="view_content"> 
+    <br />
+    <a class="action_button" id="" href="<?php echo site_url("employee_management/payroll/".$employee -> id); ?>" style="width: 50px">Payroll</a>     
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>
         <table class="reporttable">

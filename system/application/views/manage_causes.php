@@ -1,4 +1,5 @@
 <div id="view_content">
+    <br />
 	<a class="action_button" id="new_pledge" href="<?php echo site_url("pledge_controller/add"); ?>">New Cause</a>
 	<div align="center">
 		<?php echo validation_errors('<p class="error">', '</p>'); ?>
@@ -7,7 +8,8 @@
 			<tr class="yellow">
 				<th>Contributors</th>
 				<th>Amount Pledged</th>
-				<th>Amount Contributed</th>
+				<th>Amount Paid</th>
+				<th>Balance</th>
 			</tr>
 			
 			<?php
@@ -18,7 +20,8 @@
                 <td><a href="<?php echo base_url()."pledge_controller/member_contribution_details/".$contribution ->Member_Number."/".$contribution->Cause ?>"><?php echo $contribution -> Name; ?></a></td>
                 <td><?php echo $contribution -> Pledge; ?></td>
                 <td><?php echo $contribution -> Contribution_Made; ?></td>
-                
+                <td><?php if($contribution -> Contribution_Made > $contribution -> Pledge){ echo "<label style='color:purple'> +".($contribution -> Contribution_Made - $contribution -> Pledge)."</label>"; }
+                else echo "<label style='color:red'> (".($contribution -> Pledge - $contribution -> Contribution_Made).")</label>"; ?></td>
             </tr>
             <?php
             }

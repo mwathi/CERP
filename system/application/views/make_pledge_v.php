@@ -9,7 +9,7 @@
     $(function() {
         $("#neworreturning").dialog({
             resizable : false,
-            height : 200,
+            height : 250,
             modal : true,
             buttons : {
                 "New" : function() {
@@ -59,7 +59,7 @@
 
 
 <div id="view_content">
-    <div id="neworreturning" title="New or Returning Client">Is this a new or returning member?</div>
+    <div id="neworreturning" title="New or Returning Member">Is this a returning member or a visitor?</div>
 	<div align="center" class="othertext">
 		
 <?php

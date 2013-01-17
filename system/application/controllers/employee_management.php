@@ -225,6 +225,17 @@ class Employee_Management extends Controller {
         $data['content_view'] = "add_qualifications_v";
         $this -> base_params($data);
     }//end save
+    
+    public function payroll($id){
+        $employee = Employee::getEmployee($id);
+        $data['benefits'] = Benefits::getAll();
+        $data['posts'] = Posts::getAll();
+        $data['employee'] = $employee[0];
+        $data['title'] = "Employee Management::Monthly Payment";
+        $data['quick_link'] = "";
+        $data['content_view'] = "pay_employees_v";
+        $this -> base_params($data);
+    }
 
     private function _submit_validate() {
         // validation rules

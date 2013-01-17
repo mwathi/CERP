@@ -1,4 +1,5 @@
 <div id="view_content">    
+    <br />
     <a class="action_button" id="new_flock" href="<?php echo site_url("flock_management/add"); ?>">New Member</a>
     <a class="action_button" id="new_group" href="<?php echo site_url("group_management/listing"); ?>" style="width: 50px">Groups</a>
     <div align="center">

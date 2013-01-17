@@ -1,4 +1,5 @@
 <div id="view_content">
+        <br />
     <a class="action_button" id="pledges" href="<?php echo site_url("pledge_controller/makepledge"); ?>" style="width: 100px">Make a Pledge</a>
     <a class="action_button" id="pledges" href="<?php echo site_url("pledge_controller/makecontribution"); ?>" style="width: 135px">Make a Contribution</a>
     <a class="action_button" id="new_pledge" href="<?php echo site_url("pledge_controller/add"); ?>" style="width: 100px">New Cause</a>
