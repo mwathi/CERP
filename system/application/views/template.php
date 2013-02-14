@@ -53,6 +53,9 @@ if (isset($styles)) {
     <span style="margin-right: 0.1%"></span>
     <a class="header_action_button" id="sunday_money" href="<?php echo site_url("sunday_money"); ?>">Tithes and Offerings</a>
     <span style="margin-right: 0.1%"></span>
+    
+    <a class="header_action_button" id="journal_entries" href="<?php echo site_url("journal_entries"); ?>">Journal Entries</a>
+    <span style="margin-right: 0.1%"></span>
     </div>
     
     

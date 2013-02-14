@@ -49,6 +49,7 @@ class Flock extends Doctrine_Record {
         $this -> setTableName('flock');
         $this -> hasOne('Groups', array('local' => 'Member_Group', 'foreign' => 'id'));
         $this -> hasOne('Countries', array('local' => 'Nationality', 'foreign' => 'id'));
+        $this -> hasOne('Pledges', array('local' => 'Member_Number', 'foreign' => 'Member_Number'));
     }//end setUp
 
     public function getAll() {

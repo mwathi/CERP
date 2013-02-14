@@ -1,14 +1,19 @@
-<link href="<?php echo base_url().'system/CSS/jquery.ui.css'?>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.js'?>"></script>
-<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.js'?>"></script>
-<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<link href="<?php echo base_url().'system/CSS/jquery.ui.all.css'?>" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery-1.7.2.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.bgiframe-2.1.2.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.core.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.widget.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.mouse.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.button.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.draggable.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.position.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.dialog.js'?>"></script>
 
 
 <script>
     $(function() {
         $("#neworreturning").dialog({
-            resizable : false,
+            resizable : true,
             height : 250,
             modal : true,
             buttons : {
@@ -70,6 +75,7 @@ echo validation_errors('
 ');
 ?>
 
+<br />
 		<div id="250div" class="holder" style="width: 25%; margin-left: 5%;">
 		    <!--i>In gratitude for God's blessings, I/we pledge to contribute for Christ's work for <?php echo date('Y')?></i-->
 			<p>

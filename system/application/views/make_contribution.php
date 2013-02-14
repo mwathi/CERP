@@ -1,8 +1,14 @@
-<link href="<?php echo base_url().'system/CSS/jquery.ui.css'?>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.js'?>"></script>
-<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.js'?>"></script>
-<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<link href="<?php echo base_url().'system/CSS/jquery.ui.all.css'?>" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery-1.7.2.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.bgiframe-2.1.2.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.core.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.widget.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.mouse.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.button.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.draggable.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.position.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.dialog.js'?>"></script>
+
 
 
 <script>
@@ -57,6 +63,8 @@
 
 </style>
 
+<br />
+<br />
 
 <div id="view_content">
     <div id="neworreturning" title="New or Returning Client">Is this a new or returning member?</div>
@@ -77,13 +85,13 @@ echo validation_errors('
             </p>
             <br />
             <p>
-            Member Name
-            <select name="member_name" id="member_name" required>
-                <option value="" id="">Select Member</option>
+                        Select Cause <select name="pledgecause" id="cause">
+                <option value="">Causes</option>
+                <option value="0">General</option>
                 <?php
-                foreach ($members as $member) {
-                    echo '<option value="' . $member -> Member_Number . '" id="' . $member -> Member_Number . '">' . $member -> First_Name . " ". $member -> Surname ." ". $member -> Last_Name . '</option>';
-                }//end foreach
+                foreach ($causedata as $cause) {
+                    echo "<option value='$cause->id'>$cause->Name</option>";
+                }
                 ?>
             </select>
             </p>
@@ -92,13 +100,16 @@ echo validation_errors('
             <p style="border-bottom: 1px solid grey"></p>
             <br />
             
-            Select Cause <select name="pledgecause" id="cause">
-                <option value="">Causes</option>
-                <option value="0">General</option>
+
+            
+            
+            Member Name
+            <select name="member_name" id="member_name" required>
+                <option value="" id="">Select Member</option>
                 <?php
-                foreach ($causedata as $cause) {
-                    echo "<option value='$cause->id'>$cause->Name</option>";
-                }
+                foreach ($members as $member) {
+                    echo '<option value="' . $member -> Member_Number . '" id="' . $member -> Member_Number . '">' . $member -> First_Name . " ". $member -> Surname ." ". $member -> Last_Name . '</option>';
+                }//end foreach
                 ?>
             </select>
             <br />
@@ -142,17 +153,12 @@ echo validation_errors('
 
 
 <script>
-function numberWithCommas(x) {
-    var parts = x.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
-}
 
     $(document.getElementById('member_name')).change(function() {
 
         $.ajax({
             url : '../contributors.php',
-            data : "id=" + document.getElementById('member_name').value,
+            data : { id: document.getElementById('member_name').value, cause: document.getElementById('cause').value},
 
             dataType : 'json',
             success : function(data) {
@@ -161,18 +167,65 @@ function numberWithCommas(x) {
                 var address = data[4];
                 var email = data[5];
                 var name = data[2];
-                var pledge = data[7];
-                var pledgetobesaved = data[7];
+                var pledge = data[0];
+                var pledgetobesaved = data[0];
 
                 document.getElementById('pledgeemail').value = email;
                 document.getElementById('pledgename').value = name;
                 document.getElementById('pledgeaddress').value = address;
                 document.getElementById('pledgetelephone').value = phone;
                 document.getElementById('member_number').value = member_number;
-                document.getElementById('pledge').value = numberWithCommas(pledge);
+                document.getElementById('pledge').value = pledge;
                 document.getElementById('pledgetobesaved').value = pledgetobesaved;
-            }
+            },
+            error : function(data) {
+                document.getElementById('pledgeemail').value = "";
+                document.getElementById('pledgename').value = "";
+                document.getElementById('pledgeaddress').value = "";
+                document.getElementById('pledgetelephone').value = "";
+                document.getElementById('member_number').value = "";
+                document.getElementById('pledge').value = "";
+                document.getElementById('pledgetobesaved').value = "";
+            } 
         });
     });
 
     </script>
+<script>
+        $(document.getElementById('cause')).change(function() {
+
+        $.ajax({
+            url : '../contributors.php',
+            data : { id: document.getElementById('member_name').value, cause: document.getElementById('cause').value},
+
+            dataType : 'json',
+            success : function(data) {
+                var phone = data[3];
+                var member_number = data[1];
+                var address = data[4];
+                var email = data[5];
+                var name = data[2];
+                var pledge = data[0];
+                var pledgetobesaved = data[0];
+
+                document.getElementById('pledgeemail').value = email;
+                document.getElementById('pledgename').value = name;
+                document.getElementById('pledgeaddress').value = address;
+                document.getElementById('pledgetelephone').value = phone;
+                document.getElementById('member_number').value = member_number;
+                document.getElementById('pledge').value = pledge;
+                document.getElementById('pledgetobesaved').value = pledgetobesaved;
+            },
+            error : function(data) {
+                document.getElementById('pledgeemail').value = "";
+                document.getElementById('pledgename').value = "";
+                document.getElementById('pledgeaddress').value = "";
+                document.getElementById('pledgetelephone').value = "";
+                document.getElementById('member_number').value = "";
+                document.getElementById('pledge').value = "";
+                document.getElementById('pledgetobesaved').value = "";
+            } 
+        });
+    });
+</script>
+

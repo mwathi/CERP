@@ -2,7 +2,7 @@
 class Pledges extends Doctrine_Record {
 
     public function setTableDefinition() {
-        $this -> hasColumn('Member_Number', 'int', 10);    
+        $this -> hasColumn('Member_Number', 'int', 10);
         $this -> hasColumn('Name', 'varchar', 40);
         $this -> hasColumn('Telephone', 'varchar', 15);
         $this -> hasColumn('Address', 'varchar', 25);
@@ -15,6 +15,7 @@ class Pledges extends Doctrine_Record {
     public function setUp() {
         $this -> setTableName('pledges');
         $this -> hasOne('Causes', array('local' => 'Cause', 'foreign' => 'id'));
+        $this -> hasOne('Flock', array('local' => 'Member_Number', 'foreign' => 'Member_Number'));
     }//end setUp
 
     public function getAll() {
@@ -22,8 +23,8 @@ class Pledges extends Doctrine_Record {
         $pledgeData = $query -> execute();
         return $pledgeData;
     }//end getall
-    
-     public function getAllPledges($member_number) {
+
+    public function getAllPledges($member_number) {
         $query = Doctrine_Query::create() -> select("*") -> from("pledges") -> where("Member_Number = '$member_number'");
         $pledgeData = $query -> execute();
         return $pledgeData;
@@ -40,9 +41,21 @@ class Pledges extends Doctrine_Record {
         $pledgeData = $query -> execute();
         return $pledgeData;
     }
-    
+
     public function getTotalContribootions($id) {
         $query = Doctrine_Query::create() -> select("SUM(Pledge) AS Total") -> from("pledges") -> where("Cause = '$id'");
+        $pledgeData = $query -> execute();
+        return $pledgeData;
+    }
+
+    public function getAllPledgeData() {
+        $query = Doctrine_Query::create() -> select("SUM(Pledge) AS Total_Pledges, Cause") -> from("pledges") -> where("id != '' GROUP BY Cause");
+        $pledgeData = $query -> execute();
+        return $pledgeData;
+    }
+
+    public function getPledges($id) {
+        $query = Doctrine_Query::create() -> select("SUM(Pledge) AS Total_Pledge, Member_Number") -> from("pledges") -> where("Cause = '$id' GROUP BY Member_Number");
         $pledgeData = $query -> execute();
         return $pledgeData;
     }

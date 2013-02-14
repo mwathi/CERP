@@ -1,5 +1,6 @@
+<br />
 <div id="view_content">
-    <a class="action_button" id="new_pledge" href="<?php echo site_url("pledge_controller/add"); ?>">New Cause</a>
+    <a class="action_button" id="" href="<?php echo site_url("pledge_controller/causelisting"); ?>">Causes</a>
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>
         <table class="reporttable">

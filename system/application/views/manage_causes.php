@@ -69,5 +69,7 @@ if(val1 > val2){
 }else if(val2 > val1){
     document.getElementById('showresult').innerHTML = "(" + (val2 - val1) + ")";
     $('#showresult').css("color","red");
+}else{
+    document.getElementById('showresult').innerHTML = "0";
 }
 </script>

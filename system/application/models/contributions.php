@@ -24,8 +24,8 @@ class Contributions extends Doctrine_Record {
         return $contributionData;
     }//end getall
 
-    public function getAllContributions($member_number) {
-        $query = Doctrine_Query::create() -> select("*") -> from("contributions") -> where("Member_Number = '$member_number'");
+    public function getAllContributions($member_number,$cause_id) {
+        $query = Doctrine_Query::create() -> select("*") -> from("contributions") -> where("Member_Number = '$member_number' AND Cause  = '$cause_id' ");
         $contributionData = $query -> execute();
         return $contributionData;
     }//end getall

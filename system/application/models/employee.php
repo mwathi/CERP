@@ -41,6 +41,7 @@ class Employee extends Doctrine_Record {
         $this -> hasOne('Posts', array('local' => 'Post', 'foreign' => 'id'));
         $this -> hasOne('Job_Groups', array('local' => 'Job_Group', 'foreign' => 'id'));
         $this -> hasOne('Qualifications', array('local' => 'Technical_Qualifications', 'foreign' => 'id'));
+        $this -> hasOne('Payroll', array('local' => 'Employee_Number', 'foreign' => 'Employee_Number'));
     }//end setUp
 
     public function getAll() {
@@ -51,6 +52,12 @@ class Employee extends Doctrine_Record {
 
     public function getEmployee($id) {
         $query = Doctrine_Query::create() -> select("*") -> from("employee") -> where("id = '$id'");
+        $employeeData = $query -> execute();
+        return $employeeData;
+    }
+
+    public function getNumberOfEmployees() {
+        $query = Doctrine_Query::create() -> select("COUNT(DISTINCT(Employee_Number)) AS Employees") -> from("employee") -> where("Employee_Number != '10000'");
         $employeeData = $query -> execute();
         return $employeeData;
     }

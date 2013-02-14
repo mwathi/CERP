@@ -76,6 +76,7 @@ echo validation_errors('
         });
     });
 </script>
+<br />
 <a class="action_button" id="new_asset" href="<?php echo site_url("asset_management/listing"); ?>">Assets</a>
 <input type="hidden" name="asset_id" value = "<?php echo $asset_id; ?>"/>
 <div class="holder" style="margin-top: 50px; width: 500px">

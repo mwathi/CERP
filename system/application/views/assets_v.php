@@ -1,3 +1,4 @@
+<br />
 <div id="view_content">
     <a class="action_button" id="new_asset" href="<?php echo site_url("asset_management/add"); ?>">New Asset</a>
     <div align="center">

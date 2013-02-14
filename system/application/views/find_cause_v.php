@@ -1,3 +1,4 @@
+<br />
 <div id="view_content">
     <a class="action_button" id="new_pledge" href="<?php echo site_url("pledge_controller/add"); ?>">New Cause</a>
     <div align="center">
@@ -12,7 +13,7 @@
                     <?php echo form_close();?>
                 </td>
             </tr>
-            
+            <tr height="10px"></tr>
             <tr class="yellow">
                 <th>Cause</th>
                 <th>Description</th>

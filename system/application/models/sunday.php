@@ -10,11 +10,11 @@ class Sunday extends Doctrine_Record {
         $this -> hasColumn('Monthly_Pledge', 'varchar', 40);
         $this -> hasColumn('Thanksgiving', 'varchar', 40);
         $this -> hasColumn('Tithe', 'varchar', 40);
-        $this -> hasColumn('Date', 'date');        
+        $this -> hasColumn('Date', 'date');
     }
 
     public function setUp() {
-        $this -> setTableName('sunday');        
+        $this -> setTableName('sunday');
     }//end setUp
 
     public function getAll() {
@@ -31,6 +31,12 @@ class Sunday extends Doctrine_Record {
 
     public function getSundayId() {
         $query = Doctrine_Query::create() -> select("id") -> from("sunday");
+        $sundayData = $query -> execute();
+        return $sundayData;
+    }
+
+    public function getSundayTotal($date) {
+        $query = Doctrine_Query::create() -> select("SUM(Youth_Service + Teens + Sunday_School + English_Service + Swahili_Service + Monthly_Pledge + Thanksgiving + Tithe) AS Offertory") -> from("sunday") -> where("MONTH(Date) = '$date'");
         $sundayData = $query -> execute();
         return $sundayData;
     }

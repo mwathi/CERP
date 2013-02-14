@@ -17,6 +17,7 @@ echo validation_errors('
 ');
 ?>
 
+<br />
 <a class="action_button" id="new_employee" href="<?php echo site_url("benefit_management/listing"); ?>">Benefits</a>
 <input type="hidden" name="benefit_id" value = "<?php echo $benefit_id; ?>"/>
 <div class="holder" style="margin-top: 50px; width: 500px">

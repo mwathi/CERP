@@ -32,7 +32,7 @@ class Sunday_Money extends Controller {
         $thanksgiving = $this -> input -> post("thanksgiving");
         $tithe = $this -> input -> post("tithe");
         $date = date('Y-m-d');
-        
+
         $sunday = new Sunday();
 
         $sunday -> Youth_Service = $youthservice;
@@ -46,6 +46,18 @@ class Sunday_Money extends Controller {
         $sunday -> Date = $date;
 
         $sunday -> save();
+
+        $transaction = new Transactions();
+
+        $transaction -> Date = date("Y-m-d");
+        $transaction -> Account_Affected_1 = "Cash";
+        $transaction -> Transaction = "Church contributions dated " . $date;
+        $transaction -> Account_Affected_1_Amount = $youthservice + $teens + $sunday_school + $english_service + $swahili_service + $monthly_pledge + $thanksgiving + $tithe;
+        $transaction -> Account_Affected_1_Operation = "Debit";
+        $transaction -> Account_Affected_2 = "Offerings";
+        $transaction -> Account_Affected_2_Amount = $youthservice + $teens + $sunday_school + $english_service + $swahili_service + $monthly_pledge + $thanksgiving + $tithe;
+        $transaction -> Account_Affected_2_Operation = "Credit";
+        $transaction -> save();
         redirect("sunday_money/listing");
 
     }//end save
@@ -57,8 +69,7 @@ class Sunday_Money extends Controller {
         redirect("asset_management/listing", "refresh");
     }//end save
 
-
-    public function view_sunday($id) {        
+    public function view_sunday($id) {
         $sunday = Sunday::getSunday($id);
         $data['sunday'] = $sunday[0];
         $data['title'] = "Tithes and Offerings";
@@ -67,10 +78,9 @@ class Sunday_Money extends Controller {
         $this -> base_params($data);
     }
 
-
     public function base_params($data) {
-        $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");
-        $data['scripts'] = array("jquery-ui.js");
+        $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css","SpryAccordion.css");
+        $data['scripts'] = array("jquery-ui.js","SpryAccordion.js");
         $this -> load -> view('template', $data);
     }//end base_params
 

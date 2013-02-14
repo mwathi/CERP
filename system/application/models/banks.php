@@ -7,7 +7,7 @@ class Banks extends Doctrine_Record {
 
     public function setUp() {
         $this -> setTableName('banks');
-        //$this -> hasOne('Employee_Benefits', array('local' => 'id', 'foreign' => 'Benefits'));
+        $this -> hasOne('Church_Particulars', array('local' => 'id', 'foreign' => 'Bank'));
     }//end setUp
 
     public function getAll() {

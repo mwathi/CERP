@@ -27,6 +27,13 @@ class Pledge_Controller extends Controller {
         $this -> base_params($data);
     }//end listing
 
+    public function pledgelisting() {
+        $data['title'] = "Pledges";
+        $data['causedata'] = Pledges::getAllPledgeData();
+        $data['content_view'] = "pledge_v";
+        $this -> base_params($data);
+    }//end listing
+
     public function makepledge() {
         $data['title'] = "Make a Pledge";
         $data['causedata'] = Causes::getAll();
@@ -72,6 +79,19 @@ class Pledge_Controller extends Controller {
         $pledge -> Address = $pledgeaddress;
         $pledge -> Email = $pledgeemail;
         $pledge -> save();
+
+        $transaction = new Transactions();
+
+        $transaction -> Date = date("Y-m-d");
+        $transaction -> Account_Affected_1 = "Pledges";
+        $transaction -> Transaction = "Pledge towards " . $pledgecause;
+        $transaction -> Account_Affected0_1_Amount = $pledgemade;
+        $transaction -> Account_Affected_1_Operation = "Debit";
+        $transaction -> Account_Affected_2 = "Cash";
+        $transaction -> Account_Affected_2_Amount = $pledgemade;
+        $transaction -> Account_Affected_2_Operation = "Credit";
+        $transaction -> save();
+
         redirect("pledge_controller/causelisting");
 
     }//end save
@@ -99,6 +119,18 @@ class Pledge_Controller extends Controller {
         $contributions -> Address = $pledgeaddress;
         $contributions -> Email = $pledgeemail;
         $contributions -> save();
+
+        $transaction = new Transactions();
+
+        $transaction -> Date = date("Y-m-d");
+        $transaction -> Account_Affected_1 = "Cash";
+        $transaction -> Transaction = "Contributions towards " . $pledgecause;
+        $transaction -> Account_Affected_1_Amount = $pledge;
+        $transaction -> Account_Affected_1_Operation = "Debit";
+        $transaction -> Account_Affected_2 = "Pledges";
+        $transaction -> Account_Affected_2_Amount = $pledge;
+        $transaction -> Account_Affected_2_Operation = "Credit";
+        $transaction -> save();
         redirect("pledge_controller/causelisting");
 
     }//end save
@@ -152,11 +184,18 @@ class Pledge_Controller extends Controller {
         $this -> base_params($data);
     }
 
-    public function member_contribution_details($member_number,$cause_id) {
-        $data['contriboot'] = Contributions::getContributionPerMember($cause_id,$member_number);        
+    public function pledge_details($id) {
+        $data['pledges'] = Pledges::getPledges($id);
+        $data['title'] = "Pledge Management";
+        $data['content_view'] = "pledges_made";
+        $this -> base_params($data);
+    }
+
+    public function member_contribution_details($member_number, $cause_id) {
+        $data['contriboot'] = Contributions::getContributionPerMember($cause_id, $member_number);
         $data['causes'] = Causes::getAll();
-        $data['contributiondata'] = Contributions::getAllContributions($member_number);
-        $data['pledgedata'] = Pledges::getAllPledges($member_number);        
+        $data['contributiondata'] = Contributions::getAllContributions($member_number, $cause_id);
+        $data['pledgedata'] = Pledges::getAllPledges($member_number);
         $data['title'] = "Pledge Management";
         $data['content_view'] = "member_contributions_v";
         $this -> base_params($data);

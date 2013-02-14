@@ -79,6 +79,21 @@ class Asset_Management extends Controller {
             $asset -> Description = $description;
 
             $asset -> save();
+            
+            
+            //create general asset account
+            $transaction = new Transactions();
+
+            $transaction -> Date = date("Y-m-d");
+            $transaction -> Account_Affected_1 = "Fixed Asset";
+            $transaction -> Transaction = "Asset Registration: Serial ". $serial_number;
+            $transaction -> Account_Affected_1_Amount = $balance_due;
+            $transaction -> Account_Affected_1_Operation = "Debit";
+            $transaction -> Account_Affected_2 = "Cash";
+            $transaction -> Account_Affected_2_Amount = $balance_due;
+            $transaction -> Account_Affected_2_Operation = "Credit";
+            $transaction -> save();
+            
             redirect("asset_management/listing");
         }//end else
     }//end save

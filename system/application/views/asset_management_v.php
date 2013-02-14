@@ -31,7 +31,7 @@
                
                <td><?php echo $asset -> Serial_Number; ?></td>
                <td><?php echo $asset -> Location; ?></td>
-               <td id="book_value"><?php echo $asset -> Asset_Cost; ?> KES.</td>
+               <td id="book_value"><?php echo number_format($asset -> Asset_Cost); ?> KES.</td>
                <td><?php echo $asset -> Date_Purchased; ?></td>
                <td><?php echo $asset -> Description; ?></td>
            </tr>
@@ -40,7 +40,7 @@
              <th> Useful Life </th><td id="useful"><?php echo $asset -> Useful_Life?> Years</td>
             </tr>
             <tr>
-             <th>Salvage Value </th><td id="salvage"><?php echo $asset -> Salvage_Value; ?> KES.</td>  
+             <th>Salvage Value </th><td id="salvage"><?php echo number_format($asset -> Salvage_Value); ?> KES.</td>  
            </tr>
                <tr>
                       <table class="reporttable">
