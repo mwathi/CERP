@@ -1,6 +1,5 @@
 <?php
-error_reporting(E_ALL^E_NOTICE);
-
+error_reporting(E_ALL ^ E_NOTICE);
 ?>
 <link href="<?php echo base_url().'system/CSS/jquery.ui.css'?>" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.js'?>"></script>
@@ -50,7 +49,7 @@ error_reporting(E_ALL^E_NOTICE);
 ');
 		?>
 		<div style="height: 50px"></div>
-		<div id="250div" class="holder" style="width: 25%; margin-left: 5%;">
+		<div id="250div" class="holder" style="width: 70%; margin-left: 1%;">
 
 <div class="Accordion" id="sampleAccordion" tabindex="0">
     <div class="AccordionPanel">
@@ -74,7 +73,7 @@ error_reporting(E_ALL^E_NOTICE);
                     <td id="500y">500</td>
                     <td>
                         <?php
-                        $data_search = array('name' => '500youth', 'value' => $fivehundredyouth, 'class' => 'othertext','id' => '500yth');
+                        $data_search = array('name' => '500youth', 'value' => $fivehundredyouth, 'class' => 'othertext', 'id' => '500yth');
                         echo form_input($data_search);
                         ?>
                     </td>
@@ -151,7 +150,7 @@ error_reporting(E_ALL^E_NOTICE);
                     <td id="1y">1</td>
                     <td>
                         <?php
-                        $data_search = array('name' => '1youth', 'value' => $oneyouth, 'class' => 'othertext','id'=>'1yth');
+                        $data_search = array('name' => '1youth', 'value' => $oneyouth, 'class' => 'othertext', 'id' => '1yth');
                         echo form_input($data_search);
                         ?>
                     </td>
@@ -712,8 +711,8 @@ error_reporting(E_ALL^E_NOTICE);
                     <td id="1000th">1000</td>
                     <td>
                       <?php
-                        $data_search = array('name' => '1000thanksgiving', 'value' => $thousandthanksgiving, 'class' => 'othertext', 'id' => '1000thk');
-                        echo form_input($data_search);
+                    $data_search = array('name' => '1000thanksgiving', 'value' => $thousandthanksgiving, 'class' => 'othertext', 'id' => '1000thk');
+                    echo form_input($data_search);
                         ?>  
                     </td>
                 </tr>
@@ -756,8 +755,8 @@ error_reporting(E_ALL^E_NOTICE);
                     <td id="50th">50</td>
                     <td>
                     <?php
-                        $data_search = array('name' => '50thanksgiving', 'value' => $fiftythanksgiving, 'class' => 'othertext', 'id' => '50thk');
-                        echo form_input($data_search);
+                    $data_search = array('name' => '50thanksgiving', 'value' => $fiftythanksgiving, 'class' => 'othertext', 'id' => '50thk');
+                    echo form_input($data_search);
                         ?></td>
                 </tr>
                 
@@ -863,7 +862,7 @@ error_reporting(E_ALL^E_NOTICE);
                     <td id="50t">50</td>
                     <td>
                         <?php
-                        $data_search = array('name' => '50tithe', 'value' => $fiftytithe,'class' => 'othertext', 'id' => '50tth');
+                        $data_search = array('name' => '50tithe', 'value' => $fiftytithe, 'class' => 'othertext', 'id' => '50tth');
                         echo form_input($data_search);
                         ?>
                     </td>
@@ -1036,6 +1035,4 @@ error_reporting(E_ALL^E_NOTICE);
 </script>
 
 
-<script language="JavaScript" type="text/javascript">
-        var sampleAccordion = new Spry.Widget.Accordion("sampleAccordion");
-</script>
+<script language="JavaScript" type="text/javascript">var sampleAccordion = new Spry.Widget.Accordion("sampleAccordion");</script>

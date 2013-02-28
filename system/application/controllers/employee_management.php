@@ -31,6 +31,17 @@ class Employee_Management extends Controller {
         $this -> base_params($data);
     }
 
+    public function searchEmployee($name) {
+        if ($this -> input -> post('search')) {
+            redirect('/employee_management/searchEmployee/' . $this -> input -> post('search'));
+        }
+        $memberinfo = Employee::getEmployeeInformation($name);
+        $data['content_view'] = "find_employee_v";
+        $data['employeeinfo'] = $memberinfo;
+        $data['title'] = "Church ERP Search Results";
+        $this -> load -> view('template', $data);
+    }
+
     public function save() {
         $employee_number = $this -> input -> post("employee_number");
         $employment_status = $this -> input -> post("employment_status");
@@ -64,14 +75,12 @@ class Employee_Management extends Controller {
         $pension_fund_number = $this -> input -> post("pension_fund_number");
         $academic_qualifications = $this -> input -> post("academic_qualifications");
         $bank_branch = $this -> input -> post("bank_branch");
-        
-        
+
         $datefrom = $this -> input -> post("datefrom");
         $dateto = $this -> input -> post("dateto");
         $designation = $this -> input -> post("designation");
         $office = $this -> input -> post("office");
-        $city = $this -> input -> post("city");        
-        
+        $city = $this -> input -> post("city");
 
         if (strlen($employee_id) > 0) {
             $employee = Employee::getEmployee($employee_id);
@@ -149,7 +158,7 @@ class Employee_Management extends Controller {
         $sql = 'Select MAX(Employee_Number) as Employee_Number From Employee';
         $query = $this -> db -> query($sql);
         $data['maxno'] = $query -> result();
-        
+
         $data['qualifications'] = Qualifications::getAll();
         $data['banks'] = Banks::getAll();
         $data['groups'] = Job_Groups::getAll();
@@ -225,9 +234,19 @@ class Employee_Management extends Controller {
         $data['content_view'] = "add_qualifications_v";
         $this -> base_params($data);
     }//end save
-    
-    public function payroll($id){
+
+    public function payroll($id, $job_group) {
         $employee = Employee::getEmployee($id);
+
+        $this -> load -> database();
+        $sql = 'select b.name as Name,b.rate as Rate from benefits b,job_groups j where j.job_group = ? and j.benefit=b.id';
+        $query = $this -> db -> query($sql, array($job_group));
+        $data['jobgroupinformation'] = $query -> result();
+
+        $sql2 = 'select sum(b.rate) as Rate from benefits b,job_groups j where j.job_group = ? and j.benefit=b.id';
+        $query2 = $this -> db -> query($sql2, array($job_group));
+        $data['sumjobgroupinformation'] = $query2 -> result();
+
         $data['benefits'] = Benefits::getAll();
         $data['posts'] = Posts::getAll();
         $data['employee'] = $employee[0];

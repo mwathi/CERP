@@ -9,11 +9,18 @@ class Payroll extends Doctrine_Record {
         $this -> hasColumn('Earnings', 'varchar', 40);
         $this -> hasColumn('Earnings_Amount', 'int', 25);
         $this -> hasColumn('Deductions', 'varchar', 40);
-        $this -> hasColumn('Deductions_Amount', 'int', 15);
-        $this -> hasColumn('Taxation', 'int', 15);
         $this -> hasColumn('Gross_Earnings', 'int', 15);
         $this -> hasColumn('Net_Salary', 'int', 15);
         $this -> hasColumn('Date_Created', 'date');
+        
+        $this -> hasColumn('PAYE', 'int', 15);
+        $this -> hasColumn('Total_Tax_Payable', 'int', 15);
+        $this -> hasColumn('Personal_Relief', 'int', 15);
+        $this -> hasColumn('Total_Deductions', 'int', 15);
+        $this -> hasColumn('Total_Benefits', 'int', 15);
+        $this -> hasColumn('Taxable_Pay', 'int', 15);
+        $this -> hasColumn('Benefit_Name', 'varchar', 40);
+        $this -> hasColumn('Benefit_Value', 'int', 15);
     }
 
     public function setUp() {

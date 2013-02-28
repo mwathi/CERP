@@ -11,7 +11,8 @@ class Job_Groups extends Doctrine_Record {
     public function setUp() {
         $this -> setTableName('job_groups');
         $this -> hasOne('Groups', array('local' => 'Benefit', 'foreign' => 'id'));
-        $this -> hasOne('Employee', array('local' => 'id', 'foreign' => 'Job_Group'));
+        $this -> hasOne('Employee', array('local' => 'Job_Group', 'foreign' => 'Job_Group'));
+        $this -> hasOne('Benefits', array('local' => 'Benefit', 'foreign' => 'id'));
     }//end setUp
 
     public function getAll() {

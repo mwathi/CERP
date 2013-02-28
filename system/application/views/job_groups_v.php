@@ -1,4 +1,5 @@
 <div id="view_content">
+    <br />
     <a class="action_button" id="new_group" href="<?php echo site_url("job_group_management/add"); ?>">New Job Group</a>
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>

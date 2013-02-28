@@ -1,7 +1,86 @@
-<?php error_reporting(0); ?>
+<script>
+	$(function() {
+		document.getElementById("taxablepay").value = parseInt(document.getElementById("totalbenefits").value) + parseInt(document.getElementById("salary").value);
+		document.getElementById("net").value = document.getElementById("gross_earnings").value;
+	})
+	$(function() {
+		var chargeablePay = parseInt(document.getElementById('taxablepay').value);
+
+		if (chargeablePay < 11135) {
+			document.getElementById('totaltaxpayable').value = chargeablePay;
+		} else {
+			if (chargeablePay > 11135) {//case 10%
+				chargeablePay = chargeablePay - 10164;
+				document.getElementById('totaltaxpayable').value = chargeablePay;
+				if (chargeablePay > 9576) {//case 15%
+					chargeablePay = chargeablePay - 9576;
+					document.getElementById('totaltaxpayable').value = chargeablePay;
+					if (chargeablePay > 9576) {//case 20%
+						chargeablePay = chargeablePay - 9576;
+						document.getElementById('totaltaxpayable').value = chargeablePay;
+						if (chargeablePay > 9576) {//case 25%
+							chargeablePay = chargeablePay - 9576;
+							document.getElementById('totaltaxpayable').value = chargeablePay;
+							if (chargeablePay > 9576) {//case 30%
+								chargeablePay = Math.floor(((chargeablePay * 30) / 100));
+
+								////////////////////////////////////
+								/////calculate tax payable here////
+								//////////////////////////////////
+								var totaltaxpayable = 1016 + 1436 + 1915 + 2394 + chargeablePay;
+								document.getElementById('totaltaxpayable').value = totaltaxpayable;
+								var PAYE = totaltaxpayable - parseInt(document.getElementById('personalrelief').value);
+								document.getElementById('PAYE').value = PAYE;
+							} else {
+								chargeablePay = Math.floor(((chargeablePay * 30) / 100));
+								//document.getElementById('net').value = chargeablePay;
+								var totaltaxpayable = 1016 + 1436 + 1915 + 2394 + chargeablePay;
+								document.getElementById('totaltaxpayable').value = totaltaxpayable;
+								var PAYE = totaltaxpayable - parseInt(document.getElementById('personalrelief').value);
+								document.getElementById('PAYE').value = PAYE;
+							}
+						} else {
+							var fourthleveltax = Math.floor((chargeablePay * 25) / 100);
+							var totaltaxpayable = 1016 + 1436 + 1915 + fourthleveltax;
+							document.getElementById('totaltaxpayable').value = totaltaxpayable;
+							var PAYE = totaltaxpayable - parseInt(document.getElementById('personalrelief').value);
+							document.getElementById('PAYE').value = PAYE;
+						}
+					} else {
+						var thirdleveltax = Math.floor((chargeablePay * 20) / 100);
+						var totaltaxpayable = 1016 + 1436 + thirdleveltax;
+						document.getElementById('totaltaxpayable').value = totaltaxpayable;
+						var PAYE = totaltaxpayable - parseInt(document.getElementById('personalrelief').value);
+						document.getElementById('PAYE').value = PAYE;
+					}
+				} else {
+					var secondleveltax = Math.floor((chargeablePay * 15) / 100);
+					var totaltaxpayable = 1016 + secondleveltax;
+					document.getElementById('totaltaxpayable').value = totaltaxpayable;
+					var PAYE = totaltaxpayable - parseInt(document.getElementById('personalrelief').value);
+					document.getElementById('PAYE').value = PAYE;
+				}
+			} else {
+				var firstleveltax = Math.floor((chargeablePay * 10) / 100);
+				var totaltaxpayable = 1016 + firstleveltax;
+				document.getElementById('totaltaxpayable').value = totaltaxpayable;
+				var PAYE = totaltaxpayable - parseInt(document.getElementById('personalrelief').value);
+				document.getElementById('PAYE').value = PAYE;
+			}
+
+		}//end else
+		document.getElementById('gross_earnings').value = parseInt(document.getElementById("taxablepay").value)  - parseInt(document.getElementById('PAYE').value);
+ 
+        
+	})
+
+</script>
 <style>
 	#view_content {
 		font: .85em "Segoe UI", Segoe, Arial, Sans-Serif;
+	}
+	input {
+		font: 1em "Segoe UI", Segoe, Arial, Sans-Serif;
 	}
 	#nameholder {
 		background-color: purple;
@@ -13,7 +92,7 @@
 		border: 1px solid #999999;
 		width: 60%;
 		margin-left: 20%;
-		height: 500px
+		height: 600px
 	}
 	#details {
 		border-bottom: 1px solid #999999;
@@ -91,11 +170,40 @@
             <th>Amount</th>              
         </tr>
         
+        
+        
         <tr>
-            <td><input type="text" name="earnings" value="Basic Salary" style="border: 0" readonly=""/></td>
+            <td><input type="text" name="earnings" value="Basic Salary" style="border: 0; font: .85em "Segoe UI", Segoe, Arial, Sans-Serif" readonly=""/></td>
             <td id=""><input id="salary" type="text" name="earnings_amount" value="<?php echo $employee -> Job_Groups -> Salary; ?>" readonly style="border:0"/></td>
             <td>Taxation</td>
-            <td><input type="text" id="tax" value="0" onchange="dave()" name="taxation"/></td>             
+            <td><input type="button" id="tax" value="Press" onclick="dave()"/></td>             
+        </tr>
+        
+        <?php
+        echo "<tr><th>Benefits</th><td></td><td></td><td></td></tr>";
+        foreach ($jobgroupinformation as $jobgroupinfo) {
+            echo "<tr>
+                <td><input type=text name=benefitname[] value='" . $jobgroupinfo -> Name . "' /></td>
+                <td><input type=text name=benefitvalue[] value='" . $jobgroupinfo -> Rate . "' /></td>
+                <td></td><td></td>
+            </tr>";
+        }
+
+        foreach ($sumjobgroupinformation as $sumbenefits) {
+            echo "<tr>
+                <td><b>Total Benefits</b></td>
+                <td><input type=text name=totalbenefits id=totalbenefits value='" . $sumbenefits -> Rate . "' /></td>
+                <td></td><td></td>
+            </tr>";
+        }
+        ?>
+        
+        <tr>
+            <th>Taxable Pay</th>
+            <td><input type="text" name="taxablepay"  id="taxablepay" value="0"/></td>
+            <td></td>
+            <td>
+            </td>
         </tr>
         <tr id="newtaxrow">
             <td></td>
@@ -105,10 +213,41 @@
             <td><a id="new_tax">Add new taxfield</a></td>
         </tr>
         <tr>
+            <td>Total Tax Payable</td>
+            <th id=""><input type="text" id="totaltaxpayable" name="totaltaxpayable" value="" readonly="" style="border: 0" /></th>
+            <td></td>
+            <td></td>
+        </tr>
+        
+        <!--personal relief-----------------
+            ---
+            ---
+            --->
+         <tr>
+            <td>Less Personal Relief</td>
+            <th id=""><input type="text" id="personalrelief" name="personalrelief" value="1162" readonly="" style="border: 0" /></th>
+            <td></td>
+            <td></td>
+        </tr>
+        
+        
+         <!--PAYE----------------
+            ---
+            ---
+            --->
+         <tr>
+            <th>PAYE to be Deducted</th>
+            <th id=""><input type="text" id="PAYE" name="PAYE" value="" readonly="" style="border: 0; font-weight: bold" /></th>
+            <td></td>
+            <td></td>
+        </tr>
+        
+        
+        <tr>
            <th>Gross Earnings</th>
-           <th id="amount"><input type="text" name="gross_earnings" value="<?php echo $employee -> Job_Groups -> Salary; ?>" readonly style="border:0"/></th>   
-           <td></td>
-           <td><input type="hidden" id="totalothertaxvalue" value="0"/></td>                   
+           <th id="amount"><input type="text" name="gross_earnings" id="gross_earnings" value="0" readonly style="border:0; font-weight: bold; text-align: left"/></th>   
+           <th>Total Deductions</th>
+           <td><input type="text" style="border: 0" readonly="" id="totalothertaxvalue" name="totalothertaxvalue" value="0"/></td>                   
         </tr>
         
         <tr>
@@ -127,41 +266,27 @@
     </div>
 </form>
 </div>
-
-
 <script>
-	function dave() {
-		var val1 = parseInt(document.getElementById('salary').value);
-		var val2 = parseInt(document.getElementById('tax').value);
-		var val3 = parseInt(document.getElementById('totalothertaxvalue').value);
+    $("#new_tax").click(function() {
+        $(document.getElementById("newtaxrow")).replaceWith('<tr id="newtaxrow" class="newtaxrow"><td></td><td></td><td><input type="text" id="newtaxname" class="newtaxname" name="deductions[]"/></td><td><input type="text"  value="0"  id="newtaxfield" class="newtaxfield" name="deductions_amount"/></td><td><a id="clonetax">Add new tax field</a></td></tr>');
 
-		var total = val1 - (val2 + val3);
-		document.getElementById("net").value = total;
-	}
+        $("#clonetax").click(function() {
+            $(".newtaxrow:last").clone(true).insertAfter(".newtaxrow:last");
+            $(".newtaxrow:last").find(":input.newtaxfield").val("0");
+            $(".newtaxrow:last").find(":input.newtaxname").val("");
+        });
+        totalothertax = 0;
+
+        $('#newtaxfield').focusout(function() {
+            $(".newtaxfield").each(function(index) {
+                totalothertax += parseInt($(this).val());
+            });
+            document.getElementById("totalothertaxvalue").value = totalothertax;
+            totalothertax = 0
+            document.getElementById("net").value = parseInt(document.getElementById("gross_earnings").value) - parseInt(document.getElementById("totalothertaxvalue").value);
+        });
+        
+
+    });
 
 </script>
-
-<script>
-	$("#new_tax").click(function() {
-		$(document.getElementById("newtaxrow")).replaceWith('<tr id="newtaxrow" class="newtaxrow"><td></td><td></td><td><input type="text" id="newtaxname" class="newtaxname" name="deductions[]"/></td><td><input type="text"  value="0"  id="newtaxfield" class="newtaxfield" name="deductions_amount[]"/></td><td><a id="clonetax">Add new tax field</a></td></tr>');
-
-		$("#clonetax").click(function() {
-			$(".newtaxrow:last").clone(true).insertAfter(".newtaxrow:last");
-			$(".newtaxrow:last").find(":input.newtaxfield").val("0");
-			$(".newtaxrow:last").find(":input.newtaxname").val("");
-		});
-		totalothertax = 0;
-
-		$('#newtaxfield').focusout(function() {
-			$(".newtaxfield").each(function(index) {
-				totalothertax += parseInt($(this).val());
-			});
-			document.getElementById("totalothertaxvalue").value = totalothertax;
-			dave();
-			totalothertax = 0
-		});
-
-	});
-
-</script>
-

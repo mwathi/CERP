@@ -1,5 +1,4 @@
 <?php
-error_reporting();
 class Payroll_Management extends Controller {
     function __construct() {
         parent::__construct();
@@ -27,10 +26,23 @@ class Payroll_Management extends Controller {
         $earnings_amount = $this -> input -> post("earnings_amount");
         $deductions = $this -> input -> post("deductions");
         $deductions_amount = $this -> input -> post("deductions_amount");
-        $taxation = $this -> input -> post("taxation");
         $gross_earnings = $this -> input -> post("gross_earnings");
         $net_salary = $this -> input -> post("net_salary");
         $date_created = date("Y-m-d");
+
+        $PAYE = $this -> input -> post("PAYE");
+        $total_tax_payable = $this -> input -> post("totaltaxpayable");
+        $personal_relief = $this -> input -> post("personalrelief");
+        $total_deductions = $this -> input -> post("totalothertaxvalue");
+        $total_benefits = $this -> input -> post("totalbenefits");
+        $taxable_pay = $this -> input -> post("taxablepay");
+
+        $benefitname = $this -> input -> post("benefitname");
+        $benefitx = $this -> input -> post("benefitname");
+        //**loo
+        $benefitvalue = $this -> input -> post("benefitvalue");
+        //**p
+
         $i = 0;
 
         $valid = $this -> _validate_submission();
@@ -45,9 +57,68 @@ class Payroll_Management extends Controller {
             if ($num > 0) {
                 echo "You cannot process the same payments in the same month for the same person. Click here to go back <a href=" . base_url() . "payroll_management >Back</a> ";
             } else {
-                if ($deductions_amount != "") {
-                    foreach ($deductions_amount as $deds) {
+                if ($total_deductions != 0) {
+                    if ($benefitname > $deductions) {
+                        foreach ($benefitname as $bens) {
 
+                            $payroll = new Payroll();
+
+                            $payroll -> Employee_Number = $employee_number;
+                            $payroll -> Pay_Period = $pay_period;
+                            $payroll -> Account_Number = $account_number;
+                            $payroll -> Bank_Name = $bank_name;
+                            $payroll -> Earnings = $earnings;
+                            $payroll -> Earnings_Amount = $earnings_amount;
+                            $payroll -> Deductions = $deductions[$i];
+
+                            $payroll -> PAYE = $PAYE;
+                            $payroll -> Total_Tax_Payable = $total_tax_payable;
+                            $payroll -> Personal_Relief = $personal_relief;
+                            $payroll -> Total_Deductions = $deductions_amount;
+                            $payroll -> Total_Benefits = $total_benefits;
+                            $payroll -> Taxable_Pay = $taxable_pay;
+                            $payroll -> Benefit_Name = $benefitx[$i];
+                            $payroll -> Benefit_Value = $benefitvalue[$i];
+
+                            $payroll -> Gross_Earnings = $gross_earnings;
+                            $payroll -> Net_Salary = $net_salary;
+                            $payroll -> Date_Created = $date_created;
+
+                            $payroll -> save();
+                            $i++;
+                        }
+                    } else {
+                        foreach ($deductions as $deds) {
+
+                            $payroll = new Payroll();
+
+                            $payroll -> Employee_Number = $employee_number;
+                            $payroll -> Pay_Period = $pay_period;
+                            $payroll -> Account_Number = $account_number;
+                            $payroll -> Bank_Name = $bank_name;
+                            $payroll -> Earnings = $earnings;
+                            $payroll -> Earnings_Amount = $earnings_amount;
+                            $payroll -> Deductions = $deds;
+
+                            $payroll -> PAYE = $PAYE;
+                            $payroll -> Total_Tax_Payable = $total_tax_payable;
+                            $payroll -> Personal_Relief = $personal_relief;
+                            $payroll -> Total_Deductions = $deductions_amount;
+                            $payroll -> Total_Benefits = $total_benefits;
+                            $payroll -> Taxable_Pay = $taxable_pay;
+                            $payroll -> Benefit_Name = $benefitx[$i];
+                            $payroll -> Benefit_Value = $benefitvalue[$i];
+
+                            $payroll -> Gross_Earnings = $gross_earnings;
+                            $payroll -> Net_Salary = $net_salary;
+                            $payroll -> Date_Created = $date_created;
+
+                            $payroll -> save();
+                            $i++;
+                        }
+                    }
+                } else {
+                    foreach ($benefitname as $bens) {
                         $payroll = new Payroll();
 
                         $payroll -> Employee_Number = $employee_number;
@@ -56,32 +127,21 @@ class Payroll_Management extends Controller {
                         $payroll -> Bank_Name = $bank_name;
                         $payroll -> Earnings = $earnings;
                         $payroll -> Earnings_Amount = $earnings_amount;
-                        $payroll -> Deductions = $deductions[$i];
-
-                        $payroll -> Deductions_Amount = $deds;
-                        $payroll -> Taxation = $taxation;
                         $payroll -> Gross_Earnings = $gross_earnings;
                         $payroll -> Net_Salary = $net_salary;
                         $payroll -> Date_Created = $date_created;
 
+                        $payroll -> PAYE = $PAYE;
+                        $payroll -> Total_Tax_Payable = $total_tax_payable;
+                        $payroll -> Personal_Relief = $personal_relief;
+                        $payroll -> Total_Benefits = $total_benefits;
+                        $payroll -> Taxable_Pay = $taxable_pay;
+                        $payroll -> Benefit_Name = $benefitx[$i];
+                        $payroll -> Benefit_Value = $benefitvalue[$i];
+
                         $payroll -> save();
                         $i++;
                     }
-                } else {
-                    $payroll = new Payroll();
-
-                    $payroll -> Employee_Number = $employee_number;
-                    $payroll -> Pay_Period = $pay_period;
-                    $payroll -> Account_Number = $account_number;
-                    $payroll -> Bank_Name = $bank_name;
-                    $payroll -> Earnings = $earnings;
-                    $payroll -> Earnings_Amount = $earnings_amount;
-                    $payroll -> Taxation = $taxation;
-                    $payroll -> Gross_Earnings = $gross_earnings;
-                    $payroll -> Net_Salary = $net_salary;
-                    $payroll -> Date_Created = $date_created;
-
-                    $payroll -> save();
 
                 }
                 $transaction = new Transactions();
@@ -102,12 +162,13 @@ class Payroll_Management extends Controller {
     }//end save
 
     private function _validate_submission() {
-        $this -> form_validation -> set_rules('taxation', 'Tax', 'trim|required|min_length[1]');
+        $this -> form_validation -> set_rules('net_salary', 'NET Salary', 'trim|required|min_length[1]');
         return $this -> form_validation -> run();
     }//end validate_submission
 
     public function payroll_two($pay_period) {
         $data['payperioddata'] = Payroll::getPayPeriodData($pay_period);
+
         $data['title'] = "Payroll Management";
         $data['content_view'] = "payroll_two_v";
         $this -> base_params($data);
@@ -134,8 +195,8 @@ class Payroll_Management extends Controller {
     }
 
     public function payroll($id) {
-        error_reporting(0);
         $employee = Employee::getEmployee($id);
+
         $data['benefits'] = Benefits::getAll();
         $data['posts'] = Posts::getAll();
         $data['employee'] = $employee[0];

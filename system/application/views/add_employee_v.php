@@ -103,7 +103,7 @@ echo validation_errors('
                 <option value="0" selected>Select Group</option>
                 <?php
                 foreach ($groups as $group) {
-                    echo "<option selected value='$group->id'>$group->Job_Group</option>";
+                    echo "<option selected value='$group->Job_Group'>$group->Job_Group</option>";
                 }
                 ?>
             </select>

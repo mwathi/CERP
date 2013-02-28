@@ -1,3 +1,4 @@
+
 <div id="view_content">      
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>

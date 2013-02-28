@@ -95,7 +95,7 @@ class Flock extends Doctrine_Record {
     }
 
     public function getBirthdaysUpcoming() {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("MONTH(Date_of_Birth) = MONTH(NOW()) AND DAY(Date_of_Birth) > DAY(NOW())");
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("MONTH(Date_of_Birth) > MONTH(NOW())");
         $flockData = $query -> execute();
         return $flockData;
     }
@@ -131,7 +131,7 @@ class Flock extends Doctrine_Record {
     }
 
     public function getLatestParents($orderitem) {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24 GROUP BY Member_Number") -> orderBy($orderitem) -> limit('10');
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24") -> orderBy($orderitem) -> limit('10');
         $flockData = $query -> execute();
         return $flockData;
     }
