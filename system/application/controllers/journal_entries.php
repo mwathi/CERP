@@ -48,7 +48,9 @@ class Journal_Entries extends Controller {
         
         $data['expenseTotal'] = $expenseTotalQuery -> result();
         $data['expenses'] = $expensequery -> result();
-        $data['offerings'] = Sunday::getSundayTotal($monthNumber);
+        $data['offerings'] = Sunday::getSundayIncomes($monthNumber);
+        $contributions = Contributions::getTotalContribootionsPerMonth($monthNumber);
+        $data['contributions'] = $contributions[0]; 
         $data['title'] = "Journal Information::Ledger for " . date('F', strtotime($monthNumber));
         $data['content_view'] = "incomes_v";
         $this -> base_params($data);

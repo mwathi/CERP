@@ -8,6 +8,9 @@
 
 		if (chargeablePay < 11135) {
 			document.getElementById('totaltaxpayable').value = chargeablePay;
+			var totaltaxpayable = 0;
+			var PAYE = 0;
+			document.getElementById('PAYE').value = PAYE;
 		} else {
 			if (chargeablePay > 11135) {//case 10%
 				chargeablePay = chargeablePay - 10164;
@@ -69,9 +72,8 @@
 			}
 
 		}//end else
-		document.getElementById('gross_earnings').value = parseInt(document.getElementById("taxablepay").value)  - parseInt(document.getElementById('PAYE').value);
- 
-        
+		document.getElementById('gross_earnings').value = parseInt(document.getElementById("taxablepay").value) - parseInt(document.getElementById('PAYE').value);
+        document.getElementById("net").value = document.getElementById('gross_earnings').value;
 	})
 
 </script>
@@ -175,7 +177,7 @@
         <tr>
             <td><input type="text" name="earnings" value="Basic Salary" style="border: 0; font: .85em "Segoe UI", Segoe, Arial, Sans-Serif" readonly=""/></td>
             <td id=""><input id="salary" type="text" name="earnings_amount" value="<?php echo $employee -> Job_Groups -> Salary; ?>" readonly style="border:0"/></td>
-            <td>Taxation</td>
+            <td></td>
             <td><input type="button" id="tax" value="Press" onclick="dave()"/></td>             
         </tr>
         
@@ -267,26 +269,25 @@
 </form>
 </div>
 <script>
-    $("#new_tax").click(function() {
-        $(document.getElementById("newtaxrow")).replaceWith('<tr id="newtaxrow" class="newtaxrow"><td></td><td></td><td><input type="text" id="newtaxname" class="newtaxname" name="deductions[]"/></td><td><input type="text"  value="0"  id="newtaxfield" class="newtaxfield" name="deductions_amount"/></td><td><a id="clonetax">Add new tax field</a></td></tr>');
+	$("#new_tax").click(function() {
+		$(document.getElementById("newtaxrow")).replaceWith('<tr id="newtaxrow" class="newtaxrow"><td></td><td></td><td><input type="text" id="newtaxname" class="newtaxname" name="deductions[]"/></td><td><input type="text"  value="0"  id="newtaxfield" class="newtaxfield" name="deductions_amount"/></td><td><a id="clonetax">Add new tax field</a></td></tr>');
 
-        $("#clonetax").click(function() {
-            $(".newtaxrow:last").clone(true).insertAfter(".newtaxrow:last");
-            $(".newtaxrow:last").find(":input.newtaxfield").val("0");
-            $(".newtaxrow:last").find(":input.newtaxname").val("");
-        });
-        totalothertax = 0;
+		$("#clonetax").click(function() {
+			$(".newtaxrow:last").clone(true).insertAfter(".newtaxrow:last");
+			$(".newtaxrow:last").find(":input.newtaxfield").val("0");
+			$(".newtaxrow:last").find(":input.newtaxname").val("");
+		});
+		totalothertax = 0;
 
-        $('#newtaxfield').focusout(function() {
-            $(".newtaxfield").each(function(index) {
-                totalothertax += parseInt($(this).val());
-            });
-            document.getElementById("totalothertaxvalue").value = totalothertax;
-            totalothertax = 0
-            document.getElementById("net").value = parseInt(document.getElementById("gross_earnings").value) - parseInt(document.getElementById("totalothertaxvalue").value);
-        });
-        
+		$('#newtaxfield').focusout(function() {
+			$(".newtaxfield").each(function(index) {
+				totalothertax += parseInt($(this).val());
+			});
+			document.getElementById("totalothertaxvalue").value = totalothertax;
+			totalothertax = 0
+			document.getElementById("net").value = parseInt(document.getElementById("gross_earnings").value) - parseInt(document.getElementById("totalothertaxvalue").value);
+		});
 
-    });
+	});
 
 </script>

@@ -24,7 +24,7 @@ class Contributions extends Doctrine_Record {
         return $contributionData;
     }//end getall
 
-    public function getAllContributions($member_number,$cause_id) {
+    public function getAllContributions($member_number, $cause_id) {
         $query = Doctrine_Query::create() -> select("*") -> from("contributions") -> where("Member_Number = '$member_number' AND Cause  = '$cause_id' ");
         $contributionData = $query -> execute();
         return $contributionData;
@@ -36,7 +36,7 @@ class Contributions extends Doctrine_Record {
         return $contributionData;
     }
 
-    public function getContributionPerMember($cause_id,$member_number) {
+    public function getContributionPerMember($cause_id, $member_number) {
         $query = Doctrine_Query::create() -> select("SUM(Contribution_Made) AS Total_Contribution_Made") -> from("contributions") -> where("Cause = '$cause_id' AND Member_Number = '$member_number' ");
         $contributionData = $query -> execute();
         return $contributionData;
@@ -50,6 +50,12 @@ class Contributions extends Doctrine_Record {
 
     public function getTotalContribootions($id) {
         $query = Doctrine_Query::create() -> select("SUM(Contribution_Made) AS Total") -> from("contributions") -> where("Cause = '$id'");
+        $contributionData = $query -> execute();
+        return $contributionData;
+    }
+
+    public function getTotalContribootionsPerMonth($month) {
+        $query = Doctrine_Query::create() -> select("SUM(Contribution_Made) AS Sunday_Contributions") -> from("contributions") -> where("MONTH(Date_of_Contribution) = '$month'");
         $contributionData = $query -> execute();
         return $contributionData;
     }

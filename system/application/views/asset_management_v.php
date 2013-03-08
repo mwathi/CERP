@@ -32,6 +32,7 @@
                <td><?php echo $asset -> Serial_Number; ?></td>
                <td><?php echo $asset -> Location; ?></td>
                <td id="book_value"><?php echo number_format($asset -> Asset_Cost); ?> KES.</td>
+               <input type="hidden" id="bookvaluehidden" value="<?=$asset->Asset_Cost?>" />
                <td><?php echo $asset -> Date_Purchased; ?></td>
                <td><?php echo $asset -> Description; ?></td>
            </tr>
@@ -84,7 +85,7 @@
 		if (document.getElementById('salvage').innerText != "") {
 			var useful_life = parseInt(document.getElementById("useful").innerText);
 			var salvage_value = parseInt(document.getElementById('salvage').innerText);
-			var beginning_book_value = parseInt(document.getElementById('book_value').innerText);
+			var beginning_book_value = parseInt(document.getElementById('bookvaluehidden').value);
 			var beginning_book_value_handle = beginning_book_value;
 			var annual_depreciation = (beginning_book_value - salvage_value) / useful_life;
 			var annual_depreciation_handle = annual_depreciation;

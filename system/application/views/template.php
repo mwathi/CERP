@@ -56,6 +56,9 @@ if (isset($styles)) {
     
     <a class="header_action_button" id="journal_entries" href="<?php echo site_url("journal_entries"); ?>">Journal Entries</a>
     <span style="margin-right: 0.1%"></span>
+    
+     <a class="header_action_button" id="journal_entries" href="<?php echo site_url("journal_entries/incomedates"); ?>">Income Statements</a>
+    <span style="margin-right: 0.1%"></span>
     </div>
     
     
