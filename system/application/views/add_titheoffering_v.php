@@ -912,7 +912,7 @@ error_reporting(E_ALL ^ E_NOTICE);
                     </td>
                 </tr>
                 
-  
+<input type="hidden" value="<?=$partakings -> Transaction_Value;?>" name="opening_balance" />  
  
             </table>
         </div>

@@ -50,6 +50,13 @@ class Church_Management extends Controller {
             $church -> Opening_Balance_Date = $opening_balance_date; 
 
             $church -> save();
+            
+            $partakings = new Partakings();
+            $partakings -> Transaction_Value = $opening_balance;
+            $partakings -> Date = date('Y-m-d');
+            
+            $partakings -> save();
+            
             redirect("church_management/listing");
         }//end else
     }//end save

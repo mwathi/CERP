@@ -236,6 +236,9 @@ class Employee_Management extends Controller {
     }//end save
 
     public function payroll($id, $job_group) {
+        $partakings = Partakings::getAll();
+        $data['partakings'] = $partakings[0];
+
         $employee = Employee::getEmployee($id);
 
         $this -> load -> database();

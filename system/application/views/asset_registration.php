@@ -33,6 +33,9 @@ if (isset($asset)) {
     $salvage = "";
 }
 
+
+
+
 $attributes = array('enctype' => 'multipart/form-data');
 echo form_open('asset_management/save', $attributes);
 echo validation_errors('
@@ -217,7 +220,7 @@ echo validation_errors('
             echo form_textarea($data_search);
             ?></td>
         </tr>
-
+        <input type="hidden" value="<?=$partakings -> Transaction_Value;?>" name="opening_balance" />
         <tr>
             <td><input name="submit" type="submit" value="Save Asset to Database" class="submit" ></td>
         </tr>

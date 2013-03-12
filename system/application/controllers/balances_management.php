@@ -10,6 +10,8 @@ class Balances_Management extends Controller {
 
     public function listing() {
         $data['balances'] = Balances::getAll();
+        $partakings = Partakings::getAll();
+        $data['partakings'] = $partakings[0];
         $data['title'] = "Balances Management::All Balances";
         $data['content_view'] = "balances_v";
         $this -> base_params($data);
@@ -63,7 +65,7 @@ class Balances_Management extends Controller {
         }//end else
     }//end save
 
-    public function pay_balance($id, $balance_due) {
+    public function pay_balance($id, $balance_due, $partaking) {
         $this -> load -> database();
         $sql = 'UPDATE balances SET balance_due = 0 WHERE id =' . $id . ' ';
         $query = $this -> db -> query($sql);
@@ -78,7 +80,14 @@ class Balances_Management extends Controller {
         $transaction -> Account_Affected_2 = "Cash";
         $transaction -> Account_Affected_2_Amount = $balance_due;
         $transaction -> Account_Affected_2_Operation = "Credit";
+        $transaction -> Ending_Balance = ($opening_balance - $balance_due);
         $transaction -> save();
+
+        $buffer = $partaking - $balance_due;
+        $partakings = new Partakings();
+        $partakings -> Transaction_Value = $buffer;
+        $partakings -> Date = date('Y-m-d');
+        $partakings -> save();
 
         redirect("balances_management/listing", "refresh");
     }//end save

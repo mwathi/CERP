@@ -45,6 +45,8 @@ class Pledge_Controller extends Controller {
     public function makecontribution() {
         $data['title'] = "Make a Contribution";
         $data['causedata'] = Causes::getAll();
+        $partakings = Partakings::getAll();
+        $data['partakings'] = $partakings[0];
         $data['members'] = Flock::getAll();
         $data['content_view'] = "make_contribution";
         $this -> base_params($data);
@@ -106,6 +108,7 @@ class Pledge_Controller extends Controller {
         $pledgeemail = $this -> input -> post("pledgeemail");
         $member_number = $this -> input -> post("member_number");
         $dateofcontribution = $this -> input -> post("dateofcontribution");
+        $opening_balance = $this -> input -> post("opening_balance");
 
         $contributions = new Contributions();
 
@@ -130,7 +133,15 @@ class Pledge_Controller extends Controller {
         $transaction -> Account_Affected_2 = "Pledges";
         $transaction -> Account_Affected_2_Amount = $pledge;
         $transaction -> Account_Affected_2_Operation = "Credit";
+        $transaction -> Ending_Balance = ($opening_balance + $pledge);
         $transaction -> save();
+
+        $buffer = $opening_balance + $pledge;
+        $partakings = new Partakings();
+        $partakings -> Transaction_Value = $buffer;
+        $partakings -> Date = date('Y-m-d');
+        $partakings -> save();
+        
         redirect("pledge_controller/causelisting");
 
     }//end save

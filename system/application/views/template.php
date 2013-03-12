@@ -39,14 +39,10 @@ if (isset($styles)) {
     <div>
     <a class="header_action_button" id="employees" href="<?php echo site_url("employee_management/listing"); ?>">Employees</a>
     <span style="margin-right: 0.1%"></span>
- <a class="header_action_button" id="parents" href="<?php echo site_url("flock_management/allParentsListing"); ?>">Adults</a>
+    
+ <a class="header_action_button" id="parents" href="<?php echo site_url("flock_management/listing"); ?>">Members</a>
  <span style="margin-right: 0.1%"></span>
-    <a class="header_action_button" id="youth" href="<?php echo site_url("flock_management/allYouthListing"); ?>">Youth</a>
-    <span style="margin-right: 0.1%"></span>
-    <a class="header_action_button" id="children" href="<?php echo site_url("flock_management/allChildrenListing"); ?>">Children</a>
-    <span style="margin-right: 0.1%"></span>    
-    <a class="header_action_button" id="reports" href="<?php echo site_url("flock_management/allListing"); ?>">Member Reports</a>
-    <span style="margin-right: 0.1%"></span>
+
     <a class="header_action_button" id="pledges" href="<?php echo site_url("pledge_controller/causelisting"); ?>">Causes</a>
     <span style="margin-right: 0.1%"></span>
     <a class="header_action_button" id="assets" href="<?php echo site_url("asset_management"); ?>">Assets</a>

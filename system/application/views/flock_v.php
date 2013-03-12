@@ -1,5 +1,11 @@
 
-<div id="view_content">      
+<div id="view_content">
+        <div id="space" style="height: 20px"></div> 
+    <a class="action_button" id="parents" href="<?php echo site_url("flock_management/allParentsListing"); ?>">Adults</a>
+    <a class="action_button" id="youth" href="<?php echo site_url("flock_management/allYouthListing"); ?>">Youth</a>
+    <a class="action_button" id="children" href="<?php echo site_url("flock_management/allChildrenListing"); ?>">Children</a>
+    <a class="action_button" id="reports" href="<?php echo site_url("flock_management/allListing"); ?>">Member Reports</a>
+    <br />      
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>
         <table class="reporttable">

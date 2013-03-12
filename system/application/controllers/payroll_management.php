@@ -41,6 +41,7 @@ class Payroll_Management extends Controller {
         $benefitx = $this -> input -> post("benefitname");
         //**loo
         $benefitvalue = $this -> input -> post("benefitvalue");
+        $opening_balance = $this -> input -> post("opening_balance");
         //**p
 
         $i = 0;
@@ -144,17 +145,26 @@ class Payroll_Management extends Controller {
                     }
 
                 }
+
+                $buffer = $opening_balance - $gross_earnings;
                 $transaction = new Transactions();
 
                 $transaction -> Date = date("Y-m-d");
                 $transaction -> Account_Affected_1 = "Wages";
                 $transaction -> Transaction = "Employee: Employee Number " . $employee_number . " Wage Reimbursement";
-                $transaction -> Account_Affected_1_Amount = $net_salary;
+                $transaction -> Account_Affected_1_Amount = $gross_earnings;
                 $transaction -> Account_Affected_1_Operation = "Debit";
                 $transaction -> Account_Affected_2 = "Cash";
-                $transaction -> Account_Affected_2_Amount = $net_salary;
+                $transaction -> Account_Affected_2_Amount = $gross_earnings;
                 $transaction -> Account_Affected_2_Operation = "Credit";
+                $transaction -> Ending_Balance = ($opening_balance - $gross_earnings);
                 $transaction -> save();
+
+                $partakings = new Partakings();
+                $partakings -> Transaction_Value = $buffer;
+                $partakings -> Date = date('Y-m-d');
+                $partakings -> save();
+
                 redirect("payroll_management/listing");
             }
         }
@@ -200,6 +210,10 @@ class Payroll_Management extends Controller {
         $data['benefits'] = Benefits::getAll();
         $data['posts'] = Posts::getAll();
         $data['employee'] = $employee[0];
+
+        $data['partakings'] = Partakings::getAll();
+        //$data['partakings'] = $partakings[0];
+
         $data['title'] = "Employee Management::Monthly Payment";
         $data['quick_link'] = "";
         $data['content_view'] = "pay_employees_v";

@@ -12,6 +12,8 @@ class Transactions extends Doctrine_Record {
         $this -> hasColumn('Account_Affected_2', 'varchar', 40);
         $this -> hasColumn('Account_Affected_2_Amount', 'int', 15);
         $this -> hasColumn('Account_Affected_2_Operation', 'varchar', 15);
+        
+        $this -> hasColumn('Ending_Balance', 'int', 15);
     }
 
     public function setUp() {

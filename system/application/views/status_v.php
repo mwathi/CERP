@@ -5,7 +5,8 @@ if (isset($allstatuses)) {
     $allstatuses = "";
 }
 ?>  
-<div id="view_content">   
+<div id="view_content">  
+    <br /> 
      <a class="action_button" id="" href="<?php echo site_url("flock_management/groupListing"); ?>" style="width: 104px; text-align: left">Member Groups</a>
     <a class="action_button" id="" href="<?php echo site_url("flock_management/professionListing"); ?>" style="width: 104px; text-align: left">Professions</a>
     <a class="action_button" id="" href="<?php echo site_url("flock_management/statusListing"); ?>" style="width: 104px; text-align: left">Marital Status</a>

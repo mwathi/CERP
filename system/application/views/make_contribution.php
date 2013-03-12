@@ -140,6 +140,7 @@ echo validation_errors('
             <input type="hidden" name="pledgename" id="pledgename" />
             <input type="hidden" name="member_number" id="member_number" />
             <input type="hidden" name="pledgetobesaved" id="pledgetobesaved" />
+            <input type="hidden" value="<?=$partakings -> Transaction_Value;?>" name="opening_balance" />
             <br />
             <br />
             <br />

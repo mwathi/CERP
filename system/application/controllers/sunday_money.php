@@ -16,6 +16,8 @@ class Sunday_Money extends Controller {
     }//end listing
 
     public function add() {
+        $partakings = Partakings::getAll();
+        $data['partakings'] = $partakings[0];
         $data['title'] = "Tithes and Offerings";
         $data['quick_link'] = "new_tithe";
         $data['content_view'] = "add_titheoffering_v";
@@ -103,7 +105,7 @@ class Sunday_Money extends Controller {
         $tentithe = $this -> input -> post("10tithe");
         $fivetithe = $this -> input -> post("5tithe");
         $onetithe = $this -> input -> post("1tithe");
-
+        $opening_balance = $this -> input -> post("opening_balance");
         $date = date('Y-m-d');
 
         $sunday = new Sunday();
@@ -193,17 +195,24 @@ class Sunday_Money extends Controller {
         $sunday -> save();
 
         $transaction = new Transactions();
-
+        $cash = $thousandyouth + $fivehundredyouth + $twohundredyouth + $hundredyouth + $fiftyyouth + $twentyyouth + $tenyouth + $fiveyouth + $oneyouth + $thousandteens + $fivehundredteens + $twohundredteens + $hundredteens + $fiftyteens + $twentyteens + $tenteens + $fiveteens + $oneteens + $thousandsundayschool + $fivehundredsundayschool + $twohundredsundayschool + $hundredsundayschool + $fiftysundayschool + $twentysundayschool + $tensundayschool + $fivesundayschool + $onesundayschool + $thousandenglishservice + $fivehundredenglishservice + $twohundredenglishservice + $hundredenglishservice + $fiftyenglishservice + $twentyenglishservice + $tenenglishservice + $fiveenglishservice + $oneenglishservice + $thousandswahiliservice + $fivehundredswahiliservice + $twohundredswahiliservice + $hundredswahiliservice + $fiftyswahiliservice + $twentyswahiliservice + $tenswahiliservice + $fiveswahiliservice + $oneswahiliservice + $thousandmonthlypledge + $fivehundredmonthlypledge + $twohundredmonthlypledge + $hundredmonthlypledge + $fiftymonthlypledge + $twentymonthlypledge + $tenmonthlypledge + $fivemonthlypledge + $onemonthlypledge + $thousandthanksgiving + $fivehundredthanksgiving + $twohundredthanksgiving + $hundredthanksgiving + $fiftythanksgiving + $twentythanksgiving + $tenthanksgiving + $fivethanksgiving + $onethanksgiving + $thousandtithe + $fivehundredtithe + $twohundredtithe + $hundredtithe + $fiftytithe + $twentytithe + $tentithe + $fivetithe + $onetithe;
         $transaction -> Date = date("Y-m-d");
         $transaction -> Account_Affected_1 = "Cash";
         $transaction -> Transaction = "Church contributions dated " . $date;
-        $transaction -> Account_Affected_1_Amount = $thousandyouth + $fivehundredyouth + $twohundredyouth + $hundredyouth + $fiftyyouth + $twentyyouth + $tenyouth + $fiveyouth + $oneyouth + $thousandteens + $fivehundredteens + $twohundredteens + $hundredteens + $fiftyteens + $twentyteens + $tenteens + $fiveteens + $oneteens + $thousandsundayschool + $fivehundredsundayschool + $twohundredsundayschool + $hundredsundayschool + $fiftysundayschool + $twentysundayschool + $tensundayschool + $fivesundayschool + $onesundayschool + $thousandenglishservice + $fivehundredenglishservice + $twohundredenglishservice + $hundredenglishservice + $fiftyenglishservice + $twentyenglishservice + $tenenglishservice + $fiveenglishservice + $oneenglishservice + $thousandswahiliservice + $fivehundredswahiliservice + $twohundredswahiliservice + $hundredswahiliservice + $fiftyswahiliservice + $twentyswahiliservice + $tenswahiliservice + $fiveswahiliservice + $oneswahiliservice + $thousandmonthlypledge + $fivehundredmonthlypledge + $twohundredmonthlypledge + $hundredmonthlypledge + $fiftymonthlypledge + $twentymonthlypledge + $tenmonthlypledge + $fivemonthlypledge + $onemonthlypledge + $thousandthanksgiving + $fivehundredthanksgiving + $twohundredthanksgiving + $hundredthanksgiving + $fiftythanksgiving + $twentythanksgiving + $tenthanksgiving + $fivethanksgiving + $onethanksgiving + $thousandtithe + $fivehundredtithe + $twohundredtithe + $hundredtithe + $fiftytithe + $twentytithe + $tentithe + $fivetithe + $onetithe;
+        $transaction -> Account_Affected_1_Amount = $cash;
 
         $transaction -> Account_Affected_1_Operation = "Debit";
         $transaction -> Account_Affected_2 = "Offerings";
-        $transaction -> Account_Affected_2_Amount = $thousandyouth + $fivehundredyouth + $twohundredyouth + $hundredyouth + $fiftyyouth + $twentyyouth + $tenyouth + $fiveyouth + $oneyouth + $thousandteens + $fivehundredteens + $twohundredteens + $hundredteens + $fiftyteens + $twentyteens + $tenteens + $fiveteens + $oneteens + $thousandsundayschool + $fivehundredsundayschool + $twohundredsundayschool + $hundredsundayschool + $fiftysundayschool + $twentysundayschool + $tensundayschool + $fivesundayschool + $onesundayschool + $thousandenglishservice + $fivehundredenglishservice + $twohundredenglishservice + $hundredenglishservice + $fiftyenglishservice + $twentyenglishservice + $tenenglishservice + $fiveenglishservice + $oneenglishservice + $thousandswahiliservice + $fivehundredswahiliservice + $twohundredswahiliservice + $hundredswahiliservice + $fiftyswahiliservice + $twentyswahiliservice + $tenswahiliservice + $fiveswahiliservice + $oneswahiliservice + $thousandmonthlypledge + $fivehundredmonthlypledge + $twohundredmonthlypledge + $hundredmonthlypledge + $fiftymonthlypledge + $twentymonthlypledge + $tenmonthlypledge + $fivemonthlypledge + $onemonthlypledge + $thousandthanksgiving + $fivehundredthanksgiving + $twohundredthanksgiving + $hundredthanksgiving + $fiftythanksgiving + $twentythanksgiving + $tenthanksgiving + $fivethanksgiving + $onethanksgiving + $thousandtithe + $fivehundredtithe + $twohundredtithe + $hundredtithe + $fiftytithe + $twentytithe + $tentithe + $fivetithe + $onetithe;
+        $transaction -> Account_Affected_2_Amount = $cash;
         $transaction -> Account_Affected_2_Operation = "Credit";
+        $transaction -> Ending_Balance = ($opening_balance + $cash);
         $transaction -> save();
+
+        $partakings = new Partakings();
+        $partakings -> Transaction_Value = $opening_balance + $cash;
+        $partakings -> Date = date('Y-m-d');
+        $partakings -> save();
+
         redirect("sunday_money/listing");
 
     }//end save

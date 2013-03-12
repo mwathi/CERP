@@ -17,6 +17,8 @@ class Asset_Management extends Controller {
 
     public function add() {
         $data['assetes'] = Asset_Types::getAll();
+        $partakings = Partakings::getAll();
+        $data['partakings'] = $partakings[0];
         $data['title'] = "Asset Management::Add New Asset";
         $data['quick_link'] = "new_asset";
         $data['content_view'] = "asset_registration";
@@ -46,6 +48,7 @@ class Asset_Management extends Controller {
         $salvage = $this -> input -> post("salvage");
         
         $description = $this -> input -> post("description");
+        $opening_balance = $this -> input -> post("opening_balance");
 
         if (strlen($asset_id) > 0) {
             $asset = Assets::getAsset($asset_id);
@@ -81,18 +84,25 @@ class Asset_Management extends Controller {
             $asset -> save();
             
             
+            $buffer = $opening_balance - $asset_cost;
             //create general asset account
             $transaction = new Transactions();
 
             $transaction -> Date = date("Y-m-d");
             $transaction -> Account_Affected_1 = "Fixed Asset";
             $transaction -> Transaction = "Asset Registration: Serial ". $serial_number;
-            $transaction -> Account_Affected_1_Amount = $balance_due;
+            $transaction -> Account_Affected_1_Amount = $asset_cost;
             $transaction -> Account_Affected_1_Operation = "Debit";
             $transaction -> Account_Affected_2 = "Cash";
-            $transaction -> Account_Affected_2_Amount = $balance_due;
+            $transaction -> Account_Affected_2_Amount = $asset_cost;
             $transaction -> Account_Affected_2_Operation = "Credit";
+            $transaction -> Ending_Balance = ($opening_balance - $asset_cost);
             $transaction -> save();
+            
+            $partakings = new Partakings();
+            $partakings -> Transaction_Value = $buffer;
+            $partakings -> Date = date('Y-m-d');
+            $partakings -> save();
             
             redirect("asset_management/listing");
         }//end else

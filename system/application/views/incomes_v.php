@@ -36,8 +36,7 @@
                         <tr>                                                                        
                             <th>Contributions</th>
                             <td></td>
-                            <td><?php echo number_format($contributions -> Sunday_Contributions); ?></td>
-                            <td id="contributions"><? echo $contributions -> Sunday_Contributions ?></td>
+                            <td id="contributions" class=""><? echo $contributions -> Sunday_Contributions ?></td>
                         </tr>
           
                     <tr height="20px"></tr>
