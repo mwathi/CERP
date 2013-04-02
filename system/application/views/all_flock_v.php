@@ -5,11 +5,7 @@ if (isset($totalmembers)) {
     $totalmembers = "";
 }
 ?>
-<script>
-	$(function() {
-		document.getElementById("taxablepay").value = parseInt(document.getElementById("totalbenefits").value) + parseInt(document.getElementById("salary").value);	
-	})
-</script>
+
 <div id="view_content">   
         <br />
     <a class="action_button" id="" href="<?php echo site_url("flock_management/groupListing"); ?>" style="width: 104px; text-align: left">Member Groups</a>

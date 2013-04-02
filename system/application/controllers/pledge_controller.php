@@ -27,6 +27,21 @@ class Pledge_Controller extends Controller {
         $this -> base_params($data);
     }//end listing
 
+    public function receipts() {
+        $data['title'] = "Contribution Receipts";
+        $data['causedata'] = Contributions::getAll();
+        $data['content_view'] = "receipts_v";
+        $this -> base_params($data);
+    }//end listing
+
+    public function issuereceipt($member_number,$date,$cause) {
+        $data['title'] = "Contribution Receipts";
+        $causedata = Contributions::getSpecifiedContribution($member_number,$date,$cause);
+        $data['causedata'] = $causedata[0];
+        $data['content_view'] = "contribution_receipt_v";
+        $this -> base_params($data);
+    }//end listing
+
     public function pledgelisting() {
         $data['title'] = "Pledges";
         $data['causedata'] = Pledges::getAllPledgeData();
@@ -86,7 +101,7 @@ class Pledge_Controller extends Controller {
 
         $transaction -> Date = date("Y-m-d");
         $transaction -> Account_Affected_1 = "Pledges";
-        $transaction -> Transaction = "Pledge towards " . $pledgecause;
+        $transaction -> Transaction = "Pledge by " . $pledgename;
         $transaction -> Account_Affected0_1_Amount = $pledgemade;
         $transaction -> Account_Affected_1_Operation = "Debit";
         $transaction -> Account_Affected_2 = "Cash";
@@ -127,21 +142,21 @@ class Pledge_Controller extends Controller {
 
         $transaction -> Date = date("Y-m-d");
         $transaction -> Account_Affected_1 = "Cash";
-        $transaction -> Transaction = "Contributions towards " . $pledgecause;
-        $transaction -> Account_Affected_1_Amount = $pledge;
+        $transaction -> Transaction = "Contributions dated " . $dateofcontribution . "by " . $pledgename;
+        $transaction -> Account_Affected_1_Amount = $contribution;
         $transaction -> Account_Affected_1_Operation = "Debit";
         $transaction -> Account_Affected_2 = "Pledges";
-        $transaction -> Account_Affected_2_Amount = $pledge;
+        $transaction -> Account_Affected_2_Amount = $contribution;
         $transaction -> Account_Affected_2_Operation = "Credit";
-        $transaction -> Ending_Balance = ($opening_balance + $pledge);
+        $transaction -> Ending_Balance = ($opening_balance + $contribution);
         $transaction -> save();
 
-        $buffer = $opening_balance + $pledge;
+        $buffer = $opening_balance + $contribution;
         $partakings = new Partakings();
         $partakings -> Transaction_Value = $buffer;
         $partakings -> Date = date('Y-m-d');
         $partakings -> save();
-        
+
         redirect("pledge_controller/causelisting");
 
     }//end save

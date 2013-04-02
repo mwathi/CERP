@@ -341,7 +341,7 @@ echo validation_errors('
        
      
      <tr style="height: 20px"></tr>
-     <tr>
+     <!--tr>
          <td>Service Background(Descending Order)</td>
          <table class="othertext">
              <tr>
@@ -359,10 +359,10 @@ echo validation_errors('
                  <td><input type="text" id="designation" /></td>
                  <td><input type="text" id="office" /></td>
                  <td><input type="text" id="city" /></td>
-                              
+                 <td><input type="text" id="city" /></td>             
              </tr>
          </table>
-     </tr>
+     </tr-->
      <div id="space" style="height: 30px"></div>
 
         <tr>

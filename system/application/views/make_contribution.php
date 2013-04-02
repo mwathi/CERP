@@ -22,7 +22,7 @@
                     $(document.getElementById("member_name")).replaceWith('<input type="text" name="member_name" id="member_name"/>');
                     $(this).dialog("close");
                 },
-                "Returning" : function() {
+                "Current" : function() {
                     $(this).dialog("close");
                 }
             }
@@ -67,7 +67,7 @@
 <br />
 
 <div id="view_content">
-    <div id="neworreturning" title="New or Returning Client">Is this a new or returning member?</div>
+    <div id="neworreturning" title="New or Current Member">Is this a new or current member?</div>
     <div align="center" class="othertext">
         
 <?php

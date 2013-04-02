@@ -43,19 +43,19 @@ if (isset($styles)) {
  <a class="header_action_button" id="parents" href="<?php echo site_url("flock_management/listing"); ?>">Members</a>
  <span style="margin-right: 0.1%"></span>
 
-    <a class="header_action_button" id="pledges" href="<?php echo site_url("pledge_controller/causelisting"); ?>">Causes</a>
+
+    
+    <a class="header_action_button" id="assets" href="<?php echo site_url("church_management"); ?>">Church</a>
     <span style="margin-right: 0.1%"></span>
-    <a class="header_action_button" id="assets" href="<?php echo site_url("asset_management"); ?>">Assets</a>
-    <span style="margin-right: 0.1%"></span>
+    
+
     <a class="header_action_button" id="sunday_money" href="<?php echo site_url("sunday_money"); ?>">Tithes and Offerings</a>
     <span style="margin-right: 0.1%"></span>
     
-    <a class="header_action_button" id="journal_entries" href="<?php echo site_url("journal_entries"); ?>">Journal Entries</a>
+    <a class="header_action_button" id="journal_entries" href="<?php echo site_url("journal_entries"); ?>">Financials</a>
     <span style="margin-right: 0.1%"></span>
     
-     <a class="header_action_button" id="journal_entries" href="<?php echo site_url("journal_entries/incomedates"); ?>">Income Statements</a>
-    <span style="margin-right: 0.1%"></span>
-    </div>
+        </div>
     
     
     <div id="main_wrapper"> 

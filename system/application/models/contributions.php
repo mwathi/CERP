@@ -16,6 +16,7 @@ class Contributions extends Doctrine_Record {
     public function setUp() {
         $this -> setTableName('contributions');
         $this -> hasOne('Causes', array('local' => 'Cause', 'foreign' => 'id'));
+        $this -> hasOne('Flock', array('local' => 'Member_Number', 'foreign' => 'Member_Number'));
     }//end setUp
 
     public function getAll() {
@@ -23,6 +24,12 @@ class Contributions extends Doctrine_Record {
         $contributionData = $query -> execute();
         return $contributionData;
     }//end getall
+    
+    public function getSpecifiedContribution($member_number,$date,$cause){
+        $query = Doctrine_Query::create() -> select("*") -> from("contributions") -> where("Member_Number = '$member_number' AND Cause  = '$cause' AND Date_of_Contribution = '$date' ");
+        $contributionData = $query -> execute();
+        return $contributionData;
+    }
 
     public function getAllContributions($member_number, $cause_id) {
         $query = Doctrine_Query::create() -> select("*") -> from("contributions") -> where("Member_Number = '$member_number' AND Cause  = '$cause_id' ");

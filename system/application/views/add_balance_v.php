@@ -15,7 +15,7 @@ echo validation_errors('
 ');
 ?>
 
-
+<input type="hidden" value="<?php echo $transaction_id -> Transaction_Id ?>" name="transaction_id" />
 <style>
     table, select {
         font: .85em "Segoe UI", Segoe, Arial, Sans-Serif;
@@ -35,7 +35,7 @@ echo validation_errors('
 
 
 <br />
-<a class="action_button" id="new_balance" href="<?php echo site_url("balance_management/listing"); ?>">Balances</a>
+<a class="action_button" id="new_balance" href="<?php echo site_url("balances_management/listing"); ?>">Balances</a>
 <input type="hidden" name="balance_id" value = "<?php echo $balance_id; ?>"/>
 <div class="holder" style="margin-top: 50px; width: 500px">
     

@@ -32,13 +32,12 @@
                         <?php
                         }
                     ?>
-   
+                    <input type="hidden" id="totalincomes" />
                         <tr>                                                                        
                             <th>Contributions</th>
                             <td></td>
                             <td id="contributions" class=""><? echo $contributions -> Sunday_Contributions ?></td>
                         </tr>
-          
                     <tr height="20px"></tr>
                     <tr>
                         <th>Less: Expenses</th>
@@ -69,9 +68,21 @@
 </div>
 
 <script>
-	if (document.getElementById('contributions').innerText == '' && (document.getElementById('totalexpenses').value == '' || document.getElementById('totalexpenses').value == 0)) {
-		document.getElementById('net').innerText = parseInt(document.getElementById('sales').value);
+
+if(document.getElementById('contributions').innerText == ''){
+   document.getElementById('totalincomes').value = parseInt(document.getElementById('sales').value);
+} else
+if(document.getElementById('sales').innerText == ''){
+   document.getElementById('totalincomes').value = parseInt(document.getElementById('contributions').value);
+} else{
+    document.getElementById('totalincomes').value =  parseInt(document.getElementById('sales').value) + parseInt(document.getElementById('contributions').value);    
+}
+
+
+	if (document.getElementById('totalincomes').value == '' && (document.getElementById('totalexpenses').value == '' || document.getElementById('totalexpenses').value == 0)) {
+	document.getElementById('net').innerText = '';
 	} else {
-		document.getElementById('net').innerText = (parseInt(document.getElementById('sales').value) + parseInt(document.getElementById('contributions').innerText)) - parseInt(document.getElementById('totalexpenses').value);
+		document.getElementById('net').innerText = parseInt(document.getElementById('totalincomes').value) - parseInt(document.getElementById('totalexpenses').value);
 	}
+	
 </script>

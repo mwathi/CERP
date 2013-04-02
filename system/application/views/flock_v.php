@@ -5,6 +5,7 @@
     <a class="action_button" id="youth" href="<?php echo site_url("flock_management/allYouthListing"); ?>">Youth</a>
     <a class="action_button" id="children" href="<?php echo site_url("flock_management/allChildrenListing"); ?>">Children</a>
     <a class="action_button" id="reports" href="<?php echo site_url("flock_management/allListing"); ?>">Member Reports</a>
+    <a class="action_button" id="pledges" href="<?php echo site_url("pledge_controller/causelisting"); ?>">Causes</a>
     <br />      
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>

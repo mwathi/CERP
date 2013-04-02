@@ -50,10 +50,11 @@ class Flock extends Doctrine_Record {
         $this -> hasOne('Groups', array('local' => 'Member_Group', 'foreign' => 'id'));
         $this -> hasOne('Countries', array('local' => 'Nationality', 'foreign' => 'id'));
         $this -> hasOne('Pledges', array('local' => 'Member_Number', 'foreign' => 'Member_Number'));
+        $this -> hasOne('Contributions', array('local' => 'Member_Number', 'foreign' => 'Member_Number'));
     }//end setUp
 
     public function getAll() {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Member_Number > 1000 ");
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("Member_Number > 10000 ");
         $flockData = $query -> execute();
         return $flockData;
     }//end getall
@@ -131,7 +132,7 @@ class Flock extends Doctrine_Record {
     }
 
     public function getLatestParents($orderitem) {
-        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24") -> orderBy($orderitem) -> limit('10');
+        $query = Doctrine_Query::create() -> select("*") -> from("flock") -> where("(YEAR(CURDATE())-YEAR(Date_of_Birth)) > 24 AND Member_Number > 10000") -> orderBy($orderitem) -> limit('10');
         $flockData = $query -> execute();
         return $flockData;
     }

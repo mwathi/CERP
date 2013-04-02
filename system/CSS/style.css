@@ -249,7 +249,6 @@ input:-moz-placeholder {
 }
 .reporttable td+ td {
 	border-left: 1px solid #CCC;
-	text-align: center;
 }
 .purpleelement{
 	color:#660198;

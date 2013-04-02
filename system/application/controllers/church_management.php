@@ -56,6 +56,18 @@ class Church_Management extends Controller {
             $partakings -> Date = date('Y-m-d');
             
             $partakings -> save();
+            $transaction = new Transactions();
+
+            $transaction -> Date = date("Y-m-d");
+            $transaction -> Transaction = "Opening Balance";
+            $transaction -> Account_Affected_1 = "";
+            $transaction -> Account_Affected_1_Amount = $opening_balance;
+            $transaction -> Account_Affected_1_Operation = "";
+            $transaction -> Account_Affected_2 = "Cash";
+            $transaction -> Account_Affected_2_Amount = 0;
+            $transaction -> Account_Affected_2_Operation = "Credit";
+            $transaction -> Ending_Balance = $opening_balance;
+            $transaction -> save();
             
             redirect("church_management/listing");
         }//end else

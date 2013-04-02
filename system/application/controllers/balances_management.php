@@ -18,6 +18,11 @@ class Balances_Management extends Controller {
     }//end listing
 
     public function add() {
+        $this -> load -> database();
+        $sql = 'Select MAX(Transaction_Id) as Transaction_Id From Balances';
+        $query = $this -> db -> query($sql);
+        $transaction_id = $query -> result();
+        $data['transaction_id'] = $transaction_id[0];
         $data['suppliers'] = Suppliers::getAll();
         $data['title'] = "Balance Management::Add New Balance";
         $data['content_view'] = "add_balance_v";
@@ -29,6 +34,7 @@ class Balances_Management extends Controller {
         $supplier = $this -> input -> post("supplier");
         $balance_due = $this -> input -> post("balance");
         $date_due = $this -> input -> post("date_due");
+        $transaction_id = $this -> input -> post("transaction_id");
 
         if (strlen($balance_id) > 0) {
             $balance = Balances::getBalance($balance_id);
@@ -42,30 +48,40 @@ class Balances_Management extends Controller {
         if ($valid == false) {
             $this -> listing();
         } else {
+
             $balance -> Supplier = $supplier;
             $balance -> Balance_Due = $balance_due;
             $balance -> Date_Created = date('Y-m-d');
             $balance -> Date_Due = $date_due;
+            $balance -> Transaction_Id = $transaction_id + 1;
 
             $balance -> save();
 
             $transaction = new Transactions();
 
             $transaction -> Date = date("Y-m-d");
-            $transaction -> Transaction = "Balance Accrual";
+            if($supplier == 1){
+                $transaction -> Transaction = "Balance Accrual for Electricity";    
+            }else if($supplier == 2){
+                $transaction -> Transaction = "Balance Accrual for Water";
+            }else{
+                $transaction -> Transaction = "Balance Payment";
+            }
+            
             $transaction -> Account_Affected_1 = "Utilities Expense";
             $transaction -> Account_Affected_1_Amount = $balance_due;
             $transaction -> Account_Affected_1_Operation = "Debit";
             $transaction -> Account_Affected_2 = "Accounts Payable";
             $transaction -> Account_Affected_2_Amount = $balance_due;
             $transaction -> Account_Affected_2_Operation = "Credit";
+            $transaction -> Transaction_Id = $transaction_id + 1;
             $transaction -> save();
 
             redirect("balances_management/listing");
         }//end else
     }//end save
 
-    public function pay_balance($id, $balance_due, $partaking) {
+    public function pay_balance($id, $balance_due, $partaking, $transaction_id, $supplier) {
         $this -> load -> database();
         $sql = 'UPDATE balances SET balance_due = 0 WHERE id =' . $id . ' ';
         $query = $this -> db -> query($sql);
@@ -73,14 +89,23 @@ class Balances_Management extends Controller {
         $transaction = new Transactions();
 
         $transaction -> Date = date("Y-m-d");
-        $transaction -> Transaction = "Balance Payment";
+        if($supplier == 1){
+            $transaction -> Transaction = "Balance Payment for Electricity";
+        }else if($supplier == 2){
+            $transaction -> Transaction = "Balance Payment for Water";
+        }else{
+            $transaction -> Transaction = "Balance Payment for";    
+        }
+        
         $transaction -> Account_Affected_1 = "Accounts Payable";
         $transaction -> Account_Affected_1_Amount = $balance_due;
         $transaction -> Account_Affected_1_Operation = "Debit";
         $transaction -> Account_Affected_2 = "Cash";
         $transaction -> Account_Affected_2_Amount = $balance_due;
         $transaction -> Account_Affected_2_Operation = "Credit";
-        $transaction -> Ending_Balance = ($opening_balance - $balance_due);
+        $transaction -> Ending_Balance = ($partaking - $balance_due);
+        $transaction -> Identifier = 1;
+        $transaction -> Transaction_Id = $transaction_id;
         $transaction -> save();
 
         $buffer = $partaking - $balance_due;

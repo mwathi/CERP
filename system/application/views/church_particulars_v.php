@@ -1,5 +1,6 @@
 <br />
 <div id="view_content">
+    <a class="action_button" id="assets" href="<?php echo site_url("asset_management"); ?>">Assets</a>
     <a class="action_button" id="new_church" href="<?php echo site_url("church_management/add"); ?>">New Information</a>
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>
