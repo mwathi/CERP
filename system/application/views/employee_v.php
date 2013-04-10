@@ -1,8 +1,18 @@
+<style>
+     ::-webkit-input-placeholder {
+        text-align: center;
+        font: .88em "Segoe UI", Segoe, Arial, Sans-Serif;
+        font-style: italic
+    }
+</style>
+  
 <div id="view_content">
     <div id="space" style="height: 20px"></div>
-    <a class="action_button" id="new_employee" href="<?php echo site_url("employee_management/add"); ?>">New Employee</a>
-    <a class="action_button" id="" href="<?php echo site_url("benefit_management/listing"); ?>" style="width: 50px">Benefits</a>
-    <a class="action_button" id="" href="<?php echo site_url("payroll_management/listing"); ?>" style="width: 140px">Payroll Information</a>
+    <a class="action_button" id="new_employee" href="<?php echo site_url("employee_management/add"); ?>" style="background-color: #DF00FF">New Employee</a>
+    <a class="action_button" id="" href="<?php echo site_url("benefit_management/listing"); ?>" style="width: 130px">Benefits</a>
+    <a class="action_button" id="" href="<?php echo site_url("job_group_management/listing"); ?>" style="width: 130px">Job Groups</a>
+    <a class="action_button" id="" href="<?php echo site_url("employee_management/qualification_listing"); ?>" style="width: 130px">Qualifications</a>
+    <a class="action_button" id="" href="<?php echo site_url("payroll_management/listing"); ?>" style="width: 130px">Payroll Information</a>
     
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>

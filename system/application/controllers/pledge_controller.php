@@ -50,14 +50,19 @@ class Pledge_Controller extends Controller {
     }//end listing
 
     public function makepledge() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $data['title'] = "Make a Pledge";
         $data['causedata'] = Causes::getAll();
         $data['members'] = Flock::getAll();
         $data['content_view'] = "make_pledge_v";
         $this -> base_params($data);
+        		}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end listing
 
     public function makecontribution() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $data['title'] = "Make a Contribution";
         $data['causedata'] = Causes::getAll();
         $partakings = Partakings::getAll();
@@ -65,16 +70,24 @@ class Pledge_Controller extends Controller {
         $data['members'] = Flock::getAll();
         $data['content_view'] = "make_contribution";
         $this -> base_params($data);
+				}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end listing
 
     public function add() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $data['title'] = "Causes::Add New Cause";
         $data['quick_link'] = "new_cause";
         $data['content_view'] = "add_causes_v";
         $this -> base_params($data);
+				}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function save() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         //$cause_id = $this -> input -> post("cause_id");
         $pledgecause = $this -> input -> post("pledgecause");
         $pledgemade = $this -> input -> post("pledge");
@@ -110,10 +123,13 @@ class Pledge_Controller extends Controller {
         $transaction -> save();
 
         redirect("pledge_controller/causelisting");
-
+				}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function save_contribution() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $pledgecause = $this -> input -> post("pledgecause");
         $pledge = $this -> input -> post("pledgetobesaved");
         $contribution = $this -> input -> post("contribution");
@@ -158,10 +174,13 @@ class Pledge_Controller extends Controller {
         $partakings -> save();
 
         redirect("pledge_controller/causelisting");
-
+				}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function savecause() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $cause_id = $this -> input -> post("cause_id");
         $cause_name = $this -> input -> post("cause_name");
         $description = $this -> input -> post("description");
@@ -182,22 +201,33 @@ class Pledge_Controller extends Controller {
         $cause -> Name = $cause_name;
         $cause -> save();
         redirect("pledge_controller/causelisting");
+				}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function delete($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'delete from flock where id =' . $id . ' ';
         $query = $this -> db -> query($sql);
         redirect("flock_management/listing", "refresh");
+				}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function edit_cause($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $cause = Causes::getcause($id);
         $data['cause'] = $cause[0];
         $data['title'] = "Flock Management";
         $data['content_view'] = "add_causes_v";
         $data['quick_link'] = "new_cause";
         $this -> base_params($data);
+				}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function cause_details($id) {
@@ -230,6 +260,7 @@ class Pledge_Controller extends Controller {
     public function base_params($data) {
         $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");
         $data['scripts'] = array("jquery-ui.js", "jquery.ui.datepicker.js");
+		$data['username'] = $this -> session -> userdata('names');
         $this -> load -> view('template', $data);
     }//end base_params
 

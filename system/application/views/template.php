@@ -8,7 +8,38 @@
 <script src="<?php echo base_url().'system/Scripts/jquery.js'?>" type="text/javascript"></script> 
 <script src="<?php echo base_url().'system/Scripts/jquery-ui.js'?>" type="text/javascript"></script> 
 
+<style>
+    p, select, span {
+        font: .85em "Segoe UI", Segoe, Arial, Sans-Serif;
+    }
+    ::-webkit-input-placeholder, select {
+        font-style: italic;
+    }
+    ::-webkit-input-placeholder {
+        font-size: 12px;
+        text-align: center;
+    }
+    input,select {
+        text-align: center;
+        width: 150px;
+    }
+    .submit {
+        letter-spacing: 1px;
+        text-align: center;
+        color: white;
+        height: 35px;
+        width: 150px;
+        padding: 0 8px;
+        line-height: 15px;
+        border: 1px solid gainsboro;
+        background-color: #660198;
+        cursor: pointer;
+    }
+    .submit:hover {
+        background-color: #9A32CD;
+    }
 
+</style>
 <?php
 $this -> load -> helper(array('form', 'search'));
 if (isset($scripts)) {
@@ -55,6 +86,16 @@ if (isset($styles)) {
     <a class="header_action_button" id="journal_entries" href="<?php echo site_url("journal_entries"); ?>">Financials</a>
     <span style="margin-right: 0.1%"></span>
     
+    
+        <?php 
+    if($username != '' || $username != NULL){
+    ?>
+    <span style="float: right"><span>Welcome, </span><span style="font-weight: bold; color: #660198"><?php echo $username; ?></span></span>	
+    <?php
+	}else{
+		
+	}
+    ?>
         </div>
     
     

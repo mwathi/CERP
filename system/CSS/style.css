@@ -11,6 +11,65 @@ a {
 	text-decoration: none;
 }
 
+#hmsholder {
+	background: whitesmoke;
+	font-family: calibri;
+	font-size: 18px;
+}
+#signinholder {
+	margin-left: 40%;
+	margin-top: 10%;
+	background: whitesmoke;
+	padding: 20px 25px 15px;
+	border: 1px solid #E5E5E5;
+	width: 335px;
+}
+.holder {
+	margin-left: 35%;
+	padding: 25px;
+	background: whitesmoke;
+	border: 1px solid #E5E5E5;
+	display: block;
+	width: 362px
+}
+.othertext {
+	font-family: calibri;
+	font-size: 16px;
+}
+.signintitle {
+	font-family: calibri;
+	font-size: 20px;
+}
+.signininput {
+	width: 100%;
+	height: 32px;
+	font-size: 15px;
+}
+
+.greenbutton {
+	margin: 0 1.5em 1.2 em 0;
+	line-height: 29px;
+	vertical-align: bottom;
+	border: 1px solid #50A6C2;
+	color: black;
+	text-shadow: 0 1px rgba(0,0,0,0.3);
+	background-color: rgb(247,247,13);
+	display: inline-block;
+	min-width: 46px;
+	text-align: center;
+	font-weight: bold;
+	padding: 0 8px;
+	border-radius: 2px;
+	cursor: pointer;
+	font-size: 13px;
+	-webkit-transition: background-color 0.25s;
+	-moz-transition: background-color 0.25s;
+	-o-transition: background-color 0.25s;
+	transition: background-color 0.25s;
+}
+.greenbutton:hover {
+	background-color: rgb(186,247,17);
+}
 #space {
 	height: 5px;
 }

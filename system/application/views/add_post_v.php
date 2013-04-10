@@ -35,15 +35,6 @@ echo validation_errors('
             ?></td>
         </tr>
 
-         <tr>
-            <td>Pay</td>
-            <td><?php
-
-            $data_search = array('name' => 'pay', 'id' => 'pay', 'value' => $pay, 'class' => 'othertext');
-            echo form_input($data_search);
-            ?></td>
-        </tr>
-        
         <tr>
             <td>Description</td>
              <td><?php

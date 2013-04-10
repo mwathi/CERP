@@ -66,8 +66,8 @@ class Journal_Entries extends Controller {
         $this -> base_params($data);
     }//end listing
 
-    public function balancesheets($monthNumber) {
-        $partakings = Partakings::getAll();
+    public function balancesheets() {
+        $partakings = Church_Particulars::getEquity();
         $data['partakings'] = $partakings[0];
 
         $this -> load -> database();
@@ -98,10 +98,10 @@ class Journal_Entries extends Controller {
 
         //fixed assets//
         $fixedassetsql = "SELECT SUM(account_affected_1_amount) AS Property, account_affected_1 AS Account  FROM transactions WHERE account_affected_1 IN (SELECT name FROM accounts WHERE type = 'Fixed Asset Account' OR type = 'Furniture and Equipment') GROUP BY Account";
-        $fixedassetquery = $this -> db -> query($fixedassetsql, array($monthNumber));
+        $fixedassetquery = $this -> db -> query($fixedassetsql);
 
         $fixedassettotalsql = "SELECT SUM(account_affected_1_amount) AS Total FROM transactions WHERE account_affected_1 IN (SELECT name FROM accounts WHERE type = 'Fixed Asset Account' OR type = 'Furniture and Equipment')";
-        $fixedassetTotalQuery = $this -> db -> query($fixedassettotalsql, array($monthNumber));
+        $fixedassetTotalQuery = $this -> db -> query($fixedassettotalsql);
         $fixedassetTotal = $fixedassetTotalQuery -> result();
         $data['fixedassetTotal'] = $fixedassetTotal[0];
         $data['fixedassets'] = $fixedassetquery -> result();
@@ -113,7 +113,7 @@ class Journal_Entries extends Controller {
         $assetTotal = $assetTotalQuery -> result();
         $data['assetTotal'] = $assetTotal[0];
 
-        $data['title'] = "BS Information::BS for " . date('F', strtotime($monthNumber));
+        $data['title'] = "BS Information";
         $data['content_view'] = "balance_sheet_v";
         $this -> base_params($data);
     }//end listing
@@ -140,7 +140,7 @@ class Journal_Entries extends Controller {
 
     public function transactions() {
         $this -> load -> database();
-        $transactionsql = "SELECT * FROM transactions WHERE account_affected_2 = 'Cash' OR account_affected_2 = 'Offerings' OR account_affected_2 = 'Pledges' AND account_affected_2_operation = 'Credit' ";
+        $transactionsql = "SELECT * FROM transactions WHERE account_affected_1 = 'Capital'";
         $transactionquery = $this -> db -> query($transactionsql);
         $transaction = $transactionquery -> result();
         $data['transaction'] = $transaction;
@@ -248,6 +248,7 @@ class Journal_Entries extends Controller {
     public function base_params($data) {
         $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");
         $data['scripts'] = array("jquery-ui.js");
+		$data['username'] = $this -> session -> userdata('names');
         $this -> load -> view('template', $data);
     }//end base_params
 

@@ -15,7 +15,7 @@ echo validation_errors('
 <p class="error">', '</p>
 ');
 ?>
-
+<br />
 <a class="action_button" id="new_qualification" href="<?php echo site_url("employee_management/qualification_listing"); ?>">Qualifications</a>
 <input type="hidden" name="qualification_id" value = "<?php echo $qualification_id; ?>"/>
 <div class="holder" style="margin-top: 50px; width: 500px">

@@ -17,14 +17,19 @@ class Job_Group_Management extends Controller {
     }//end listing
 
     public function add() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $data['benefits'] = Benefits::getAll();
         $data['title'] = "Job Group Management::Add New Group";
         $data['quick_link'] = "new_group";
         $data['content_view'] = "add_job_group_v";
         $this -> base_params($data);
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function save() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $group_name = $this -> input -> post("group_name");
         $description = $this -> input -> post("description");
         $salary = $this -> input -> post("salary");
@@ -43,23 +48,33 @@ class Job_Group_Management extends Controller {
         }
 
         redirect("job_group_management/listing");
-
+        }else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function delete($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'delete from job_groups where id =' . $id . ' ';
         $query = $this -> db -> query($sql);
         redirect("job_group_management/listing", "refresh");
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function edit_group($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $group = Job_Groups::getGroup($id);
         $data['group'] = $group[0];
         $data['title'] = "Job Group Management";
         $data['content_view'] = "add_job_group_v";
         $data['quick_link'] = "new_group";
         $this -> base_params($data);
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function manage_group($job_group) {
@@ -82,6 +97,7 @@ class Job_Group_Management extends Controller {
     public function base_params($data) {
         $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");
         $data['scripts'] = array("jquery-ui.js");
+		$data['username'] = $this -> session -> userdata('names');
         $this -> load -> view('template', $data);
     }//end base_params
 

@@ -16,6 +16,7 @@ class Asset_Management extends Controller {
     }//end listing
 
     public function add() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $data['assetes'] = Asset_Types::getAll();
         $partakings = Partakings::getAll();
         $data['partakings'] = $partakings[0];
@@ -23,9 +24,13 @@ class Asset_Management extends Controller {
         $data['quick_link'] = "new_asset";
         $data['content_view'] = "asset_registration";
         $this -> base_params($data);
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function save() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $asset_id = $this -> input -> post("asset_id");
         $asset_name = $this -> input -> post("asset_name");
         
@@ -106,16 +111,24 @@ class Asset_Management extends Controller {
             
             redirect("asset_management/listing");
         }//end else
+        }else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function delete($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'delete from assets where id =' . $id . ' ';
         $query = $this -> db -> query($sql);
         redirect("asset_management/listing", "refresh");
+		 }else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function edit_asset($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $data['assetes'] = Asset_Types::getAll();
         $asset = Assets::getAsset($id);
         $data['asset'] = $asset[0];
@@ -123,6 +136,9 @@ class Asset_Management extends Controller {
         $data['content_view'] = "asset_registration";
         $data['quick_link'] = "new_asset";
         $this -> base_params($data);
+		 }else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function manage_asset($id) {
@@ -143,6 +159,7 @@ class Asset_Management extends Controller {
     public function base_params($data) {
         $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");
         $data['scripts'] = array("jquery-ui.js");
+		$data['username'] = $this -> session -> userdata('names');
         $this -> load -> view('template', $data);
     }//end base_params
 

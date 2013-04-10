@@ -108,6 +108,7 @@ echo validation_errors('
 
 
 <input type="hidden" name="member_id" value = "<?php echo $member_id; ?>"/>
+<br />
 <div class="holder" style="width: 1100px; margin-left: 10%" align="center">
     <table class="segoe">        
         <tr>

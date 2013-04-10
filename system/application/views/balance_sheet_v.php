@@ -26,16 +26,16 @@
                         <?php
                         echo "<tr>
                         
-                        <td style=border-bottom:0></td><td>Equity</td><td><a href='" . base_url() . "journal_entries/transactions/' >" . $partakings -> Transaction_Value . "</a></td>
+                        <td style=border-bottom:0></td><td>Equity</td><td><a href='" . base_url() . "journal_entries/transactions/' >" . $partakings -> Opening_Balance . "</a></td>
                         
                         </tr>";
-                        echo "<tr><td></td><td>Total</td><td id=partakings>" . $partakings -> Transaction_Value . "</td></tr>";
+                        echo "<tr><td></td><td>Total</td><td id=partakings>" . $partakings -> Opening_Balance . "</td></tr>";
                         ?>
                     
             <tr>
                 <th>Other Current Assets</th><th></th><th></th>
             </tr>
-                           <tr><td style="border-bottom: 0"></td><td>Undeposited Funds</td><td id="currentassets">0</td></tr>
+                           <tr><td style="border-bottom: 0"></td><td>Undeposited Funds</td><td id="currentassets"><?= $incomeTotal -> Total ?></td></tr>
                         <tr><td style="border-bottom: 0"></td><td>Property, Furniture and Equipment</td><td id="fixedassets"><a href="<?php echo base_url().'journal_entries/asset_transactions/'?>"><?=$fixedassetTotal -> Total ?></a> </td></tr>                       
                         <tr><td style="border-bottom: 0"></td><td>Total</td><td id="totalassets"></td></tr>
             <tr>

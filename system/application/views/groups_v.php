@@ -1,3 +1,4 @@
+<br />
 <div id="view_content">
     <a class="action_button" id="new_group" href="<?php echo site_url("group_management/add"); ?>">New Group</a>
     <div align="center">

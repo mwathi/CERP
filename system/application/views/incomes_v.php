@@ -36,7 +36,7 @@
                         <tr>                                                                        
                             <th>Contributions</th>
                             <td></td>
-                            <td id="contributions" class=""><? echo $contributions -> Sunday_Contributions ?></td>
+                            <td id="contributions" class=""><?php echo $contributions -> Sunday_Contributions ?></td>
                         </tr>
                     <tr height="20px"></tr>
                     <tr>
@@ -53,7 +53,7 @@
                        
                             <?php
                                 foreach ($expenseTotal as $totalExpense) {?>
-                                    <td><? echo "<b>(" . number_format($totalExpense -> Total) . ")</b>"; ?>
+                                    <td><?php echo "<b>(" . number_format($totalExpense -> Total) . ")</b>"; ?>
                                     </td><input id="totalexpenses" type="hidden" value="<?=$totalExpense -> Total ?>" />
                                     <?php } ?>
                             

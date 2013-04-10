@@ -16,6 +16,7 @@ class Employee_Management extends Controller {
     }//end listing
 
     public function add() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'Select MAX(Employee_Number) as Employee_Number From Employee';
         $query = $this -> db -> query($sql);
@@ -29,6 +30,9 @@ class Employee_Management extends Controller {
         $data['quick_link'] = "new_employee";
         $data['content_view'] = "add_employee_v";
         $this -> base_params($data);
+			}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function searchEmployee($name) {
@@ -43,6 +47,7 @@ class Employee_Management extends Controller {
     }
 
     public function save() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $employee_number = $this -> input -> post("employee_number");
         $employment_status = $this -> input -> post("employment_status");
         $groups = $this -> input -> post("groups");
@@ -139,6 +144,9 @@ class Employee_Management extends Controller {
             $employee -> save();
             redirect("employee_management/listing");
         }//end else
+        	}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     private function _validate_submission() {
@@ -147,13 +155,18 @@ class Employee_Management extends Controller {
     }//end validate_submission
 
     public function delete($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'delete from employee  where id =' . $id . ' ';
         $query = $this -> db -> query($sql);
         redirect("employee_management/listing", "refresh");
+			}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function edit_employee($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'Select MAX(Employee_Number) as Employee_Number From Employee';
         $query = $this -> db -> query($sql);
@@ -170,6 +183,9 @@ class Employee_Management extends Controller {
         $data['content_view'] = "add_employee_v";
         $data['quick_link'] = "new_employee";
         $this -> base_params($data);
+			}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function manage_employee($id) {
@@ -195,6 +211,7 @@ class Employee_Management extends Controller {
     }
 
     public function savebenefits() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $employee_benefits = $this -> input -> post("benefit");
         $employee_id = $this -> input -> post("employee_id");
         $i = 0;
@@ -207,6 +224,9 @@ class Employee_Management extends Controller {
         }
 
         redirect("employee_management/listing");
+			}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function qualification_listing() {
@@ -217,6 +237,7 @@ class Employee_Management extends Controller {
     }
 
     public function savequalifications() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $qualification_name = $this -> input -> post("qualification_name");
         $description = $this -> input -> post("description");
 
@@ -226,13 +247,20 @@ class Employee_Management extends Controller {
         $qualification -> save();
 
         redirect("employee_management/qualification_listing");
+			}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function add_qualifications() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $data['title'] = "Employee Management::Add New Qualification";
         $data['quick_link'] = "new_qualification";
         $data['content_view'] = "add_qualifications_v";
         $this -> base_params($data);
+			}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function payroll($id, $job_group) {
@@ -268,6 +296,7 @@ class Employee_Management extends Controller {
     public function base_params($data) {
         $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");
         $data['scripts'] = array("jquery-ui.js");
+		$data['username'] = $this -> session -> userdata('names');
         $this -> load -> view('template', $data);
     }//end base_params
 

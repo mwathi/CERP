@@ -18,6 +18,7 @@ class Balances_Management extends Controller {
     }//end listing
 
     public function add() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'Select MAX(Transaction_Id) as Transaction_Id From Balances';
         $query = $this -> db -> query($sql);
@@ -27,9 +28,13 @@ class Balances_Management extends Controller {
         $data['title'] = "Balance Management::Add New Balance";
         $data['content_view'] = "add_balance_v";
         $this -> base_params($data);
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function save() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $balance_id = $this -> input -> post("balance_id");
         $supplier = $this -> input -> post("supplier");
         $balance_due = $this -> input -> post("balance");
@@ -79,9 +84,13 @@ class Balances_Management extends Controller {
 
             redirect("balances_management/listing");
         }//end else
+        }else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function pay_balance($id, $balance_due, $partaking, $transaction_id, $supplier) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'UPDATE balances SET balance_due = 0 WHERE id =' . $id . ' ';
         $query = $this -> db -> query($sql);
@@ -115,6 +124,9 @@ class Balances_Management extends Controller {
         $partakings -> save();
 
         redirect("balances_management/listing", "refresh");
+        }else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     private function _validate_submission() {
@@ -123,17 +135,22 @@ class Balances_Management extends Controller {
     }//end validate_submission
 
     public function edit_balance($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $data['suppliers'] = Suppliers::getAll();
         $balance = Balances::getBalance($id);
         $data['balance'] = $balance[0];
         $data['title'] = "Balance Management";
         $data['content_view'] = "add_balance_v";
         $this -> base_params($data);
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function base_params($data) {
         $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");
         $data['scripts'] = array("jquery-ui.js", "jquery.ui.datepicker.js");
+		$data['username'] = $this -> session -> userdata('names');
         $this -> load -> view('template', $data);
     }//end base_params
 

@@ -1,3 +1,4 @@
+<br />
 <div id="view_content">
     <a class="action_button" id="new_user" href="<?php echo site_url("user_management/add"); ?>">New User</a>
     <div align="center">

@@ -1,4 +1,5 @@
 <div id="view_content">
+	<br />
     <a class="action_button" id="new_benefit" href="<?php echo site_url("benefit_management/add"); ?>">New Benefit</a>
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>

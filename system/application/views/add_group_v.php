@@ -14,7 +14,7 @@ echo validation_errors('
 <p class="error">', '</p>
 ');
 ?>
-
+<br />
 <a class="action_button" id="new_employee" href="<?php echo site_url("group_management/listing"); ?>">Groups</a>
 <input type="hidden" name="group_id" value = "<?php echo $group_id; ?>"/>
 <div class="holder" style="margin-top: 50px; width: 500px">

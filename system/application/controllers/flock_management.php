@@ -73,6 +73,7 @@ class Flock_Management extends Controller {
         $data['parentmembers'] = Flock::getLatestParents($orderitem);
         $data['youthmembers'] = Flock::getLatestYouth();
         $data['childrenmembers'] = Flock::getLatestChildren();
+        $data['username'] = $this -> session -> userdata('names');
         $data['title'] = "Flock Management::All Flock";
         $data['content_view'] = "flock_v";
         $this -> base_params($data);
@@ -147,6 +148,7 @@ class Flock_Management extends Controller {
     }//end listing
 
     public function add() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'Select MAX(Member_Number) as Member_Number From Flock';
         $query = $this -> db -> query($sql);
@@ -160,9 +162,13 @@ class Flock_Management extends Controller {
         $data['quick_link'] = "new_category";
         $data['content_view'] = "add_flock_v";
         $this -> base_params($data);
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function save() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $parentyesno = 0;
         $i = 0;
 
@@ -307,13 +313,20 @@ class Flock_Management extends Controller {
         }
 
         redirect("flock_management/listing");
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function delete($id) {
+        if($this -> session -> userdata('username') == 'dmwathi'){	
         $this -> load -> database();
         $sql = 'delete from flock where id =' . $id . ' ';
         $query = $this -> db -> query($sql);
         redirect("flock_management/listing", "refresh");
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function order($orderitem) {
@@ -327,6 +340,7 @@ class Flock_Management extends Controller {
     }//end save
 
     public function edit_member($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $member = Flock::getMember($id);
         $data['parents'] = Flock::getParents();
         $data['member_groups'] = Groups::getAll();
@@ -335,6 +349,9 @@ class Flock_Management extends Controller {
         $data['content_view'] = "add_flock_v";
         $data['quick_link'] = "new_flock";
         $this -> base_params($data);
+        }else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function manage_member($member_number) {
@@ -391,6 +408,7 @@ class Flock_Management extends Controller {
     public function base_params($data) {
         $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");
         $data['scripts'] = array("jquery-ui.js", "jquery.ui.datepicker.js");
+		$data['username'] = $this -> session -> userdata('names');
         $this -> load -> view('template', $data);
     }//end base_params
 

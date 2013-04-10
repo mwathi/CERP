@@ -1,11 +1,39 @@
+<style>
+    input, p, select, span {
+        font: .85em "Segoe UI", Segoe, Arial, Sans-Serif;
+    }
+    ::-webkit-input-placeholder, select {
+        font-style: italic;
+    }
+    ::-webkit-input-placeholder {
+        font-size: 12px;
+        text-align: center;
+    }
+    input,select {
+        text-align: center;
+        width: 150px;
+    }
+
+</style>
 
 <div id="view_content">
-        <div id="space" style="height: 20px"></div> 
+    <div id="space" style="height: 20px"></div>
+
     <a class="action_button" id="parents" href="<?php echo site_url("flock_management/allParentsListing"); ?>">Adults</a>
     <a class="action_button" id="youth" href="<?php echo site_url("flock_management/allYouthListing"); ?>">Youth</a>
     <a class="action_button" id="children" href="<?php echo site_url("flock_management/allChildrenListing"); ?>">Children</a>
+    <a class="action_button" id="pledges" href="<?php echo site_url("group_management/listing"); ?>">Groups</a>
     <a class="action_button" id="reports" href="<?php echo site_url("flock_management/allListing"); ?>">Member Reports</a>
-    <a class="action_button" id="pledges" href="<?php echo site_url("pledge_controller/causelisting"); ?>">Causes</a>
+    <a class="action_button" id="causes" href="<?php echo site_url("pledge_controller/causelisting"); ?>">Causes</a>
+     <?php 
+    if($username != '' || $username != NULL){
+    ?>
+    <a class="action_button" id="pledges" href="<?php echo site_url("home_controller/log_out"); ?>">Logout</a>	
+    <?php
+	}else{
+	}
+    ?>
+    
     <br />      
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>

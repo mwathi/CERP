@@ -1,6 +1,9 @@
 <br />
 <div id="view_content">
     <a class="action_button" id="assets" href="<?php echo site_url("asset_management"); ?>">Assets</a>
+    <a class="action_button" id="assets" href="<?php echo site_url("balances_management"); ?>">Balances</a>
+    <a class="action_button" id="assets" href="<?php echo site_url("supplier_management"); ?>">Suppliers</a>
+    <a class="action_button" id="assets" href="<?php echo site_url("account_management"); ?>">Accounts</a>
     <a class="action_button" id="new_church" href="<?php echo site_url("church_management/add"); ?>">New Information</a>
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>

@@ -16,15 +16,20 @@ class Cheque_Management extends Controller {
     }//end listing
 
     public function add() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $partakings = Partakings::getAll();
         $data['partakings'] = $partakings[0];
         $data['banks'] = Banks::getAll();
         $data['title'] = "Cheque Management::Add New Cheque";
         $data['content_view'] = "add_cheque_v";
         $this -> base_params($data);
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     public function save() {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $cheque_id = $this -> input -> post("cheque_id");
         $bank = $this -> input -> post("bank");
         $cheque_number = $this -> input -> post("cheque_number");
@@ -71,21 +76,32 @@ class Cheque_Management extends Controller {
             $partakings -> save();
             redirect("cheque_management/listing");
         }//end else
+        }else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function delete($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $this -> load -> database();
         $sql = 'delete from cheques where id =' . $id . ' ';
         $query = $this -> db -> query($sql);
         redirect("cheque_management/listing", "refresh");
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }//end save
 
     public function edit_cheque($id) {
+    	if($this -> session -> userdata('username') == 'dmwathi'){
         $cheque = Cheques::getCheque($id);
         $data['cheque'] = $cheque[0];
         $data['title'] = "Cheque Management";
         $data['content_view'] = "add_cheque_v";
         $this -> base_params($data);
+		}else{
+			$this -> load -> view('restricted_v');
+		}
     }
 
     private function _validate_submission() {
@@ -96,6 +112,7 @@ class Cheque_Management extends Controller {
     public function base_params($data) {
         $data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");
         $data['scripts'] = array("jquery-ui.js");
+		$data['username'] = $this -> session -> userdata('names');
         $this -> load -> view('template', $data);
     }//end base_params
 

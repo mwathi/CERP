@@ -26,7 +26,7 @@ echo validation_errors('
 <p class="error">', '</p>
 ');
 ?>
-
+<br />
 <a class="action_button" id="supplier" href="<?php echo site_url("supplier_management/listing"); ?>">Suppliers</a>
 <input type="hidden" name="supplier_id" value = "<?php echo $supplier_id; ?>"/>
 <div class="holder" style="margin-top: 50px; width: 500px">

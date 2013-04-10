@@ -88,8 +88,8 @@ echo validation_errors('
         </tr>      
         <tr>
             <td>Work Status </td>
-            <td><select name="employment_status" id="employment_status" class="othertext">
-                <option value="" selected>Select Status</option>
+            <td><select name="employment_status" id="employment_status" class="othertext" required>
+                <option value="" selected>Select Work Status</option>
                 <option value="Permanent">Contract</option>
                 <option value="Permanent">Permanent</option>
                 <option value="Daily Wages">Daily Wages</option>

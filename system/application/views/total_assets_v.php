@@ -86,13 +86,6 @@ $(document).ready(function(){
               </tr>";
             }
             ?>
-            <tr>
-                <th>Total</th>
-                <th></th>
-                <td id="totalotherdebits"></td>
-                <td></td>
-                <td id="totalotherbalance"></td>
-            </tr>
         </table>
     </div>
 </div>
@@ -102,16 +95,6 @@ $(document).ready(function(){
     $(function(){
         document.getElementById("totalbalance").innerText = parseInt(document.getElementById("totaldebit").innerText) - parseInt(document.getElementById("totalcredit").innerText);
         $("#totalbalance").css("font-weight","bold");
-        $(function(){
-            var sum = 0;
-            var column2 = $('.otherdebits')
-            jQuery.each(column2,function(number){
-            sum += parseInt($(this).html());
-            });
-            $('#totalotherdebits').html("<b>" + sum + "</b>");
-            $("#totalotherbalance").text($("#totalotherdebits").text());
-            $("#totalotherbalance").css("font-weight","bold")
-            });
          
     })
 </script>

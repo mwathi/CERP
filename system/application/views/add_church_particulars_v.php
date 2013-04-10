@@ -116,6 +116,8 @@ echo validation_errors('
             echo form_input($data_search);
             ?></td>
         </tr>
+        
+        <input type="hidden" value="<?=$partakings -> Transaction_Value;?>" name="opening_opening_balance" />
 
         
         <tr>
