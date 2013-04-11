@@ -9,7 +9,7 @@ if (isset($employee)) {
     $technical_qualifications = $employee -> Technical_Qualifications;
     $number_of_children = $employee -> Number_of_Children;
     $spouse = $employee -> Spouse;
-    $bank_name = $employee -> Bank_Name;
+    $bank_name = $employee -> Bank;
     $account_number = $employee -> Account_Number;
     
     
@@ -249,7 +249,7 @@ echo validation_errors('
      
        <tr>
             <td>Professional Qualifications</td>
-            <td><select name="professional_qualifications" id="professional_qualifications" multiple="multiple">
+            <td><select name="professional_qualifications" id="professional_qualifications">
                 <option value="">Select Qualification</option>
                 <?php
                 foreach ($qualifications as $qualification) {

@@ -89,7 +89,7 @@
             </tr>
             
              <tr>
-                <th>Bank Details: </th><td><input type="text" style="border: 0" readonly="" value="<?php echo $employee -> Bank_Name; ?>" name="bank_details"/></td>
+                <th>Bank Details: </th><td><input type="text" style="border: 0" readonly="" value="<?php echo $employee -> Banks -> Name; ?>" name="bank_details"/></td>
                 
             </tr>
             

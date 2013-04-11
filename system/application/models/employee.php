@@ -13,7 +13,7 @@ class Employee extends Doctrine_Record {
         $this -> hasColumn('Technical_Qualifications', 'varchar', 250);
         $this -> hasColumn('Number_of_Children', 'int', 2);
         $this -> hasColumn('Spouse', 'varchar', 40);
-        $this -> hasColumn('Bank_Name', 'varchar', 40);
+        $this -> hasColumn('Bank', 'varchar', 40);
         $this -> hasColumn('Account_Number', 'varchar', 25);
         $this -> hasColumn('Schools_Attended', 'varchar', 250);
         $this -> hasColumn('Contact_Telephone', 'varchar', 20);
@@ -29,6 +29,7 @@ class Employee extends Doctrine_Record {
         $this -> hasColumn('Job_Group', 'varchar', 15);
         $this -> hasColumn('Pension_Fund_Number', 'varchar', 25);
         $this -> hasColumn('Academic_Qualifications', 'varchar', 200);
+		$this -> hasColumn('Professional_Qualifications', 'varchar', 80);
         $this -> hasColumn('Bank_Branch', 'varchar', 40);
 
         $this -> hasColumn('Date_Created', 'timestamp');
@@ -39,8 +40,9 @@ class Employee extends Doctrine_Record {
         $this -> setTableName('employee');
         $this -> hasOne('Posts', array('local' => 'Post', 'foreign' => 'id'));
         $this -> hasOne('Job_Groups', array('local' => 'Job_Group', 'foreign' => 'Job_Group'));
-        $this -> hasOne('Qualifications', array('local' => 'Technical_Qualifications', 'foreign' => 'id'));
+        $this -> hasOne('Qualifications', array('local' => 'Professional_Qualifications', 'foreign' => 'id'));
         $this -> hasOne('Payroll', array('local' => 'Employee_Number', 'foreign' => 'Employee_Number'));
+		$this -> hasOne('Banks', array('local' => 'Bank', 'foreign' => 'id'));
     }//end setUp
 
     public function getAll() {

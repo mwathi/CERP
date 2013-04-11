@@ -65,14 +65,7 @@ class Balances_Management extends Controller {
             $transaction = new Transactions();
 
             $transaction -> Date = date("Y-m-d");
-            if($supplier == 1){
-                $transaction -> Transaction = "Balance Accrual for Electricity";    
-            }else if($supplier == 2){
-                $transaction -> Transaction = "Balance Accrual for Water";
-            }else{
-                $transaction -> Transaction = "Balance Payment";
-            }
-            
+            $transaction -> Transaction = "Balance Payment";
             $transaction -> Account_Affected_1 = "Utilities Expense";
             $transaction -> Account_Affected_1_Amount = $balance_due;
             $transaction -> Account_Affected_1_Operation = "Debit";

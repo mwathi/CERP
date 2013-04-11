@@ -3,6 +3,7 @@
         <a class="action_button" id="" href="<?php echo site_url("pledge_controller/pledgelisting"); ?>" style="width: 150px">View Pledges Report</a>
     <a class="action_button" id="pledges" href="<?php echo site_url("pledge_controller/makepledge"); ?>" style="width: 100px">Make a Pledge</a>
     <a class="action_button" id="pledges" href="<?php echo site_url("pledge_controller/makecontribution"); ?>" style="width: 135px">Make a Contribution</a>
+    <a class="action_button" id="pledges" href="<?php echo site_url("pledge_controller/makechequecontribution"); ?>" style="width: 175px">Make cheque Contribution</a>
     <a class="action_button" id="new_pledge" href="<?php echo site_url("pledge_controller/add"); ?>" style="width: 100px">New Cause</a>
     <div align="center">
         <?php echo validation_errors('<p class="error">', '</p>'); ?>

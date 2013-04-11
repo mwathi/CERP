@@ -59,17 +59,17 @@ class Cheque_Management extends Controller {
             
             $transaction = new Transactions();
             $transaction -> Date = date("Y-m-d");
-            $transaction -> Account_Affected_1 = "XXX";
+            $transaction -> Account_Affected_1 = "Accounts Payable";
             $transaction -> Transaction = "Cheque Payment towards " . $issued_to;
             $transaction -> Account_Affected_1_Amount = $amount;
             $transaction -> Account_Affected_1_Operation = "Debit";
             $transaction -> Account_Affected_2 = "Bank";
             $transaction -> Account_Affected_2_Amount = $amount;
             $transaction -> Account_Affected_2_Operation = "Credit";
-            $transaction -> Ending_Balance = $opening_balance;
+            $transaction -> Ending_Balance = $opening_balance - $amount;
             $transaction -> save();
 
-            $buffer = $opening_balance;
+            $buffer = $opening_balance - $amount;
             $partakings = new Partakings();
             $partakings -> Transaction_Value = $buffer;
             $partakings -> Date = date('Y-m-d');

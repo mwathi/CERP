@@ -129,6 +129,8 @@ class Asset_Management extends Controller {
 
     public function edit_asset($id) {
     	if($this -> session -> userdata('username') == 'dmwathi'){
+    		$partakings = Partakings::getAll();
+        $data['partakings'] = $partakings[0];
         $data['assetes'] = Asset_Types::getAll();
         $asset = Assets::getAsset($id);
         $data['asset'] = $asset[0];

@@ -146,6 +146,7 @@ echo validation_errors('
 			<br />
 			<br />
 			<br />
+			<input type="hidden" value="<?=$partakings -> Transaction_Value;?>" name="opening_balance" />
 			<input type="submit" class="submit" />
 
 		</div>
@@ -162,11 +163,11 @@ echo validation_errors('
 
             dataType : 'json',
             success : function(data) {
-                var phone = data[11];
+                var phone = data[6];
                 var member_number = data[1];
-                var address = data[2];
-                var email = data[19];
-                var name = data[3] + " " + data[4] + " " + data[5];
+                var address = data[30];
+                var email = data[31];
+                var name = data[2] + " " + data[3] + " " + data[4];
 
                 document.getElementById('pledgeemail').value = email;
                 document.getElementById('pledgename').value = name;

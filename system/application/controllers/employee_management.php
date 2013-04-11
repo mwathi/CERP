@@ -79,6 +79,7 @@ class Employee_Management extends Controller {
         $nhif_number = $this -> input -> post("nhif_number");
         $pension_fund_number = $this -> input -> post("pension_fund_number");
         $academic_qualifications = $this -> input -> post("academic_qualifications");
+		$professional_qualifications = $this -> input -> post("professional_qualifications");
         $bank_branch = $this -> input -> post("bank_branch");
 
         $datefrom = $this -> input -> post("datefrom");
@@ -106,11 +107,11 @@ class Employee_Management extends Controller {
             $employee -> KRA_PIN = $kra_pin;
             $employee -> Mailing_Address = $mailing_address;
             $employee -> Religion = $religion;
-
+			$employee -> Professional_Qualifications = $professional_qualifications; 
             $employee -> Technical_Qualifications = $technical_qualifications;
             $employee -> Number_of_Children = $number_of_children;
             $employee -> Spouse = $spouse;
-            $employee -> Bank_Name = $bank_name;
+            $employee -> Bank = $bank_name;
             $employee -> Account_Number = $account_number;
             $employee -> Schools_Attended = $schools_attended;
             $employee -> Contact_Telephone = $contact_telephone;

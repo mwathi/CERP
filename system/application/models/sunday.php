@@ -107,7 +107,7 @@ class Sunday extends Doctrine_Record {
         return $sundayData;
     }
 
-    public function getSundayTotal($date) {
+    public function getSundayTotal($date,$id) {
         $query = Doctrine_Query::create() -> select("SUM(Thousand_Youth + Five_Hundred_Youth + Two_Hundred_Youth + Hundred_Youth + Fifty_Youth + Twenty_Youth + Ten_Youth + Five_Youth + One_Youth 
         + Thousand_Teens + Five_Hundred_Teens + Two_Hundred_Teens + Hundred_Teens + Fifty_Teens + Twenty_Teens + Ten_Teens + Five_Teens + One_Teens
          + Thousand_Sunday_School + Five_Hundred_Sunday_School + Two_Hundred_Sunday_School + Hundred_Sunday_School + Fifty_Sunday_School + Twenty_Sunday_School + Ten_Sunday_School + Five_Sunday_School + One_Sunday_School
@@ -115,7 +115,7 @@ class Sunday extends Doctrine_Record {
            + Thousand_Swahili_Service + Five_Hundred_Swahili_Service + Two_Hundred_Swahili_Service + Hundred_Swahili_Service + Fifty_Swahili_Service + Twenty_Swahili_Service + Ten_Swahili_Service + Five_Swahili_Service + One_Swahili_Service
             + Thousand_Monthly_Pledge + Five_Hundred_Monthly_Pledge + Two_Hundred_Monthly_Pledge + Hundred_Monthly_Pledge + Fifty_Monthly_Pledge + Twenty_Monthly_Pledge + Ten_Monthly_Pledge + Five_Monthly_Pledge + One_Monthly_Pledge
              + Thousand_Thanksgiving + Five_Hundred_Thanksgiving + Two_Hundred_Thanksgiving + Hundred_Thanksgiving + Fifty_Thanksgiving + Twenty_Thanksgiving + Ten_Thanksgiving + Five_Thanksgiving + One_Thanksgiving
-              + Thousand_Tithe + Five_Hundred_Tithe + Two_Hundred_Tithe + Hundred_Tithe + Fifty_Tithe + Twenty_Tithe + Ten_Tithe + Five_Tithe + One_Tithe ) AS Offertory") -> from("sunday") -> where("Date = '$date'");
+              + Thousand_Tithe + Five_Hundred_Tithe + Two_Hundred_Tithe + Hundred_Tithe + Fifty_Tithe + Twenty_Tithe + Ten_Tithe + Five_Tithe + One_Tithe ) AS Offertory") -> from("sunday") -> where("Date = '$date' AND id = '$id' ");
         $sundayData = $query -> execute();
         return $sundayData;
     }

@@ -26,8 +26,8 @@
                         <tr>                                                                        
                             <th>Sales and Offerings</th>
                             <td></td>
-                            <td><?php echo number_format($offer -> Offertory); ?></td>
-                            <input type="hidden" value="<?=$offer -> Offertory ?>" id="sales" />
+                            <td><?php echo $offer -> Offertory; ?></td>
+                            <input type="hidden" value="<?php if($offer -> Offertory != 0 || $offer -> Offertory != ""){echo $offer -> Offertory; }else{echo "0" ;} ?>" id="sales" />
                         </tr>
                         <?php
                         }
@@ -36,14 +36,20 @@
                         <tr>                                                                        
                             <th>Contributions</th>
                             <td></td>
-                            <td id="contributions" class=""><?php echo $contributions -> Sunday_Contributions ?></td>
+                            <td id="contributions" class=""><?php if($contributions -> Sunday_Contributions != "" || $contributions -> Sunday_Contributions != 0){
+                            	 echo $contributions -> Sunday_Contributions; }else{echo "0";} ?></td>
+                        </tr>
+                        <tr>
+                        	<th>Total Incomes</th>
+                        	<td></td>
+                        	<td id="totalincomerealised"></td>
                         </tr>
                     <tr height="20px"></tr>
                     <tr>
                         <th>Less: Expenses</th>
                         <?php
                         foreach ($expenses as $expense) {
-                            echo "<tr><td class='expense'>" . $expense -> Account . "</td><td></td><td>" . number_format($expense -> Expense) . "</tr>";
+                            echo "<tr><td class='expense' id=expense>" . $expense -> Account . "</td><td></td><td>" . $expense -> Expense. "</tr>";
                         }
                         ?>
                     </tr>
@@ -53,7 +59,7 @@
                        
                             <?php
                                 foreach ($expenseTotal as $totalExpense) {?>
-                                    <td><?php echo "<b>(" . number_format($totalExpense -> Total) . ")</b>"; ?>
+                                    <td><?php echo "<b>(" . $totalExpense -> Total . ")</b>"; ?>
                                     </td><input id="totalexpenses" type="hidden" value="<?=$totalExpense -> Total ?>" />
                                     <?php } ?>
                             
@@ -68,21 +74,11 @@
 </div>
 
 <script>
-
-if(document.getElementById('contributions').innerText == ''){
-   document.getElementById('totalincomes').value = parseInt(document.getElementById('sales').value);
-} else
-if(document.getElementById('sales').innerText == ''){
-   document.getElementById('totalincomes').value = parseInt(document.getElementById('contributions').value);
-} else{
-    document.getElementById('totalincomes').value =  parseInt(document.getElementById('sales').value) + parseInt(document.getElementById('contributions').value);    
-}
-
-
-	if (document.getElementById('totalincomes').value == '' && (document.getElementById('totalexpenses').value == '' || document.getElementById('totalexpenses').value == 0)) {
-	document.getElementById('net').innerText = '';
-	} else {
-		document.getElementById('net').innerText = parseInt(document.getElementById('totalincomes').value) - parseInt(document.getElementById('totalexpenses').value);
-	}
+$(function(){
+	$("#totalincomerealised").html( parseInt($("#sales").val()) + parseInt($("#contributions").html())   );
+	$("#totalincomerealised").css('font-weight','bold');
 	
+	$("#net").html( parseInt($("#totalincomerealised").html()) - parseInt($("#totalexpenses").val())   );
+	$("#net").css('font-weight','bold');
+})	
 </script>

@@ -29,7 +29,11 @@
                     foreach($transactiondates as $transactiondata){?>
                         <tr>                                                                        
                             <td><?php echo date('M d', strtotime($transactiondata -> Date )); ?></td>
-                            <td><?php echo $transactiondata -> Account_Affected_1; ?></td>
+                            <td>
+                            <a href="<?php echo base_url().'journal_entries/journals/'.$transactiondata -> Account_Affected_1; ?>">
+                            	<?php echo $transactiondata -> Account_Affected_1; ?>
+                            </a>
+                           	</td>
                             <td></td>
                             <td><?php echo $transactiondata -> Account_Affected_1_Amount; ?></td>
                             <td></td>
@@ -37,7 +41,11 @@
                         <tr>
                             <td></td>
                             <td></td>
-                            <td><?php echo $transactiondata -> Account_Affected_2; ?></td>
+                            <td>
+                            <a href="<?php echo base_url().'journal_entries/journals_/'.$transactiondata -> Account_Affected_2; ?>">	
+                            	<?php echo $transactiondata -> Account_Affected_2; ?>
+                            </a>
+                           	</td>
                             <td></td>
                             <td><?php echo $transactiondata -> Account_Affected_2_Amount; ?></td>
                         </tr>

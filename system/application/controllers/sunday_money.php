@@ -210,13 +210,9 @@ class Sunday_Money extends Controller {
 			$transaction -> Account_Affected_2 = "Offerings";
 			$transaction -> Account_Affected_2_Amount = $cash;
 			$transaction -> Account_Affected_2_Operation = "Credit";
-			$transaction -> Ending_Balance = ($opening_balance + $cash);
+			$transaction -> Ending_Balance = $opening_balance;
+			$transaction -> Identifier = 1;
 			$transaction -> save();
-
-			$partakings = new Partakings();
-			$partakings -> Transaction_Value = $opening_balance + $cash;
-			$partakings -> Date = date('Y-m-d');
-			$partakings -> save();
 
 			redirect("sunday_money/listing");
 		} else {
@@ -237,7 +233,7 @@ class Sunday_Money extends Controller {
 
 	public function view_sunday($id, $date) {
 		$sunday = Sunday::getSunday($id);
-		$totse = Sunday::getSundayTotal($date);
+		$totse = Sunday::getSundayTotal($date,$id);
 		$data['sunday'] = $sunday[0];
 		$data['totse'] = $totse[0];
 		$data['title'] = "Tithes and Offerings";

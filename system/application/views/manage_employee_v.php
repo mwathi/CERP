@@ -23,7 +23,8 @@
                <th>Schools Attended</th>
                <th>Contact Person</th>
                <th>Contact Telephone</th>
-               <th>Qualifications</th>               
+               <th>Professional Qualifications</th>
+               <th>Academic Qualifications</th>               
            </tr>
            <tr>
                <td><?php echo $employee -> Posts -> Name; ?></td>
@@ -36,17 +37,6 @@
            </tr>
            <tr style="height: 30px"></tr>
            <!--Work Details-->
-           
-           <tr>
-               <th>Days Paid</th>
-               <th>Days Absent</th>
-               <th>Days Present</th>               
-           </tr>
-           <tr>
-               <th>Sick Leave</th>
-               <th>Paid Holidays</th>
-               <th>Casual Leave</th>
-           </tr>
         </table>      
     </div>
 </div>

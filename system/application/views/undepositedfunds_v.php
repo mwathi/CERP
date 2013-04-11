@@ -23,25 +23,15 @@
 				<th>Balance</th>
 			</tr>
 			<?php
-
+			$totse = 0;
             foreach ($transaction as $transactiondata) {
-                if ($transactiondata -> transaction == "Opening Balance" || $transactiondata -> account_affected_2 == "Offerings" || $transactiondata -> account_affected_1 == "Bank" || $transactiondata -> account_affected_2 == "Pledges") {
                     echo "<tr>
               <td>" . $transactiondata -> transaction . "</td>
               <td>" . $transactiondata -> date . "</td>
               <td class=debit>" . $transactiondata -> account_affected_1_amount . "</td>
               <td class=credit>0</td>
-              <td>" . $transactiondata -> ending_balance . "</td>
+              <td>" . $totse += $transactiondata -> account_affected_1_amount  . "</td>
               </tr>";
-                } else {
-                    echo "<tr>
-              <td>" . $transactiondata -> transaction . "</td>
-              <td>" . $transactiondata -> date . "</td>
-              <td class=debit>0</td>
-              <td class=credit>" . $transactiondata -> account_affected_1_amount . "</td>
-              <td>" . $transactiondata -> ending_balance . "</td>
-              </tr>";
-                }
             }
 			?>
 			<tr>
