@@ -25,7 +25,7 @@
 			<?php
 
             foreach ($transaction as $transactiondata) {
-                if ($transactiondata -> transaction == "Opening Balance" || $transactiondata -> account_affected_2 == "Offerings" || $transactiondata -> account_affected_1 == "Bank" || $transactiondata -> account_affected_2 == "Pledges") {
+                if ($transactiondata -> account_affected_1 == $account) {
                     echo "<tr>
               <td>" . $transactiondata -> transaction . "</td>
               <td>" . $transactiondata -> date . "</td>

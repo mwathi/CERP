@@ -69,23 +69,17 @@ class Pledge_Controller extends Controller {
 			$data['causedata'] = Causes::getAll();
 			$partakings = Partakings::getAll();
 			$data['partakings'] = $partakings[0];
-			$data['members'] = Flock::getAll();
-			$data['content_view'] = "make_contribution";
-			$this -> base_params($data);
-		} else {
-			$this -> load -> view('restricted_v');
-		}
-	}//end listing
 
-	public function makechequecontribution() {
-		if ($this -> session -> userdata('username') == 'dmwathi') {
-			$data['title'] = "Make a Contribution";
-			$data['causedata'] = Causes::getAll();
-			$partakings = Partakings::getAll();
-			$data['partakings'] = $partakings[0];
+			//load up values for the drop down for banks from registered data, and facilitate ajax request
+			$this -> load -> database();
+			$registeredBanks = "SELECT bank,account_name FROM church_particulars";
+			$query = $this -> db -> query($registeredBanks);
+			$transaction = $query -> result();
+			$data['registeredbanks'] = $transaction;
+
 			$data['banks'] = Banks::getAll();
 			$data['members'] = Flock::getAll();
-			$data['content_view'] = "make_cheque_contribution";
+			$data['content_view'] = "make_contribution";
 			$this -> base_params($data);
 		} else {
 			$this -> load -> view('restricted_v');
@@ -159,33 +153,78 @@ class Pledge_Controller extends Controller {
 			$member_number = $this -> input -> post("member_number");
 			$dateofcontribution = $this -> input -> post("dateofcontribution");
 			$opening_balance = $this -> input -> post("opening_balance");
+			$cashorcheque = $this -> input -> post("cashorcheque");
+			$bank = $this -> input -> post("bank");
+			$cheque_number = $this -> input -> post("cheque_number");
 
-			$contributions = new Contributions();
+			$bank_related_account_credited = $this -> input -> post("bank_related_account_credited");
+			$account_balance = $this -> input -> post("account_balance");
 
-			$contributions -> Cause = $pledgecause;
-			$contributions -> Date_of_Contribution = $dateofcontribution;
-			$contributions -> Pledge = $pledge;
-			$contributions -> Member_Number = $member_number;
-			$contributions -> Contribution_Made = $contribution;
-			$contributions -> Name = $pledgename;
-			$contributions -> Telephone = $pledgetelephone;
-			$contributions -> Address = $pledgeaddress;
-			$contributions -> Email = $pledgeemail;
-			$contributions -> save();
+			if ($cashorcheque == 0) {
+				$contributions = new Contributions();
 
-			$transaction = new Transactions();
+				$contributions -> Cause = $pledgecause;
+				$contributions -> Date_of_Contribution = $dateofcontribution;
+				$contributions -> Pledge = $pledge;
+				$contributions -> Member_Number = $member_number;
+				$contributions -> Contribution_Made = $contribution;
+				$contributions -> Name = $pledgename;
+				$contributions -> Telephone = $pledgetelephone;
+				$contributions -> Address = $pledgeaddress;
+				$contributions -> Email = $pledgeemail;
+				$contributions -> Cashorcheque = $cashorcheque;
+				$contributions -> save();
 
-			$transaction -> Date = date("Y-m-d");
-			$transaction -> Account_Affected_1 = "Cash";
-			$transaction -> Transaction = "Contributions dated " . $dateofcontribution . "by " . $pledgename;
-			$transaction -> Account_Affected_1_Amount = $contribution;
-			$transaction -> Account_Affected_1_Operation = "Debit";
-			$transaction -> Account_Affected_2 = "Pledges";
-			$transaction -> Account_Affected_2_Amount = $contribution;
-			$transaction -> Account_Affected_2_Operation = "Credit";
-			$transaction -> Ending_Balance = ($opening_balance);
-			$transaction -> Identifier = 1;
-			$transaction -> save();
+				$transaction = new Transactions();
+
+				$transaction -> Date = date("Y-m-d");
+				$transaction -> Account_Affected_1 = "Cash";
+				$transaction -> Transaction = "Contributions dated " . $dateofcontribution . "by " . $pledgename;
+				$transaction -> Account_Affected_1_Amount = $contribution;
+				$transaction -> Account_Affected_1_Operation = "Debit";
+				$transaction -> Account_Affected_2 = "Pledges";
+				$transaction -> Account_Affected_2_Amount = $contribution;
+				$transaction -> Account_Affected_2_Operation = "Credit";
+				$transaction -> Ending_Balance = "";
+				$transaction -> Identifier = 1;
+				$transaction -> save();
+
+			} else {
+				$contributions = new Contributions();
+
+				$contributions -> Cause = $pledgecause;
+				$contributions -> Date_of_Contribution = $dateofcontribution;
+				$contributions -> Pledge = $pledge;
+				$contributions -> Member_Number = $member_number;
+				$contributions -> Contribution_Made = $contribution;
+				$contributions -> Name = $pledgename;
+				$contributions -> Telephone = $pledgetelephone;
+				$contributions -> Address = $pledgeaddress;
+				$contributions -> Email = $pledgeemail;
+				$contributions -> Cashorcheque = $cashorcheque;
+				$contributions -> Bank = $bank;
+				$contributions -> Cheque_Number = $cheque_number;
+				$contributions -> save();
+
+				$transaction = new Transactions();
+
+				$transaction -> Date = date("Y-m-d");
+				$transaction -> Account_Affected_1 = $bank_related_account_credited;
+				$transaction -> Transaction = "Cheque Contributions dated " . $dateofcontribution . "by " . $pledgename;
+				$transaction -> Account_Affected_1_Amount = $contribution;
+				$transaction -> Account_Affected_1_Operation = "Debit";
+				$transaction -> Account_Affected_2 = "Cash";
+				$transaction -> Account_Affected_2_Amount = $contribution;
+				$transaction -> Account_Affected_2_Operation = "Credit";
+				$transaction -> Ending_Balance = $account_balance + $contribution;
+				$transaction -> Identifier = 0;
+				$transaction -> save();
+
+				$this -> load -> database();
+				$sqlupdatepartakings = "UPDATE partakings SET bank_account = '" . $bank_related_account_credited . "', 
+										transaction_value = '" . ($account_balance + $contribution) . "', date =". date('Y-m-d') . " WHERE bank_account =" . $bank_related_account_credited;
+				$query = $this -> db -> query($sqlupdatepartakings);
+			}
 
 			redirect("pledge_controller/causelisting");
 		} else {
@@ -238,7 +277,7 @@ class Pledge_Controller extends Controller {
 			$transaction -> save();
 
 			$partakings = new Partakings();
-			$partakings -> Transaction_Value =($opening_balance + $contribution);
+			$partakings -> Transaction_Value = ($opening_balance + $contribution);
 			$partakings -> Date = date('Y-m-d');
 			$partakings -> save();
 

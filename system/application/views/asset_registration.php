@@ -82,7 +82,7 @@ echo validation_errors('
 <br />
 <a class="action_button" id="new_asset" href="<?php echo site_url("asset_management/listing"); ?>">Assets</a>
 <input type="hidden" name="asset_id" value = "<?php echo $asset_id; ?>"/>
-<div class="holder" style="margin-top: 50px; width: 500px">
+<div class="holder" style="margin-top: 50px; width: 600px">
     
     <table>
         
@@ -222,8 +222,52 @@ echo validation_errors('
         </tr>
         <input type="hidden" value="<?=$partakings -> Transaction_Value;?>" name="opening_balance" />
         <tr>
+        	<td>Account</td>
+        	<td>
+        		<!--select with registered banks-->
+        		<select name="bank_related_account_credited" id="registered_banks" required>
+                <option value="">Select Account</option>
+                <?php
+                foreach ($registeredbanks as $church_banks) {
+                    echo "<option value=$church_banks->bank>$church_banks->account_name</option>";
+                }
+                ?>
+            </select>
+        	</td>
+        	<td>
+        		Balance{<input type="text" value="0" id="balance_account" readonly="" style="border: 0"/>}
+        	</td>
+        </tr>
+         <tr>
             <td><input name="submit" type="submit" value="Save Asset to Database" class="submit" ></td>
+            <input type="hidden" name="account_balance" value="0" id="account_balance" />
         </tr>
     </table>
     </form>
     </div>
+    
+<script>
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+	 $(document.getElementById('registered_banks')).change(function() {
+
+        $.ajax({
+            url : '../account_balance.php',
+            data : { registered_banks: document.getElementById('registered_banks').value},
+
+            dataType : 'json',
+            success : function(data) {
+                var opening_balance = data[0];
+                 var opening_bala_duplicate = data[1];
+               	$('#account_balance').val(opening_bala_duplicate);
+                $('#balance_account').val(numberWithCommas(opening_balance));
+            },
+            error : function(data) {
+                document.getElementById('account_balance').value = "0";
+                document.getElementById('balance_account').value = "0";
+            } 
+        });
+    });
+    
+</script>

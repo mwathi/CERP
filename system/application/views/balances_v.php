@@ -18,7 +18,7 @@
                         <td><?php echo $asset_data -> Date_Created ?></td>     
                         <td><?php echo $asset_data -> Date_Due ?></td>                                                           
                         <td><a href="<?php echo base_url()."balances_management/edit_balance/".$asset_data ->id ?>">Edit Figures</a></td>
-                        <td><a href="<?php echo base_url()."balances_management/pay_balance/".$asset_data ->id."/".$asset_data->Balance_Due."/".$partakings -> Transaction_Value."/".$asset_data -> Transaction_Id."/".$asset_data -> Supplier; ?>" onclick="return confirm('Are you sure you want to settle this account?')" >Pay Balance</a></td>
+                        <td><a href="<?php echo base_url()."balances_management/balanceform/".$asset_data ->id."/".$asset_data->Balance_Due."/".$partakings -> Transaction_Value."/".$asset_data -> Transaction_Id."/".$asset_data -> Supplier; ?>" >Pay Balance</a></td>
                         </tr>
                         <?php
                         }

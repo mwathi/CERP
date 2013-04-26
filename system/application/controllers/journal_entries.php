@@ -45,6 +45,8 @@ class Journal_Entries extends Controller {
 	}//end listing
 
 	public function balanceDates() {
+		$bankaccounts = Partakings::getAccounts();
+		$data['bankaccounts'] = $bankaccounts[0];
 		$data['transactiondates'] = Transactions::getAllTransactionsByMonthDate();
 		$data['title'] = "Balance Sheet Dates";
 		$data['content_view'] = "balancesheetdates_v";
@@ -66,12 +68,15 @@ class Journal_Entries extends Controller {
 		$this -> base_params($data);
 	}//end listing
 
-	public function balancesheets() {
-		$partakings = Partakings::getAll();
-		$data['partakings'] = $partakings[0];
-
+	public function balancesheets($limit) {
+		$x = Church_Particulars::getTotalNumberBanks();
 		$this -> load -> database();
 
+		$partakingsql = "SELECT distinct(name) as account,bank_account,transaction_value FROM partakings,banks where banks.id = partakings.bank_account order by partakings.id desc limit $x";
+		$partakingquery = $this -> db -> query($partakingsql);
+		$partakings = $partakingquery -> result();
+		$data['partakings'] = $partakings;
+		$data['limit'] = $limit;
 		//accounts payable//
 		$accountspayablesql = "SELECT SUM(balance_due) AS Accounts_Payable FROM balances";
 		$accountspayablequery = $this -> db -> query($accountspayablesql);
@@ -79,11 +84,17 @@ class Journal_Entries extends Controller {
 		$data['accountspayable'] = $accountspayable[0];
 
 		//opeing balance equity//
-		$obesql = "SELECT SUM(opening_balance) AS Opening_Balance_Equity FROM church_particulars";
+		$obesql = "SELECT SUM(balance) AS Opening_Balance_Equity FROM church_particulars";
 		$obequery = $this -> db -> query($obesql);
 		$obe = $obequery -> result();
 		$data['obe'] = $obe[0];
 
+		//total opeing balance equity//
+		$partsql = "SELECT SUM(transaction_value) AS Total_Opening_Balance FROM partakings";
+		$partquery = $this -> db -> query($partsql);
+		$partak = $partquery -> result();
+		$data['partak'] = $partak[0];
+		
 		//expenses//
 		$expensetotalsql = "SELECT SUM(account_affected_1_amount) AS Total FROM transactions WHERE account_affected_1 IN (SELECT name FROM accounts WHERE type = 'Expense Account')";
 		$expenseTotalQuery = $this -> db -> query($expensetotalsql);
@@ -114,7 +125,7 @@ class Journal_Entries extends Controller {
 		$data['assetTotal'] = $assetTotal[0];
 
 		//deposited funds
-		$banktotalsql = "SELECT SUM(account_affected_1_amount) AS Total FROM transactions WHERE account_affected_1 = 'Bank' ";
+		$banktotalsql = "SELECT SUM(account_affected_1_amount) AS Total FROM transactions WHERE account_affected_1 NOT IN(SELECT name FROM accounts) AND transaction = 'Deposit of Undeposited Funds' OR transaction like '%Church cheque contributions%' OR transaction like '%Cheque Contributions dated%' ";
 		$bankTotalQuery = $this -> db -> query($banktotalsql);
 		$bankTotal = $bankTotalQuery -> result();
 		$data['bankTotal'] = $bankTotal[0];
@@ -144,9 +155,10 @@ class Journal_Entries extends Controller {
 		$this -> base_params($data);
 	}//end listing
 
-	public function transactions() {
+	public function transactions($account) {
+		$data['account'] = $account;
 		$this -> load -> database();
-		$transactionsql = "SELECT * FROM transactions WHERE account_affected_1 = 'Capital' or account_affected_1 = 'Bank' or account_affected_2 = 'Cash' AND account_affected_1 != 'Pledges'";
+		$transactionsql = "SELECT * FROM transactions WHERE account_affected_1 = '$account' or account_affected_2 = '$account'";
 		$transactionquery = $this -> db -> query($transactionsql);
 		$transaction = $transactionquery -> result();
 		$data['transaction'] = $transaction;
@@ -251,7 +263,9 @@ class Journal_Entries extends Controller {
 		$this -> base_params($data);
 	}
 
-	public function undepositedfunds() {
+	public function undepositedfunds($limit) {
+		$data['registeredbanks'] = Partakings::getAccountBalancePerAccount($limit);
+
 		$this -> load -> database();
 		$incometotalsql = "SELECT * FROM transactions WHERE account_affected_2 IN (SELECT name FROM accounts WHERE type = 'Income Account')";
 		$incomeTotalQuery = $this -> db -> query($incometotalsql);
@@ -260,6 +274,88 @@ class Journal_Entries extends Controller {
 
 		$data['title'] = "Transaction Information";
 		$data['content_view'] = "undepositedfunds_v";
+		$this -> base_params($data);
+	}
+
+	public function savefunds() {
+		$totalundepositedfunds = $this -> input -> post("totalundepositedfunds");
+		$depositvalue = $this -> input -> post("depositvalue");
+		$accountbalance = $this -> input -> post("accountbalance");
+		$bankaccount = $this -> input -> post("bankaccount");
+		$limit = $this -> input -> post("limit");
+		
+		if ($totalundepositedfunds > $depositvalue) {
+
+		} else if (($totalundepositedfunds < $depositvalue)) {
+			$buffer = $totalundepositedfunds - $depositvalue;
+
+			$transaction = new Transactions();
+			$transaction -> Date = date("Y-m-d");
+			$transaction -> Account_Affected_1 = $bankaccount;
+			$transaction -> Transaction = "Deposit of Undeposited Funds";
+			$transaction -> Account_Affected_1_Amount = $depositvalue;
+			$transaction -> Account_Affected_1_Operation = "Debit";
+			$transaction -> Account_Affected_2 = "Cash";
+			$transaction -> Account_Affected_2_Amount = $depositvalue;
+			$transaction -> Account_Affected_2_Operation = "Credit";
+			$transaction -> Ending_Balance = ($depositvalue + $accountbalance);
+			$transaction -> save();
+
+
+			$this -> load -> database();
+			$sqlinserttransaction = "insert into transactions (date,account_affected_1,transaction,account_affected_1_amount,account_affected_1_operation,account_affected_2,
+			account_affected_2_amount,account_affected_2_operation,ending_balance) values ('".date('Y-m-d')."','General Income','Balance from undeposited funds',
+			'".$buffer."','Debit','Cash','".$buffer."','Credit','".($depositvalue+$accountbalance)."') ";
+			
+			$query1 = $this -> db -> query($sqlinserttransaction);
+			
+			
+			$this -> load -> database();
+			$sqlupdatepartakings = "UPDATE partakings SET bank_account = '" . $bankaccount . "', 
+										transaction_value = '" . ($depositvalue + $accountbalance) . "', date =" . date('Y-m-d') . " WHERE bank_account =" . $bankaccount;
+			$query = $this -> db -> query($sqlupdatepartakings);
+
+		} else {
+			$transaction = new Transactions();
+			$transaction -> Date = date("Y-m-d");
+			$transaction -> Account_Affected_1 = $bankaccount;
+			$transaction -> Transaction = "Deposit of Undeposited Funds";
+			$transaction -> Account_Affected_1_Amount = $depositvalue;
+			$transaction -> Account_Affected_1_Operation = "Debit";
+			$transaction -> Account_Affected_2 = "Cash";
+			$transaction -> Account_Affected_2_Amount = $depositvalue;
+			$transaction -> Account_Affected_2_Operation = "Credit";
+			$transaction -> Ending_Balance = ($depositvalue + $accountbalance);
+			$transaction -> save();
+
+			$this -> load -> database();
+			$sqlupdatepartakings = "UPDATE partakings SET bank_account = '" . $bankaccount . "', 
+										transaction_value = '" . ($depositvalue + $accountbalance) . "', date =" . date('Y-m-d') . " WHERE bank_account =" . $bankaccount;
+			$query = $this -> db -> query($sqlupdatepartakings);
+
+			$this -> load -> database();
+			$updateIncomeSql = "UPDATE transactions SET identifier = 0 WHERE account_affected_2 IN (SELECT name FROM accounts WHERE type = 'Income Account')";
+			$updateIncomeQuery = $this -> db -> query($updateIncomeSql);
+		}
+
+		redirect("journal_entries/balancesheets/".$limit);
+	}
+
+	public function getCashBook($bankid, $transactionvalue,$limit) {
+		//incomes//
+		$this -> load -> database();
+		$incometotalsql = "SELECT SUM(account_affected_2_amount) AS Total FROM transactions WHERE account_affected_2 IN (SELECT name FROM accounts WHERE type = 'Income Account') AND identifier = 1";
+		$incomeTotalQuery = $this -> db -> query($incometotalsql);
+		$incomeTotal = $incomeTotalQuery -> result();
+		$data['incomeTotal'] = $incomeTotal[0];
+
+		$data['limit'] = $limit;
+		$data['bankid'] = $bankid;
+		$data['transactionvalue'] = $transactionvalue;
+
+		$data['cashbookdata'] = Transactions::cashbook($bankid);
+		$data['title'] = "Cashbook Information";
+		$data['content_view'] = "cashbook_v";
 		$this -> base_params($data);
 	}
 
@@ -289,35 +385,6 @@ class Journal_Entries extends Controller {
 
 	}
 
-	public function depositUndepositedFunds($amount, $opening_balance) {
-		$transaction = new Transactions();
-
-		$amountToDeposit = $amount;
-		$amountInBank = $opening_balance;
-
-		$transaction -> Date = date("Y-m-d");
-		$transaction -> Account_Affected_1 = "Bank";
-		$transaction -> Transaction = "Deposit of Undeposited Funds";
-		$transaction -> Account_Affected_1_Amount = $amountToDeposit;
-		$transaction -> Account_Affected_1_Operation = "Debit";
-		$transaction -> Account_Affected_2 = "Cash";
-		$transaction -> Account_Affected_2_Amount = $amountToDeposit;
-		$transaction -> Account_Affected_2_Operation = "Credit";
-		$transaction -> Ending_Balance = ($amountToDeposit + $amountInBank);
-		$transaction -> save();
-
-		$this -> load -> database();
-		$updateIncomeSql = "UPDATE transactions SET identifier = 0 WHERE account_affected_2 IN (SELECT name FROM accounts WHERE type = 'Income Account')";
-		$updateIncomeQuery = $this -> db -> query($updateIncomeSql);
-
-		$partakings = new Partakings();
-		$partakings -> Transaction_Value = ($amountToDeposit + $amountInBank);
-		$partakings -> Date = date('Y-m-d');
-		$partakings -> save();
-
-		redirect("journal_entries/balancesheets");
-
-	}
 
 	public function base_params($data) {
 		$data['styles'] = array("jquery-ui.css", "jquery.ui.all.css");

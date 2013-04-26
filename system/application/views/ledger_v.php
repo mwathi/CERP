@@ -6,6 +6,7 @@
     .reporttable td+td{
         border-bottom:1px solid #000000;
         border-left: 0px;
+        text-align: right
     }
 </style>
 <div id="view_content">
@@ -25,7 +26,6 @@
                 <td>Beginning Balance</td>
                 <td></td>
                 <td></td>
-                <td><?=$particulars -> Opening_Balance ?></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -46,17 +46,17 @@
                         <td>".$transactions -> Date."</td>
                         <td>".$transactions -> Transaction."</td>";
                         if($transactions -> Account_Affected_1 == "Cash"){
-                            echo "<td class=debit>".$transactions -> Account_Affected_1_Amount."</td>";
+                            echo "<td class=debit>".number_format($transactions -> Account_Affected_1_Amount)."</td>";
                         }else{
                             echo "<td></td>";
                         }
                         if($transactions -> Account_Affected_2 == "Cash"){
-                            echo "<td class=credit>".$transactions -> Account_Affected_2_Amount."</td>";
+                            echo "<td class=credit>".number_format($transactions -> Account_Affected_2_Amount)."</td>";
                         }else{
                             echo "<td></td>";
                         }
                         echo "
-                        <td>".$transactions -> Ending_Balance."</td>
+                        <td>".number_format($transactions -> Ending_Balance)."</td>
                     </tr>";
                 }
             ?>
@@ -66,9 +66,9 @@
                 <td></td>
                 <td></td>
                 <td style="font-weight: bold">Total:</td>
-                <td style="font-weight: bold"><?=$transactiontotaldebit -> Account_Affected_1_Amount ?></td>
-                <td style="font-weight: bold"><?=$transactiontotalcredit -> Account_Affected_2_Amount ?></td>
-                <td style="font-weight: bold"><?=$endingbalance -> Transaction_Value ?></td>
+                <td style="font-weight: bold"><?=number_format($transactiontotaldebit -> Account_Affected_1_Amount) ?></td>
+                <td style="font-weight: bold"><?=number_format($transactiontotalcredit -> Account_Affected_2_Amount) ?></td>
+                <td style="font-weight: bold"><?=number_format($endingbalance -> Transaction_Value) ?></td>
             </tr>
         </table>      
         

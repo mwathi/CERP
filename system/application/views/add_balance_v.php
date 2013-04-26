@@ -35,6 +35,7 @@ echo validation_errors('
 
 
 <br />
+
 <a class="action_button" id="new_balance" href="<?php echo site_url("balances_management/listing"); ?>">Balances</a>
 <input type="hidden" name="balance_id" value = "<?php echo $balance_id; ?>"/>
 <div class="holder" style="margin-top: 50px; width: 500px">

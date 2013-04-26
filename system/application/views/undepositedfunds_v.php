@@ -24,15 +24,15 @@
 			</tr>
 			<?php
 			$totse = 0;
-            foreach ($transaction as $transactiondata) {
-                    echo "<tr>
+			foreach ($transaction as $transactiondata) {
+				echo "<tr>
               <td>" . $transactiondata -> transaction . "</td>
               <td>" . $transactiondata -> date . "</td>
               <td class=debit>" . $transactiondata -> account_affected_1_amount . "</td>
               <td class=credit>0</td>
-              <td>" . $totse += $transactiondata -> account_affected_1_amount  . "</td>
+              <td>" . $totse += $transactiondata -> account_affected_1_amount . "</td>
               </tr>";
-            }
+			}
 			?>
 			<tr>
 			    <th>Total</th>
@@ -41,30 +41,41 @@
 			    <td id="totalcredits"></td>
 			    <td id="balance"></td>
 			</tr>
+			<tr height="40px"></tr>
+		</form>
 		</table>
 	</div>
 </div>
 
 
 <script>
-    $(function(){
-      var debitcolumn = $('.debit')
-      var sum = 0
-      $.each(debitcolumn,function(){
-          sum += parseInt($(this).html())
-      })  
-      $('#totaldebits').html("<b>" + sum + "</b>");
-    })
-    
-    $(function(){
-      var creditcolumn = $('.credit')
-      var sum = 0
-      $.each(creditcolumn,function(){
-          sum += parseInt($(this).html())
-      })  
-      $('#totalcredits').html("<b>" + sum + "</b>");
-      $('#balance').html( parseInt($('#totaldebits').text()) - parseInt( $('#totalcredits').text()) );
-      $('#balance').css("font-weight","bold")  
-    })
-    
+	$(function() {
+		var debitcolumn = $('.debit')
+		var sum = 0
+		$.each(debitcolumn, function() {
+			sum += parseInt($(this).html())
+		})
+		$('#totaldebits').html("<b>" + sum + "</b>");
+	})
+	$(function() {
+		var creditcolumn = $('.credit')
+		var sum = 0
+		$.each(creditcolumn, function() {
+			sum += parseInt($(this).html())
+		})
+		$('#totalcredits').html("<b>" + sum + "</b>");
+		$('#balance').html(parseInt($('#totaldebits').text()) - parseInt($('#totalcredits').text()));
+		$('#balance').css("font-weight", "bold")
+
+		//hardcode cums now
+		$('#otherbalance').val(parseInt($('#totaldebits').text()) - parseInt($('#totalcredits').text()));
+
+		$('.depositvalue').blur(function() {
+			if(parseInt($(".depositvalue").val()) > parseInt($('#otherbalance').val())){
+				alert( $('#otherbalance').val());
+			}else{
+				
+			}
+		});
+	})
 </script>

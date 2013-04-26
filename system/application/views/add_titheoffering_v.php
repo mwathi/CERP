@@ -1,6 +1,8 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
 ?>
+<br />
+<a href="<?php echo base_url().'sunday_money/add_cheque_tithe'; ?>" class="action_button">Cheque Offering</a>
 <link href="<?php echo base_url().'system/CSS/jquery.ui.css'?>" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.js'?>"></script>
 <script type="text/javascript" src="<?php echo base_url().'system/Scripts/jquery.ui.js'?>"></script>
@@ -918,7 +920,7 @@ error_reporting(E_ALL ^ E_NOTICE);
         </div>
     </div>
 </div>
-              
+              <input type="hidden" name="cashorcheque" value="0" />
                     <td><input type="submit" class="submit" /></td>
                 
 		</div>

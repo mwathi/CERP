@@ -81,6 +81,12 @@ class Sunday extends Doctrine_Record {
         $this -> hasColumn('Ten_Tithe', 'int', 15);
         $this -> hasColumn('Five_Tithe', 'int', 15);
         $this -> hasColumn('One_Tithe', 'int', 15);
+		
+		$this -> hasColumn('Cashorcheque', 'int', 15);
+		$this -> hasColumn('Bank', 'int', 15);
+		$this -> hasColumn('Cheque_Amount', 'int', 15);
+		$this -> hasColumn('Cheque_Number', 'varchar', 40);
+		$this -> hasColumn('Drawer', 'varchar', 40);
 
         $this -> hasColumn('Date', 'date');
     }

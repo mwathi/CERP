@@ -9,7 +9,7 @@
                         <tr>                                                                        
                         <td><?php echo date('F Y', strtotime($transactiondata -> Date )); ?></td>
                         <td>
-                            <a href="<?php echo base_url()."journal_entries/balancesheets/".date('n', strtotime($transactiondata -> Date)); ?>" style="padding-right:3em">View Income Statement 
+                            <a href="<?php echo base_url()."journal_entries/balancesheets/".$bankaccounts -> Bank_Accounts; ?>" style="padding-right:3em">View Balance Sheet Information
                             </a>
                         </td>
                         </tr>

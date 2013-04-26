@@ -1,14 +1,14 @@
 <?php
 if (isset($church)) {
     $church_id = $church -> id;
-    $church_name = $church -> Church_Name;
+    $account_name = $church -> Account_Name;
     $bank = $church -> Bank;
     $account_number = $church -> Account_Number;
-    $opening_balance = $church -> Opening_Balance;
+    $opening_balance = $church -> Balance;
     $opening_balance_date = $church -> Opening_Balance_Date;
 } else {
     $church_id = "";
-    $church_name = "";
+    $account_name = "";
     $bank = "";
     $account_number = "";
     $opening_balance = "";
@@ -69,10 +69,10 @@ echo validation_errors('
         </tr>
         
         <tr>
-            <td>Church Name</td>
+            <td>Account Name</td>
             <td class="othertext"><?php
 
-            $data_search = array('name' => 'church_name', 'value' => $church_name, 'class' => 'othertext');
+            $data_search = array('name' => 'account_name', 'value' => $account_name, 'class' => 'othertext');
             echo form_input($data_search);
             ?></td>
         </tr>

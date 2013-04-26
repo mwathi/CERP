@@ -67,8 +67,8 @@
 <td>Account Opening</td>
 <td>" . $transactiondata -> Opening_Balance_Date . "</td>
 <td class=opdebit>0</td>
-<td class=opcredit>" . $transactiondata -> Opening_Balance . "</td>
-<td>" . $dave += $transactiondata -> Opening_Balance . "</td>
+<td class=opcredit>" . $transactiondata -> Balance . "</td>
+<td>" . $dave += $transactiondata -> Balance . "</td>
 </tr>";
             }
 			?>

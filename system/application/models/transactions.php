@@ -76,6 +76,12 @@ class Transactions extends Doctrine_Record {
         $transactionData = $query -> execute();
         return $transactionData;
     }
+	
+	public function cashbook($bankid){
+		$query = Doctrine_Query::create() -> select("*") -> from("transactions") -> where("Account_Affected_1 = '$bankid' OR Account_Affected_2 = '$bankid' ");
+        $transactionData = $query -> execute();
+        return $transactionData;
+	}
 
 }
 ?>

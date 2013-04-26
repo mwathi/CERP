@@ -88,10 +88,43 @@
                 <th>Work Status: </th><td><?php echo $employee -> Employment_Status; ?></td>
             </tr>
             
+            
+               
+             <tr>
+
+        </tr>
+         <tr>
+        </tr>
+        
+        
              <tr>
                 <th>Bank Details: </th><td><input type="text" style="border: 0" readonly="" value="<?php echo $employee -> Banks -> Name; ?>" name="bank_details"/></td>
                 
             </tr>
+            
+            <tr>
+            	<th></th><th></th>
+            <th>Account</th>
+        	<th>
+        		<!--select with registered banks-->
+        		<select name="bank_related_account_credited" id="registered_banks" required>
+                <option value="">Select Account</option>
+                <?php
+                foreach ($registeredbanks as $church_banks) {
+                    echo "<option value=$church_banks->bank>$church_banks->account_name</option>";
+                }
+                ?>
+            </select>
+        	</th>
+            </tr>
+
+			<tr>
+				<th></th><th></th><th></th>
+				 	<th>
+        		Balance{<input type="text" value="0" id="balance_account" readonly="" style="border: 0"/>}
+        		 <input type="hidden" name="account_balance" value="0" id="account_balance" />
+        	</th>
+			</tr>         	
             
             <tr>
                 <th></th><td>Acc No <input type="text" style="border: 0" readonly="" value="<?php echo $employee -> Account_Number; ?>" name="account_number"/></td>
@@ -341,4 +374,31 @@
 
 	});
 
+</script>
+
+<script>
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+	 $(document.getElementById('registered_banks')).change(function() {
+
+        $.ajax({
+            url : '<?php echo site_url('account_balance.php') ?>',
+            data : { registered_banks: document.getElementById('registered_banks').value},
+
+            dataType : 'json',
+            success : function(data) {
+                var opening_balance = data[0];
+                 var opening_bala_duplicate = data[1];
+               	$('#account_balance').val(opening_bala_duplicate);
+                $('#balance_account').val(numberWithCommas(opening_balance));
+                alert($('#account_balance').val())
+            },
+            error : function(data) {
+                document.getElementById('account_balance').value = "0";
+                document.getElementById('balance_account').value = "0";
+            } 
+        });
+    });
+    
 </script>

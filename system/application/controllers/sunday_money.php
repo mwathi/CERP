@@ -28,9 +28,28 @@ class Sunday_Money extends Controller {
 		}
 	}
 
-	public function save() {
+	public function add_cheque_tithe() {
 		if ($this -> session -> userdata('username') == 'dmwathi') {
-			error_reporting(0);
+			//load up values for the drop down for banks from registered data, and facilitate ajax request
+			$this -> load -> database();
+			$registeredBanks = "SELECT bank,account_name FROM church_particulars";
+			$query = $this -> db -> query($registeredBanks);
+			$transaction = $query -> result();
+			$data['registeredbanks'] = $transaction;
+
+			$data['banks'] = Banks::getAll();
+			$data['title'] = "Tithes and Offerings";
+			$data['content_view'] = "add_tithe_cheque";
+
+			$this -> base_params($data);
+		} else {
+			$this -> load -> view('restricted_v');
+		}
+	}
+
+	public function save() {
+		error_reporting(E_ALL ^ E_NOTICE);
+		if ($this -> session -> userdata('username') == 'dmwathi') {
 			$thousandyouth = $this -> input -> post("1000youth");
 			$fivehundredyouth = $this -> input -> post("500youth");
 			$twohundredyouth = $this -> input -> post("200youth");
@@ -111,6 +130,17 @@ class Sunday_Money extends Controller {
 			$fivetithe = $this -> input -> post("5tithe");
 			$onetithe = $this -> input -> post("1tithe");
 			$opening_balance = $this -> input -> post("opening_balance");
+
+			$cashorcheque = $this -> input -> post("cashorcheque");
+			$bank = $this -> input -> post("bank");
+			$amount = $this -> input -> post("amount");
+			$cheque_number = $this -> input -> post("cheque_number");
+			$drawer = $this -> input -> post("drawer");
+
+			//values posted from ajax and bank details
+			$bank_related_account_credited = $this -> input -> post("bank_related_account_credited");
+			$account_balance = $this -> input -> post("account_balance");
+
 			$date = date('Y-m-d');
 
 			$sunday = new Sunday();
@@ -195,25 +225,52 @@ class Sunday_Money extends Controller {
 			$sunday -> Five_Tithe = $fivetithe;
 			$sunday -> One_Tithe = $onetithe;
 
+			$sunday -> Cashorcheque = $cashorcheque;
+			$sunday -> Bank = $bank;
+			$sunday -> Cheque_Amount = $amount;
+			$sunday -> Cheque_Number = $cheque_number;
+			$sunday -> Drawer = $drawer;
+
 			$sunday -> Date = $date;
 
 			$sunday -> save();
 
-			$transaction = new Transactions();
-			$cash = $thousandyouth + $fivehundredyouth + $twohundredyouth + $hundredyouth + $fiftyyouth + $twentyyouth + $tenyouth + $fiveyouth + $oneyouth + $thousandteens + $fivehundredteens + $twohundredteens + $hundredteens + $fiftyteens + $twentyteens + $tenteens + $fiveteens + $oneteens + $thousandsundayschool + $fivehundredsundayschool + $twohundredsundayschool + $hundredsundayschool + $fiftysundayschool + $twentysundayschool + $tensundayschool + $fivesundayschool + $onesundayschool + $thousandenglishservice + $fivehundredenglishservice + $twohundredenglishservice + $hundredenglishservice + $fiftyenglishservice + $twentyenglishservice + $tenenglishservice + $fiveenglishservice + $oneenglishservice + $thousandswahiliservice + $fivehundredswahiliservice + $twohundredswahiliservice + $hundredswahiliservice + $fiftyswahiliservice + $twentyswahiliservice + $tenswahiliservice + $fiveswahiliservice + $oneswahiliservice + $thousandmonthlypledge + $fivehundredmonthlypledge + $twohundredmonthlypledge + $hundredmonthlypledge + $fiftymonthlypledge + $twentymonthlypledge + $tenmonthlypledge + $fivemonthlypledge + $onemonthlypledge + $thousandthanksgiving + $fivehundredthanksgiving + $twohundredthanksgiving + $hundredthanksgiving + $fiftythanksgiving + $twentythanksgiving + $tenthanksgiving + $fivethanksgiving + $onethanksgiving + $thousandtithe + $fivehundredtithe + $twohundredtithe + $hundredtithe + $fiftytithe + $twentytithe + $tentithe + $fivetithe + $onetithe;
-			$transaction -> Date = date("Y-m-d");
-			$transaction -> Account_Affected_1 = "Cash";
-			$transaction -> Transaction = "Church contributions dated " . $date;
-			$transaction -> Account_Affected_1_Amount = $cash;
+			if ($cashorcheque == 0) {
+				$transaction = new Transactions();
+				$cash = $thousandyouth + $fivehundredyouth + $twohundredyouth + $hundredyouth + $fiftyyouth + $twentyyouth + $tenyouth + $fiveyouth + $oneyouth + $thousandteens + $fivehundredteens + $twohundredteens + $hundredteens + $fiftyteens + $twentyteens + $tenteens + $fiveteens + $oneteens + $thousandsundayschool + $fivehundredsundayschool + $twohundredsundayschool + $hundredsundayschool + $fiftysundayschool + $twentysundayschool + $tensundayschool + $fivesundayschool + $onesundayschool + $thousandenglishservice + $fivehundredenglishservice + $twohundredenglishservice + $hundredenglishservice + $fiftyenglishservice + $twentyenglishservice + $tenenglishservice + $fiveenglishservice + $oneenglishservice + $thousandswahiliservice + $fivehundredswahiliservice + $twohundredswahiliservice + $hundredswahiliservice + $fiftyswahiliservice + $twentyswahiliservice + $tenswahiliservice + $fiveswahiliservice + $oneswahiliservice + $thousandmonthlypledge + $fivehundredmonthlypledge + $twohundredmonthlypledge + $hundredmonthlypledge + $fiftymonthlypledge + $twentymonthlypledge + $tenmonthlypledge + $fivemonthlypledge + $onemonthlypledge + $thousandthanksgiving + $fivehundredthanksgiving + $twohundredthanksgiving + $hundredthanksgiving + $fiftythanksgiving + $twentythanksgiving + $tenthanksgiving + $fivethanksgiving + $onethanksgiving + $thousandtithe + $fivehundredtithe + $twohundredtithe + $hundredtithe + $fiftytithe + $twentytithe + $tentithe + $fivetithe + $onetithe;
+				$transaction -> Date = date("Y-m-d");
+				$transaction -> Account_Affected_1 = "Cash";
+				$transaction -> Transaction = "Church contributions dated " . $date;
+				$transaction -> Account_Affected_1_Amount = $cash;
 
-			$transaction -> Account_Affected_1_Operation = "Debit";
-			$transaction -> Account_Affected_2 = "Offerings";
-			$transaction -> Account_Affected_2_Amount = $cash;
-			$transaction -> Account_Affected_2_Operation = "Credit";
-			$transaction -> Ending_Balance = $opening_balance;
-			$transaction -> Identifier = 1;
-			$transaction -> save();
+				$transaction -> Account_Affected_1_Operation = "Debit";
+				$transaction -> Account_Affected_2 = "Offerings";
+				$transaction -> Account_Affected_2_Amount = $cash;
+				$transaction -> Account_Affected_2_Operation = "Credit";
+				$transaction -> Ending_Balance = $opening_balance;
+				$transaction -> Identifier = 1;
+				$transaction -> save();
+			} else if ($cashorcheque == 1) {
+				$transaction = new Transactions();
+				$transaction -> Date = date("Y-m-d");
+				$transaction -> Account_Affected_1 = $bank_related_account_credited;
+				$transaction -> Transaction = "Church cheque contributions dated " . $date;
+				$transaction -> Account_Affected_1_Amount = $amount;
 
+				$transaction -> Account_Affected_1_Operation = "Debit";
+				$transaction -> Account_Affected_2 = "Cash";
+				$transaction -> Account_Affected_2_Amount = $amount;
+				$transaction -> Account_Affected_2_Operation = "Credit";
+				$transaction -> Ending_Balance = $amount + $account_balance;
+				$transaction -> Identifier = 1;
+				$transaction -> save();
+
+				$this -> load -> database();
+				$sqlupdatepartakings = "UPDATE partakings SET bank_account = '" . $bank_related_account_credited . "', 
+										transaction_value = '" . ($amount + $account_balance) . "', date =" . date('Y-m-d') . " WHERE bank_account =" . $bank_related_account_credited;
+				$query = $this -> db -> query($sqlupdatepartakings);
+
+			}
 			redirect("sunday_money/listing");
 		} else {
 			$this -> load -> view('restricted_v');
@@ -233,7 +290,7 @@ class Sunday_Money extends Controller {
 
 	public function view_sunday($id, $date) {
 		$sunday = Sunday::getSunday($id);
-		$totse = Sunday::getSundayTotal($date,$id);
+		$totse = Sunday::getSundayTotal($date, $id);
 		$data['sunday'] = $sunday[0];
 		$data['totse'] = $totse[0];
 		$data['title'] = "Tithes and Offerings";

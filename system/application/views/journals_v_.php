@@ -1,10 +1,12 @@
 <style>
     .reporttable td{
         border-bottom:1px solid #000000;
+        text-align: right
     }
     .reporttable td+td{
         border-bottom:1px solid #000000;
         border-left: 0px;
+        text-align: right
     }
 </style>
 <div id="view_content">
@@ -16,7 +18,6 @@
      <a class="header_action_button" id="" href="<?php echo site_url("journal_entries/ledgerDates"); ?>">Ledger Entries</a>
      <br /><br />
      <a class="header_action_button" id="" href="<?php echo site_url("journal_entries/balanceDates"); ?>">Balance Sheets</a>
-
     <div align="center">
         <table class="reporttable">
             <tr class="yellow">
@@ -33,7 +34,7 @@
                         echo "<tr>
                         <td>". $transactiondata -> date ."</td>
                         <td>". $transactiondata -> transaction ."</td>
-						<td>". $transactiondata -> account_affected_2_amount ."</td>
+						<td cllass=right>". number_format($transactiondata -> account_affected_2_amount) ."</td>
 	                    <td></td>
 	                    </tr>";
 						}else{
@@ -41,7 +42,7 @@
                         <td>". $transactiondata -> date ."</td>
                         <td>". $transactiondata -> transaction ."</td>
 						<td></td>
-	                    <td>". $transactiondata -> account_affected_2_amount ."</td>
+	                    <td>". number_format($transactiondata -> account_affected_2_amount) ."</td>
 	                    </tr>";	
 						}
                         }

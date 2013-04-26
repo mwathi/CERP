@@ -1,10 +1,12 @@
 <style>
     .reporttable td{
         border-bottom:1px solid #000000;
+        text-align: right
     }
     .reporttable td+td{
         border-bottom:1px solid #000000;
         border-left: 0px;
+        text-align: right
     }
 </style>
 <div id="view_content">
@@ -35,7 +37,7 @@
                             </a>
                            	</td>
                             <td></td>
-                            <td><?php echo $transactiondata -> Account_Affected_1_Amount; ?></td>
+                            <td><?php echo number_format($transactiondata -> Account_Affected_1_Amount); ?></td>
                             <td></td>
                         </tr>
                         <tr>
@@ -47,7 +49,7 @@
                             </a>
                            	</td>
                             <td></td>
-                            <td><?php echo $transactiondata -> Account_Affected_2_Amount; ?></td>
+                            <td><?php echo number_format($transactiondata -> Account_Affected_2_Amount); ?></td>
                         </tr>
                         <?php
                         }

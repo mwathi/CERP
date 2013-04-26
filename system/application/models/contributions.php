@@ -11,6 +11,9 @@ class Contributions extends Doctrine_Record {
         $this -> hasColumn('Contribution_Made', 'int', 15);
         $this -> hasColumn('Pledge', 'int', 15);
         $this -> hasColumn('Date_of_Contribution', 'date');
+		$this -> hasColumn('Bank', 'int', 10);
+		$this -> hasColumn('Cheque_Number', 'int', 40);
+		$this -> hasColumn('Cashorcheque', 'int', 15);
     }
 
     public function setUp() {
